@@ -60,7 +60,7 @@ export const site = {
   // ── External links (replace placeholders) ────────────────────────────────
   links: {
     ownerPortal: "https://app.rentredi.com/login", // RentRedi owner login
-    tenantPortal: "https://app.rentredi.com/login", // RentRedi tenant login
+    tenantPortal: "https://tenant.rentredi.com/getStarted", // RentRedi tenant portal
     // Until a dedicated RentRedi application/Calendly link is provided, these
     // fall back to sensible destinations so no buttons are broken on the live site.
     rentRediApplication: "https://app.rentredi.com/login",
