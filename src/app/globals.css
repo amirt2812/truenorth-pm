@@ -1,0 +1,86 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-bg: 246 241 231; /* sand */
+    --color-surface: 255 255 255;
+    --color-ink: 15 39 66; /* navy */
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-sand-100 text-slate-700 antialiased;
+    font-feature-settings: "kern", "liga", "calt";
+  }
+
+  /* Respect reduced-motion: disable non-essential animation */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  /* Visible, brand-colored focus ring for keyboard users */
+  :where(a, button, input, select, textarea, [tabindex]):focus-visible {
+    outline: 2px solid theme("colors.gold.500");
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  h1, h2, h3, h4 {
+    @apply font-display text-navy-800;
+    text-wrap: balance;
+  }
+
+  ::selection {
+    background: theme("colors.gold.200");
+    color: theme("colors.navy.900");
+  }
+}
+
+@layer components {
+  .container-tn {
+    @apply mx-auto w-full max-w-container px-5 sm:px-6 lg:px-8;
+  }
+
+  /* Subtle compass/direction motif: faint radial guide-lines background */
+  .bg-compass {
+    background-image:
+      radial-gradient(circle at 50% 50%, rgba(194, 154, 74, 0.06) 0, transparent 60%),
+      repeating-conic-gradient(
+        from 0deg at 50% 50%,
+        rgba(15, 39, 66, 0.04) 0deg 0.5deg,
+        transparent 0.5deg 45deg
+      );
+  }
+
+  .prose-tn {
+    @apply max-w-3xl text-slate-700 leading-relaxed;
+  }
+  .prose-tn h2 {
+    @apply text-display-md mt-12 mb-4;
+  }
+  .prose-tn h3 {
+    @apply text-2xl font-display text-navy-800 mt-8 mb-3;
+  }
+  .prose-tn p {
+    @apply mb-5 text-lg leading-relaxed;
+  }
+  .prose-tn ul {
+    @apply mb-6 space-y-2 pl-5 list-disc marker:text-gold-500;
+  }
+  .prose-tn a {
+    @apply text-navy-600 underline underline-offset-4 hover:text-gold-600;
+  }
+}

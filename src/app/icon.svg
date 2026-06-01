@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <rect width="64" height="64" rx="12" fill="#16215A"/>
+  <g fill="none" stroke="#ffffff" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round">
+    <!-- tall building outline (left) -->
+    <path d="M16 14 h12 v34 h-16 v-22 z"/>
+    <!-- inner vertical accent line -->
+    <path d="M21 14 v9"/>
+    <!-- house gable roof with eaves overhang -->
+    <path d="M22 30 L37 18 L54 31"/>
+    <!-- house body right wall -->
+    <path d="M37 22 v26"/>
+  </g>
+  <!-- 2x2 window -->
+  <g fill="#ffffff">
+    <rect x="40" y="27" width="4.5" height="4.5" rx="0.6"/>
+    <rect x="46" y="27" width="4.5" height="4.5" rx="0.6"/>
+    <rect x="40" y="33" width="4.5" height="4.5" rx="0.6"/>
+    <rect x="46" y="33" width="4.5" height="4.5" rx="0.6"/>
+  </g>
+  <!-- downward compass needle -->
+  <path d="M37 33 L43 48 L37 44 L31 48 Z" fill="#C7912E"/>
+</svg>
