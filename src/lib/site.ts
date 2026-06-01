@@ -61,9 +61,7 @@ export const site = {
   links: {
     ownerPortal: "https://app.rentredi.com/login", // RentRedi owner login
     tenantPortal: "https://tenant.rentredi.com/getStarted", // RentRedi tenant portal
-    // Until a dedicated RentRedi application/Calendly link is provided, these
-    // fall back to sensible destinations so no buttons are broken on the live site.
-    rentRediApplication: "https://app.rentredi.com/login",
+    rentRediApplication: "https://tenant.rentredi.com/getStarted", // tenant apply / get started
     calendly: "/contact", // replace with your Calendly URL when ready
 
     googleBusinessProfile: "[INSERT Google Business Profile Link]",
