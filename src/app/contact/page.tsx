@@ -89,16 +89,15 @@ export default function ContactPage() {
               </Button>
             </Card>
 
-            {/* Service area map placeholder */}
+            {/* Service area map */}
             <Card className="overflow-hidden p-0">
-              <div className="flex aspect-[4/3] items-center justify-center bg-navy-50 bg-compass">
-                <div className="text-center">
-                  <Icon name="pin" className="mx-auto h-8 w-8 text-navy-400" />
-                  <p className="mt-2 px-6 text-sm text-slate-500">
-                    [INSERT embedded Google Map of your Hernando County service area]
-                  </p>
-                </div>
-              </div>
+              <iframe
+                title="TrueNorth Property Management service area"
+                src="https://www.google.com/maps?q=Brooksville,+FL&z=10&output=embed"
+                className="aspect-[4/3] w-full border-0"
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              />
               <div className="p-5">
                 <p className="text-sm font-medium text-navy-800">Service area</p>
                 <p className="mt-1 text-sm text-slate-600">{serviceAreas.join(" · ")} and surrounding Hernando County communities.</p>

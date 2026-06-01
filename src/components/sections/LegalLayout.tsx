@@ -11,7 +11,7 @@ export function LegalLayout({
   title,
   intro,
   path,
-  updated = "[INSERT date]",
+  updated = "May 31, 2026",
   children,
 }: {
   title: string;

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { pageMeta } from "@/lib/seo";
-import { site, compliance, activeBrokerageDisclosure } from "@/lib/site";
+import { site, compliance, activeBrokerageDisclosure, isBrokerageNamed } from "@/lib/site";
 import { LegalLayout } from "@/components/sections/LegalLayout";
 
 export const metadata: Metadata = pageMeta({
@@ -19,10 +19,13 @@ export default function LegalDisclosuresPage() {
       <h2>Brokerage & licensing</h2>
       <p>{activeBrokerageDisclosure()}</p>
       <ul>
-        <li>Brokerage legal name: {site.brokerageLegalName}</li>
-        <li>Florida real estate brokerage license number: {site.brokerageLicenseNumber}</li>
+        {isBrokerageNamed && <li>Brokerage legal name: {site.brokerageLegalName}</li>}
+        {isBrokerageNamed && <li>Florida real estate brokerage license number: {site.brokerageLicenseNumber}</li>}
         <li>Holding company: {site.holdingCompany}</li>
       </ul>
+      {!isBrokerageNamed && (
+        <p className="text-sm text-slate-500">[Brokerage legal name and Florida license number to be published here.]</p>
+      )}
 
       <h2>Advertising & licensing disclosure</h2>
       <p>

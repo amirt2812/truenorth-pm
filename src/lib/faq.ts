@@ -1,4 +1,4 @@
-import { site, serviceAreaSentence } from "./site";
+import { site, serviceAreaSentence, isBrokerageNamed } from "./site";
 
 /** Master FAQ list for /faq. License answer uses the required placeholder. */
 export const faqs: { q: string; a: string }[] = [
@@ -16,5 +16,7 @@ export const faqs: { q: string; a: string }[] = [
   { q: "What software do you use?", a: `We use ${site.softwarePlatform} as our primary property management suite for rent payments, maintenance requests, owner visibility, and centralized communication.` },
   { q: "Can I switch from another property manager?", a: "Yes. Many owners come to us from another manager. We'll walk you through a clean transition, subject to the terms of your current agreement and a signed management agreement with us." },
   { q: "Do you work with out-of-state owners?", a: "Yes. Our RentRedi owner portal and clear monthly reporting are built so out-of-area owners stay fully informed." },
-  { q: "Are you a licensed brokerage?", a: `Property management and leasing services are provided through ${site.brokerageLegalName}, subject to active Florida brokerage registration. Final license information will be published here upon activation.` },
+  { q: "Are you a licensed brokerage?", a: isBrokerageNamed
+      ? `Property management and leasing services are provided through ${site.brokerageLegalName}, a Florida licensed real estate brokerage (license ${site.brokerageLicenseNumber}), in accordance with applicable Florida law.`
+      : "Property management and leasing services are provided in accordance with applicable Florida real estate law. Our full brokerage name and license number will be published here." },
 ];

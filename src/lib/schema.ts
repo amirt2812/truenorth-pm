@@ -1,4 +1,4 @@
-import { site, serviceAreas, isPreLaunch } from "./site";
+import { site, serviceAreas, isPreLaunch, isBrokerageNamed } from "./site";
 
 /**
  * JSON-LD structured data builders. All use placeholder legal name until the
@@ -13,7 +13,7 @@ export function organizationSchema() {
     "@type": "Organization",
     "@id": `${site.url}/#organization`,
     name: site.brand,
-    legalName: site.brokerageLegalName,
+    ...(isBrokerageNamed ? { legalName: site.brokerageLegalName } : {}),
     url: site.url,
     slogan: site.tagline,
     description: site.description,
@@ -43,9 +43,10 @@ export function localBusinessSchema() {
     description: site.description,
     address: {
       "@type": "PostalAddress",
-      streetAddress: site.address,
-      addressLocality: "Spring Hill",
-      addressRegion: "FL",
+      streetAddress: site.addressParts.street,
+      addressLocality: site.addressParts.city,
+      addressRegion: site.addressParts.region,
+      postalCode: site.addressParts.postalCode,
       addressCountry: "US",
     },
     areaServed: serviceAreas.map((a) => ({ "@type": "City", name: `${a}, FL` })),

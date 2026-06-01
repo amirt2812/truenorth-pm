@@ -19,7 +19,8 @@
  *                 brokerage registration. Only switch this AFTER the user
  *                 confirms licensing is active (per compliance instruction #1).
  */
-export const launchStatus: "pre-launch" | "licensed" = "pre-launch";
+export type LaunchStatus = "pre-launch" | "licensed";
+export const launchStatus = "licensed" as LaunchStatus;
 
 export const isPreLaunch = launchStatus === "pre-launch";
 
@@ -41,20 +42,30 @@ export const site = {
   brokerageLicenseNumber: "[INSERT Florida Brokerage License Number]",
   softwarePlatform: "RentRedi",
 
-  // ── Contact placeholders (replace before launch) ─────────────────────────
-  phone: "[INSERT Business Phone]",
-  phoneHref: "tel:+10000000000", // INSERT real E.164 phone, e.g. tel:+13525550123
-  email: "[INSERT Business Email]", // Outlook domain mailbox, e.g. hello@truenorthpm.co
-  emailHref: "mailto:[INSERT Business Email]",
-  address: "[INSERT Business Address or Mailing Address]",
+  // ── Contact ──────────────────────────────────────────────────────────────
+  phone: "(727) 815-5245",
+  phoneHref: "tel:+17278155245",
+  email: "alfredo@truenorthpm.co",
+  emailHref: "mailto:alfredo@truenorthpm.co",
+  address: "7629 Odessa Ct, Brooksville, FL 34613",
+  // Structured address (used by LocalBusiness schema)
+  addressParts: {
+    street: "7629 Odessa Ct",
+    city: "Brooksville",
+    region: "FL",
+    postalCode: "34613",
+  },
   businessHours: "Mon–Fri 9:00am – 5:00pm ET",
 
   // ── External links (replace placeholders) ────────────────────────────────
   links: {
     ownerPortal: "https://app.rentredi.com/login", // RentRedi owner login
     tenantPortal: "https://app.rentredi.com/login", // RentRedi tenant login
-    rentRediApplication: "[INSERT RentRedi Application Link]",
-    calendly: "[INSERT Calendly Link]",
+    // Until a dedicated RentRedi application/Calendly link is provided, these
+    // fall back to sensible destinations so no buttons are broken on the live site.
+    rentRediApplication: "https://app.rentredi.com/login",
+    calendly: "/contact", // replace with your Calendly URL when ready
+
     googleBusinessProfile: "[INSERT Google Business Profile Link]",
   },
 
@@ -91,8 +102,13 @@ export const compliance = {
   // Version A — pre-license / pre-launch
   preLaunchDisclosure:
     "Brokerage registration and service launch pending. Website content is for informational and pre-launch purposes only. No property management, leasing, or brokerage services are provided until all required licensing and registrations are active.",
-  // Version B — post-license
+  // Version B — post-license, full (used once the brokerage name + license # are filled in)
   licensedDisclosure: `TrueNorth Property Management is operated by ${site.brokerageLegalName}, a Florida licensed real estate brokerage. License number: ${site.brokerageLicenseNumber}.`,
+  // Version B — interim, used while the legal brokerage name/number are still placeholders.
+  // Avoids exposing bracketed placeholders inside a legal claim. Replace by filling
+  // brokerageLegalName + brokerageLicenseNumber above.
+  licensedInterimDisclosure:
+    "TrueNorth Property Management provides property management and leasing services in accordance with applicable Florida real estate law. Full brokerage name and license number will be published here.",
 
   fairHousing:
     "TrueNorth Property Management supports equal housing opportunity and does not discriminate on the basis of race, color, national origin, religion, sex, familial status, disability, or any other protected class under applicable law.",
@@ -107,6 +123,16 @@ export const compliance = {
     "Pricing is subject to property type, location, condition, service scope, and signed management agreement.",
 } as const;
 
-/** Returns the correct brokerage disclosure string for the current launch status. */
-export const activeBrokerageDisclosure = (): string =>
-  isPreLaunch ? compliance.preLaunchDisclosure : compliance.licensedDisclosure;
+/** True once the real brokerage legal name has been filled in (no placeholder brackets). */
+export const isBrokerageNamed = !site.brokerageLegalName.includes("[");
+
+/**
+ * Returns the correct brokerage disclosure for the current state:
+ * - pre-launch → Version A (registration pending)
+ * - licensed + real name/number → full Version B
+ * - licensed but name/number still placeholder → interim (no bracketed placeholders)
+ */
+export const activeBrokerageDisclosure = (): string => {
+  if (isPreLaunch) return compliance.preLaunchDisclosure;
+  return isBrokerageNamed ? compliance.licensedDisclosure : compliance.licensedInterimDisclosure;
+};
