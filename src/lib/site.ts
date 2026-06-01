@@ -42,6 +42,15 @@ export const site = {
   brokerageLicenseNumber: "[INSERT Florida Brokerage License Number]",
   softwarePlatform: "RentRedi",
 
+  // ── Founder ──────────────────────────────────────────────────────────────
+  founder: {
+    name: "Alfredo Mirt",
+    title: "Founder",
+    // Drop the headshot at public/founder.jpg — until then a clean "AM" monogram shows.
+    photo: "/founder.jpg",
+    bio: "Alfredo Mirt is the founder of TrueNorth Property Management and a local Hernando County real estate investor. He started TrueNorth to bring institutional-quality systems — transparent pricing, modern technology, and clear, proactive communication — to local residential landlords who've been underserved by traditional property managers. His approach is simple: treat every owner's property like an asset worth protecting, and give owners the visibility and responsiveness they deserve.",
+  },
+
   // ── Contact ──────────────────────────────────────────────────────────────
   phone: "(727) 815-5245",
   phoneHref: "tel:+17278155245",

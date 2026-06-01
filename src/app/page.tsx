@@ -13,6 +13,7 @@ import { FoundingLandlord } from "@/components/sections/FoundingLandlord";
 import { CtaBand } from "@/components/sections/CtaBand";
 import { FaqSection } from "@/components/sections/FaqSection";
 import { RentalAnalysisForm } from "@/components/forms/RentalAnalysisForm";
+import { FounderAvatar } from "@/components/ui/FounderAvatar";
 
 export const metadata: Metadata = pageMeta({
   title: "Hernando County Property Management | TrueNorth",
@@ -280,13 +281,16 @@ export default function HomePage() {
         <div className="mx-auto max-w-3xl text-center">
           <span className="text-sm font-semibold uppercase tracking-[0.14em] text-gold-600">Local & owner-led</span>
           <blockquote className="mt-4 font-display text-2xl leading-relaxed text-navy-800 sm:text-3xl">
-            &ldquo;[Founder Name] is a local Hernando County real estate investor and property
-            management operator focused on bringing institutional-quality systems to local
-            residential landlords.&rdquo;
+            &ldquo;Treat every owner&apos;s property like an asset worth protecting, and give owners
+            the visibility and responsiveness they deserve.&rdquo;
           </blockquote>
-          <p className="mt-6 text-sm text-slate-500">
-            [INSERT founder name, photo, and bio. Do not add credentials that aren&apos;t verified.]
-          </p>
+          <div className="mt-6 flex items-center justify-center gap-4">
+            <FounderAvatar className="h-14 w-14" />
+            <div className="text-left">
+              <p className="font-display text-lg font-medium text-navy-800">{site.founder.name}</p>
+              <p className="text-sm text-slate-500">{site.founder.title}, {site.brand}</p>
+            </div>
+          </div>
           <div className="mt-8">
             <Button href="/about" variant="secondary">Meet TrueNorth</Button>
           </div>

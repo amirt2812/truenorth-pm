@@ -6,6 +6,7 @@ import { Section, SectionHeading } from "@/components/ui/Section";
 import { Card } from "@/components/ui/Card";
 import { CtaBand } from "@/components/sections/CtaBand";
 import { Icon } from "@/components/ui/Icon";
+import { FounderAvatar } from "@/components/ui/FounderAvatar";
 
 export const metadata: Metadata = pageMeta({
   title: "About TrueNorth Property Management | Local & Owner-Led",
@@ -66,21 +67,11 @@ export default function AboutPage() {
       <Section tone="sand">
         <Card className="mx-auto max-w-3xl">
           <div className="flex flex-col items-center gap-6 sm:flex-row sm:items-start">
-            <div className="flex h-24 w-24 shrink-0 items-center justify-center rounded-2xl bg-navy-50 text-navy-300">
-              <Icon name="users" className="h-10 w-10" />
-            </div>
+            <FounderAvatar className="h-28 w-28" />
             <div>
-              <p className="text-sm font-semibold uppercase tracking-wider text-gold-600">Founder</p>
-              <h2 className="mt-1 font-display text-2xl text-navy-800">[Founder Name]</h2>
-              <p className="mt-3 leading-relaxed text-slate-600">
-                [Founder Name] is a local Hernando County real estate investor and property management
-                operator focused on bringing institutional-quality systems to local residential
-                landlords.
-              </p>
-              <p className="mt-3 text-sm text-slate-500">
-                [INSERT founder photo, bio, and any verified credentials. Do not add credentials that
-                aren&apos;t verified.]
-              </p>
+              <p className="text-sm font-semibold uppercase tracking-wider text-gold-600">{site.founder.title}</p>
+              <h2 className="mt-1 font-display text-2xl text-navy-800">{site.founder.name}</h2>
+              <p className="mt-3 leading-relaxed text-slate-600">{site.founder.bio}</p>
             </div>
           </div>
         </Card>
