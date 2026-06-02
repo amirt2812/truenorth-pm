@@ -8,6 +8,7 @@ const routes = [
   "/property-management",
   "/pricing",
   "/free-rental-analysis",
+  "/schedule",
   "/owner-portal",
   "/tenant-portal",
   "/owners",

@@ -71,7 +71,7 @@ export const site = {
     ownerPortal: "https://app.rentredi.com/login", // RentRedi owner login
     tenantPortal: "https://tenant.rentredi.com/getStarted", // RentRedi tenant portal
     rentRediApplication: "https://tenant.rentredi.com/getStarted", // tenant apply / get started
-    calendly: "/contact", // replace with your Calendly URL when ready
+    calendly: "https://calendly.com/alfredo-truenorthpm",
 
     googleBusinessProfile: "[INSERT Google Business Profile Link]",
   },

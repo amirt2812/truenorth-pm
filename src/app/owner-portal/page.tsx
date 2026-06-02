@@ -55,7 +55,7 @@ export default function OwnerPortalPage() {
         <div className="mx-auto max-w-2xl text-center">
           <SectionHeading light eyebrow="See it for yourself" title="Want a walkthrough?" intro="Schedule a consultation and we'll show you exactly what owner reporting looks like for a property like yours." />
           <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
-            <Button href={site.links.calendly} variant="gold" size="lg"><Icon name="calendar" className="h-4 w-4" /> Schedule a Consultation</Button>
+            <Button href="/schedule" variant="gold" size="lg"><Icon name="calendar" className="h-4 w-4" /> Schedule a Consultation</Button>
             <Button href="/free-rental-analysis" variant="secondary" size="lg">Get a Free Rental Analysis</Button>
           </div>
         </div>

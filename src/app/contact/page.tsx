@@ -84,7 +84,7 @@ export default function ContactPage() {
                   <span className="text-navy-800">{site.businessHours}</span>
                 </li>
               </ul>
-              <Button href={site.links.calendly} variant="gold" className="mt-6 w-full">
+              <Button href="/schedule" variant="gold" className="mt-6 w-full">
                 <Icon name="calendar" className="h-4 w-4" /> Schedule an Owner Consultation
               </Button>
             </Card>
