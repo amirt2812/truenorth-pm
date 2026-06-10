@@ -20,3 +20,24 @@ export const faqs: { q: string; a: string }[] = [
       ? `Property management and leasing services are provided through ${site.brokerageLegalName}, a Florida licensed real estate brokerage (license ${site.brokerageLicenseNumber}), in accordance with applicable Florida law.`
       : "Property management and leasing services are provided in accordance with applicable Florida real estate law. Our full brokerage name and license number will be published here." },
 ];
+
+/** Spanish master FAQ list for /es/faq. */
+export const faqsEs: { q: string; a: string }[] = [
+  { q: "¿Qué áreas atienden?", a: "Atendemos Spring Hill, Brooksville, Weeki Wachee, Hernando Beach, Timber Pines y las comunidades cercanas del Condado de Hernando." },
+  { q: "¿Qué tipos de propiedades administran?", a: "Administramos rentas residenciales — casas unifamiliares, townhomes, condominios y propiedades pequeñas multifamiliares y de portafolio en todo el Condado de Hernando." },
+  { q: "¿Cuánto cuestan sus servicios?", a: "Los planes integrales comienzan en $99/mes (Essential), $149/mes (Plus) y $229/mes (Premier), más opciones de arrendamiento y renovación por separado. El precio final depende del tipo de propiedad, ubicación, condición, alcance del servicio y un acuerdo de administración firmado." },
+  { q: "¿Ofrecen servicios de solo arrendamiento?", a: "Sí. Nuestro servicio de Solo Arrendamiento cubre la promoción, selección, visitas y firma del contrato para propietarios que autoadministran el día a día. Comienza en 75% de la primera renta (tarifa mínima por confirmar)." },
+  { q: "¿Puedo aprobar las reparaciones antes de que se realicen?", a: "Sí. Usted define un umbral de aprobación. El trabajo de rutina por debajo se coordina y documenta; el trabajo por encima se le envía para aprobación primero, salvo emergencias reales que protejan la salud, la seguridad o la propiedad." },
+  { q: "¿Cómo seleccionan a los inquilinos?", a: "Aplicamos un proceso de selección consistente y conforme a la vivienda justa a cada solicitante. Los criterios específicos se entregan por escrito y se aplican de manera uniforme. [INSERTAR criterios de selección finales una vez confirmados con su abogado/correduría.]" },
+  { q: "¿Cómo reciben los propietarios los pagos de renta?", a: "Los desembolsos y estados de cuenta del propietario se manejan a través de nuestro proceso con RentRedi, con estados en línea disponibles en su portal del propietario." },
+  { q: "¿Cómo pagan la renta los inquilinos?", a: "Los inquilinos pagan renta en línea por el portal del inquilino de RentRedi, con recordatorios automáticos." },
+  { q: "¿Administran casas con HOA?", a: "Sí. Administramos propiedades regidas por HOA y ayudamos a mantener a los inquilinos alineados con las reglas de la comunidad." },
+  { q: "¿Manejan desalojos?", a: "TrueNorth puede coordinar la documentación y la entrega a un abogado cuando se requiere acción legal. Los servicios legales los brindan únicamente abogados con licencia; no brindamos representación ni asesoría legal." },
+  { q: "¿Retienen los depósitos de seguridad?", a: "El manejo del depósito de seguridad se realiza de acuerdo con la ley aplicable de Florida y el contrato/acuerdo de administración firmado." },
+  { q: "¿Qué software usan?", a: `Usamos ${site.softwarePlatform} como nuestra suite principal de administración de propiedades para pagos de renta, solicitudes de mantenimiento, visibilidad del propietario y comunicación centralizada.` },
+  { q: "¿Puedo cambiar de otro administrador?", a: "Sí. Muchos propietarios llegan a nosotros desde otro administrador. Le guiaremos en una transición limpia, sujeta a los términos de su acuerdo actual y a un acuerdo de administración firmado con nosotros." },
+  { q: "¿Trabajan con propietarios de fuera del estado?", a: "Sí. Nuestro portal del propietario con RentRedi y los reportes mensuales claros están diseñados para que los propietarios de fuera del área se mantengan plenamente informados." },
+  { q: "¿Son una correduría con licencia?", a: isBrokerageNamed
+      ? `Los servicios de administración y arrendamiento se brindan a través de ${site.brokerageLegalName}, una correduría de bienes raíces con licencia en Florida (licencia ${site.brokerageLicenseNumber}), de acuerdo con la ley aplicable de Florida.`
+      : "Los servicios de administración y arrendamiento se brindan de acuerdo con la ley de bienes raíces aplicable de Florida. Nuestro nombre completo de correduría y número de licencia se publicarán aquí." },
+];
