@@ -14,7 +14,7 @@ import { RentalAnalysisForm } from "@/components/forms/RentalAnalysisForm";
 import { HtmlLang } from "@/components/layout/HtmlLang";
 
 export const metadata: Metadata = pageMeta({
-  title: "Administración de Propiedades en el Condado de Hernando | TrueNorth",
+  title: "Administración de Propiedades en el Condado de Hernando",
   description:
     "Administración de propiedades transparente y moderna para propietarios en el Condado de Hernando, FL. Análisis de renta gratis, precios claros, responsabilidad local y una experiencia con tecnología RentRedi.",
   path: "/",

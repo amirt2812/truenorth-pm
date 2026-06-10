@@ -24,9 +24,12 @@ const sans = Plus_Jakarta_Sans({
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
+  // pageMeta() builds complete, brand-inclusive titles, so the template is a
+  // passthrough (no extra "| brand" appended). `default` covers pages without
+  // their own metadata.
   title: {
     default: `${site.brand} | Hernando County Property Management`,
-    template: `%s | ${site.brand}`,
+    template: "%s",
   },
   description: site.description,
   applicationName: site.brand,

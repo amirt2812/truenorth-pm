@@ -16,7 +16,7 @@ import { RentalAnalysisForm } from "@/components/forms/RentalAnalysisForm";
 import { FounderAvatar } from "@/components/ui/FounderAvatar";
 
 export const metadata: Metadata = pageMeta({
-  title: "Hernando County Property Management | TrueNorth",
+  title: "Hernando County Property Management",
   description:
     "Transparent, technology-forward property management for Hernando County, FL landlords. Free rental analysis, clear pricing, local accountability, and a RentRedi-powered owner & tenant experience.",
   path: "/",

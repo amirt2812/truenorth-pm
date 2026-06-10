@@ -30,8 +30,9 @@ export function pageMeta({
   const esUrl = `${site.url}${esPath}`;
   const canonical = lang === "es" ? esUrl : enUrl;
 
-  const fullTitle =
-    title.includes(site.shortName) || title.includes(site.brand) ? title : `${title} | ${site.brand}`;
+  // Always end with the full brand exactly once. If the caller already included
+  // the brand, don't append it again (prevents "… | TrueNorth | TrueNorth …").
+  const fullTitle = title.includes(site.brand) ? title : `${title} | ${site.brand}`;
 
   return {
     title: fullTitle,
