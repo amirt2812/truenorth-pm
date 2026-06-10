@@ -95,7 +95,7 @@ export default function TenantsPage() {
 
       <Section tone="sand">
         <div className="mx-auto max-w-3xl rounded-2xl border border-navy-100 bg-white p-6 text-center text-sm text-slate-600">
-          <strong className="text-navy-800">Equal Housing Opportunity.</strong> {compliance.fairHousing}
+          <strong className="text-navy-800">Equal Housing Opportunity.</strong> {compliance.fairHousing.en}
         </div>
       </Section>
     </>

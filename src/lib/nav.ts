@@ -7,6 +7,53 @@
 export type NavLink = { label: string; href: string };
 export type NavGroup = { label: string; href?: string; children?: NavLink[] };
 
+/**
+ * Spanish labels keyed by the English label. The Header/Footer look up the
+ * translated label here when rendering under /es. Hrefs are localized
+ * separately via localizeHref(), so we only translate display text.
+ */
+export const navLabelEs: Record<string, string> = {
+  // Primary nav
+  "Property Management": "Administración de Propiedades",
+  "Full-Service Management": "Administración Integral",
+  "Investor Services": "Servicios para Inversionistas",
+  "Owner Portal": "Portal del Propietario",
+  "Tenant Portal": "Portal del Inquilino",
+  "Hernando County": "Condado de Hernando",
+  "Spring Hill": "Spring Hill",
+  Brooksville: "Brooksville",
+  "Weeki Wachee": "Weeki Wachee",
+  "Hernando Beach": "Hernando Beach",
+  Pricing: "Precios",
+  Owners: "Propietarios",
+  "For Owners": "Para Propietarios",
+  "Free Rental Analysis": "Análisis de Renta Gratis",
+  "Landlord ROI Calculator": "Calculadora de Rentabilidad",
+  "Realtor Referral Partners": "Socios Agentes de Bienes Raíces",
+  Tenants: "Inquilinos",
+  "For Tenants": "Para Inquilinos",
+  Resources: "Recursos",
+  "Resources & Blog": "Recursos y Blog",
+  FAQ: "Preguntas Frecuentes",
+  About: "Nosotros",
+  // Footer headings + links
+  Services: "Servicios",
+  "Owners & Tenants": "Propietarios e Inquilinos",
+  "Service Areas": "Áreas de Servicio",
+  "Company & Legal": "Empresa y Legal",
+  Contact: "Contacto",
+  "Legal Disclosures": "Avisos Legales",
+  "Privacy Policy": "Política de Privacidad",
+  "Terms of Use": "Términos de Uso",
+  "SMS / Email Consent": "Consentimiento SMS / Email",
+  "Fair Housing Statement": "Declaración de Vivienda Justa",
+};
+
+/** Translate a nav label for the given language (falls back to English). */
+export function navLabel(label: string, lang: "en" | "es"): string {
+  return lang === "es" ? navLabelEs[label] ?? label : label;
+}
+
 export const primaryNav: NavGroup[] = [
   {
     label: "Property Management",

@@ -163,7 +163,7 @@ export default function PropertyManagementPage() {
           <ComparisonTable />
         </div>
         <p className="mx-auto mt-8 max-w-2xl text-center text-sm text-slate-500">
-          {compliance.servicesSubjectToAgreement}
+          {compliance.servicesSubjectToAgreement.en}
         </p>
       </Section>
 

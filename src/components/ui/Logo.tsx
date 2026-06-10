@@ -1,6 +1,10 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { site } from "@/lib/site";
+import { langFromPath } from "@/lib/i18n";
 import logoHorizontal from "../../../public/logo-horizontal.png";
 
 /**
@@ -17,8 +21,9 @@ export function Logo({
   className?: string;
   priority?: boolean;
 }) {
+  const home = langFromPath(usePathname() || "/") === "es" ? "/es" : "/";
   return (
-    <Link href="/" aria-label={`${site.brand} home`} className={`inline-flex items-center ${className}`}>
+    <Link href={home} aria-label={`${site.brand} home`} className={`inline-flex items-center ${className}`}>
       <Image
         src={logoHorizontal}
         alt={site.brand}

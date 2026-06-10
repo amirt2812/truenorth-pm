@@ -16,7 +16,7 @@ export default function FairHousingPage() {
       path="/fair-housing"
       intro="We are committed to equal housing opportunity for all."
     >
-      <p className="text-lg font-medium text-navy-800">{compliance.fairHousing}</p>
+      <p className="text-lg font-medium text-navy-800">{compliance.fairHousing.en}</p>
       <h2>Our commitment</h2>
       <p>
         We provide equal professional service to all clients, prospective tenants, and applicants

@@ -23,7 +23,7 @@ export default function TermsOfUsePage() {
       </p>
 
       <h2>No professional advice</h2>
-      <p>{compliance.noAdvice}</p>
+      <p>{compliance.noAdvice.en}</p>
 
       <h2>No guarantees</h2>
       <p>
@@ -33,7 +33,7 @@ export default function TermsOfUsePage() {
       </p>
 
       <h2>Services subject to agreement</h2>
-      <p>{compliance.servicesSubjectToAgreement}</p>
+      <p>{compliance.servicesSubjectToAgreement.en}</p>
 
       <h2>Intellectual property</h2>
       <p>

@@ -74,7 +74,7 @@ export default function PricingPage() {
         <div className="mt-10">
           <PricingCards plans={aLaCartePlans} />
         </div>
-        <p className="mx-auto mt-6 max-w-2xl text-center text-sm text-slate-500">{compliance.pricingDisclaimer}</p>
+        <p className="mx-auto mt-6 max-w-2xl text-center text-sm text-slate-500">{compliance.pricingDisclaimer.en}</p>
       </Section>
 
       {/* Fee transparency */}

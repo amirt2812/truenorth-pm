@@ -35,16 +35,16 @@ export default function LegalDisclosuresPage() {
       </p>
 
       <h2>Equal housing opportunity</h2>
-      <p>{compliance.fairHousing}</p>
+      <p>{compliance.fairHousing.en}</p>
 
       <h2>No legal, tax, or investment advice</h2>
-      <p>{compliance.noAdvice}</p>
+      <p>{compliance.noAdvice.en}</p>
 
       <h2>Services subject to agreement</h2>
-      <p>{compliance.servicesSubjectToAgreement}</p>
+      <p>{compliance.servicesSubjectToAgreement.en}</p>
 
       <h2>Pricing</h2>
-      <p>{compliance.pricingDisclaimer} Pricing is subject to change.</p>
+      <p>{compliance.pricingDisclaimer.en} Pricing is subject to change.</p>
 
       <h2>Informational use only</h2>
       <p>

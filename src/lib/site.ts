@@ -104,42 +104,47 @@ export const serviceAreas = [
 export const serviceAreaSentence =
   "Spring Hill, Brooksville, Weeki Wachee, Hernando Beach, Timber Pines, and surrounding Hernando County communities.";
 
-// ── Compliance copy blocks (used by Footer + legal pages) ───────────────────
+export type Lang2 = "en" | "es";
+
+// ── Compliance copy blocks (bilingual; used by Footer + legal pages) ─────────
 export const compliance = {
-  // Version A — pre-license / pre-launch
-  preLaunchDisclosure:
-    "Brokerage registration and service launch pending. Website content is for informational and pre-launch purposes only. No property management, leasing, or brokerage services are provided until all required licensing and registrations are active.",
-  // Version B — post-license, full (used once the brokerage name + license # are filled in)
-  licensedDisclosure: `TrueNorth Property Management is operated by ${site.brokerageLegalName}, a Florida licensed real estate brokerage. License number: ${site.brokerageLicenseNumber}.`,
-  // Version B — interim, used while the legal brokerage name/number are still placeholders.
-  // Avoids exposing bracketed placeholders inside a legal claim. Replace by filling
-  // brokerageLegalName + brokerageLicenseNumber above.
-  licensedInterimDisclosure:
-    "TrueNorth Property Management provides property management and leasing services in accordance with applicable Florida real estate law. Full brokerage name and license number will be published here.",
-
-  fairHousing:
-    "TrueNorth Property Management supports equal housing opportunity and does not discriminate on the basis of race, color, national origin, religion, sex, familial status, disability, or any other protected class under applicable law.",
-
-  servicesSubjectToAgreement:
-    "All property management, leasing, and brokerage services are subject to signed agreements and applicable Florida law.",
-
-  noAdvice:
-    "Website content is for general informational purposes only and is not legal, tax, financial, or investment advice.",
-
-  pricingDisclaimer:
-    "Pricing is subject to property type, location, condition, service scope, and signed management agreement.",
+  preLaunchDisclosure: {
+    en: "Brokerage registration and service launch pending. Website content is for informational and pre-launch purposes only. No property management, leasing, or brokerage services are provided until all required licensing and registrations are active.",
+    es: "Registro de corretaje y lanzamiento de servicios pendientes. El contenido del sitio web es solo para fines informativos y de prelanzamiento. No se brindan servicios de administración de propiedades, arrendamiento ni corretaje hasta que todas las licencias y registros requeridos estén activos.",
+  },
+  licensedDisclosure: {
+    en: `TrueNorth Property Management is operated by ${site.brokerageLegalName}, a Florida licensed real estate brokerage. License number: ${site.brokerageLicenseNumber}.`,
+    es: `TrueNorth Property Management es operada por ${site.brokerageLegalName}, una correduría de bienes raíces con licencia en Florida. Número de licencia: ${site.brokerageLicenseNumber}.`,
+  },
+  licensedInterimDisclosure: {
+    en: "TrueNorth Property Management provides property management and leasing services in accordance with applicable Florida real estate law. Full brokerage name and license number will be published here.",
+    es: "TrueNorth Property Management brinda servicios de administración de propiedades y arrendamiento de acuerdo con la ley de bienes raíces aplicable de Florida. El nombre completo de la correduría y el número de licencia se publicarán aquí.",
+  },
+  fairHousing: {
+    en: "TrueNorth Property Management supports equal housing opportunity and does not discriminate on the basis of race, color, national origin, religion, sex, familial status, disability, or any other protected class under applicable law.",
+    es: "TrueNorth Property Management apoya la igualdad de oportunidad de vivienda y no discrimina por motivos de raza, color, origen nacional, religión, sexo, estado familiar, discapacidad ni ninguna otra clase protegida bajo la ley aplicable.",
+  },
+  servicesSubjectToAgreement: {
+    en: "All property management, leasing, and brokerage services are subject to signed agreements and applicable Florida law.",
+    es: "Todos los servicios de administración de propiedades, arrendamiento y corretaje están sujetos a acuerdos firmados y a la ley aplicable de Florida.",
+  },
+  noAdvice: {
+    en: "Website content is for general informational purposes only and is not legal, tax, financial, or investment advice.",
+    es: "El contenido del sitio web es solo para fines informativos generales y no constituye asesoramiento legal, fiscal, financiero ni de inversión.",
+  },
+  pricingDisclaimer: {
+    en: "Pricing is subject to property type, location, condition, service scope, and signed management agreement.",
+    es: "Los precios están sujetos al tipo de propiedad, ubicación, condición, alcance del servicio y acuerdo de administración firmado.",
+  },
 } as const;
 
 /** True once the real brokerage legal name has been filled in (no placeholder brackets). */
 export const isBrokerageNamed = !site.brokerageLegalName.includes("[");
 
 /**
- * Returns the correct brokerage disclosure for the current state:
- * - pre-launch → Version A (registration pending)
- * - licensed + real name/number → full Version B
- * - licensed but name/number still placeholder → interim (no bracketed placeholders)
+ * Returns the correct brokerage disclosure for the current state + language.
  */
-export const activeBrokerageDisclosure = (): string => {
-  if (isPreLaunch) return compliance.preLaunchDisclosure;
-  return isBrokerageNamed ? compliance.licensedDisclosure : compliance.licensedInterimDisclosure;
+export const activeBrokerageDisclosure = (lang: Lang2 = "en"): string => {
+  if (isPreLaunch) return compliance.preLaunchDisclosure[lang];
+  return isBrokerageNamed ? compliance.licensedDisclosure[lang] : compliance.licensedInterimDisclosure[lang];
 };

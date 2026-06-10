@@ -104,3 +104,97 @@ export const aLaCartePlans: Plan[] = [
     cta: { label: "Request a Management Proposal", href: "/contact?topic=custom" },
   },
 ];
+
+// ── Spanish ─────────────────────────────────────────────────────────────────
+const proposalCta = { label: "Solicitar una Propuesta", href: "/es/contact?topic=proposal" };
+
+export const managementPlansEs: Plan[] = [
+  {
+    name: "Essential",
+    price: "Desde $99",
+    cadence: "/mes",
+    blurb: "Administración esencial para propietarios que quieren un cobro de renta confiable y reportes claros.",
+    features: [
+      "Cobro de renta con RentRedi",
+      "Estados de cuenta en línea",
+      "Recepción y triaje de solicitudes de mantenimiento",
+      "Apoyo en el cumplimiento del contrato",
+      "Revisión anual de estrategia de renta",
+    ],
+    cta: proposalCta,
+  },
+  {
+    name: "Plus",
+    price: "Desde $149",
+    cadence: "/mes",
+    blurb: "Nuestro plan más popular — agrega inspecciones proactivas y coordinación de mantenimiento más rápida.",
+    featured: true,
+    features: [
+      "Todo lo de Essential",
+      "Inspecciones periódicas de la propiedad",
+      "Coordinación prioritaria de mantenimiento",
+      "Umbrales de aprobación que usted define",
+      "Gestión de renovación de contrato",
+      "Resumen mensual de rendimiento",
+    ],
+    cta: proposalCta,
+  },
+  {
+    name: "Premier",
+    price: "Desde $229",
+    cadence: "/mes",
+    blurb: "Administración integral de alto nivel para propietarios que quieren máxima visibilidad y asesoría.",
+    features: [
+      "Todo lo de Plus",
+      "Mayor frecuencia de inspecciones",
+      "Asesoría de rendimiento de la renta",
+      "Apoyo en planificación de capex y renovaciones",
+      "Punto de contacto dedicado",
+      "Apoyo en reportes de fin de año",
+    ],
+    cta: proposalCta,
+  },
+];
+
+export const aLaCartePlansEs: Plan[] = [
+  {
+    name: "Solo Arrendamiento",
+    price: "Desde 75%",
+    cadence: "de la primera renta",
+    blurb: "Colocación de inquilinos para propietarios que autoadministran. Tarifa mínima por confirmar.",
+    features: [
+      "Posicionamiento de renta informado por el mercado",
+      "Publicación y promoción",
+      "Selección de inquilinos",
+      "Coordinación de visitas",
+      "Preparación y firma del contrato",
+    ],
+    cta: { label: "Hable con un Administrador Local", href: "/es/contact?topic=leasing" },
+  },
+  {
+    name: "Solo Renovación",
+    price: "Desde $299",
+    cadence: "por renovación",
+    blurb: "Negociación y papeleo para propietarios que autoadministran pero quieren renovaciones bien hechas.",
+    features: [
+      "Precio de renovación informado por el mercado",
+      "Comunicación con el inquilino",
+      "Documentación de la renovación",
+      "Revisión de cumplimiento del contrato",
+    ],
+    cta: { label: "Hable con un Administrador Local", href: "/es/contact?topic=renewal" },
+  },
+  {
+    name: "Arme su Plan",
+    price: "A medida",
+    cadence: "por servicio",
+    blurb: "Combine servicios según su portafolio. Precios personalizados para portafolios disponibles.",
+    features: [
+      "Elija los servicios que necesita",
+      "Precios para portafolios y varias propiedades",
+      "Paquetes de inspección",
+      "Complementos de asesoría",
+    ],
+    cta: { label: "Solicitar una Propuesta de Administración", href: "/es/contact?topic=custom" },
+  },
+];
