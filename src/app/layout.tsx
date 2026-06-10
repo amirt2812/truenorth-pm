@@ -6,6 +6,7 @@ import { site } from "@/lib/site";
 import { AlertBanner } from "@/components/layout/AlertBanner";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { MobileCtaBar } from "@/components/layout/MobileCtaBar";
 import { JsonLd } from "@/components/ui/JsonLd";
 import { organizationSchema, localBusinessSchema } from "@/lib/schema";
 
@@ -28,7 +29,7 @@ export const metadata: Metadata = {
   // passthrough (no extra "| brand" appended). `default` covers pages without
   // their own metadata.
   title: {
-    default: `${site.brand} | Hernando County Property Management`,
+    default: `${site.shortName} Property Management | Hernando County, FL`,
     template: "%s",
   },
   description: site.description,
@@ -76,6 +77,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Header />
         <main id="main">{children}</main>
         <Footer />
+        <MobileCtaBar />
       </body>
     </html>
   );

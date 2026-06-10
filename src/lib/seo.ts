@@ -30,9 +30,9 @@ export function pageMeta({
   const esUrl = `${site.url}${esPath}`;
   const canonical = lang === "es" ? esUrl : enUrl;
 
-  // Always end with the full brand exactly once. If the caller already included
-  // the brand, don't append it again (prevents "… | TrueNorth | TrueNorth …").
-  const fullTitle = title.includes(site.brand) ? title : `${title} | ${site.brand}`;
+  // Append the short brand ("TrueNorth") so titles stay under Google's ~60-char
+  // display limit. Skip if the caller already mentions the brand in any form.
+  const fullTitle = title.includes(site.shortName) ? title : `${title} | ${site.shortName}`;
 
   return {
     title: fullTitle,

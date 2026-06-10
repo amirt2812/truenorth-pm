@@ -10,7 +10,7 @@ import { FaqSection } from "@/components/sections/FaqSection";
 import { Icon } from "@/components/ui/Icon";
 
 export const metadata: Metadata = pageMeta({
-  title: "Transparent Property Management Pricing in Hernando County",
+  title: "Property Management Pricing in Hernando County",
   description:
     "Clear, published property management pricing for Hernando County, FL. Full-service plans starting at $99/mo, plus leasing-only, renewal-only, and à la carte options. No vague junk fees.",
   path: "/pricing",

@@ -7,7 +7,7 @@ import { Icon } from "@/components/ui/Icon";
 import { RentalAnalysisForm } from "@/components/forms/RentalAnalysisForm";
 
 export const metadata: Metadata = pageMeta({
-  title: "Free Rental Analysis — Spring Hill & Hernando County, FL",
+  title: "Free Rental Analysis – Hernando County, FL",
   description:
     "Find out what your Hernando County rental could earn. Get a market-informed rental estimate, rent-readiness notes, and a recommended management approach. Not an appraisal.",
   path: "/free-rental-analysis",

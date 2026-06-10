@@ -11,7 +11,7 @@ import { FaqSection } from "@/components/sections/FaqSection";
 import { Icon } from "@/components/ui/Icon";
 
 export const metadata: Metadata = pageMeta({
-  title: "Full-Service Property Management for Hernando County Rental Owners",
+  title: "Full-Service Property Management in Hernando County",
   description:
     "Full-service property management in Hernando County, FL: leasing, screening, rent collection, maintenance, inspections, renewals, and owner reporting — with transparent pricing and local accountability.",
   path: "/property-management",

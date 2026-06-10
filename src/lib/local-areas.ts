@@ -21,7 +21,7 @@ export const areas: Record<string, Area> = {
   "hernando-county-property-management": {
     slug: "hernando-county-property-management",
     city: "Hernando County",
-    metaTitle: "Hernando County Property Management | TrueNorth",
+    metaTitle: "Property Management Across Hernando County | TrueNorth",
     metaDescription:
       "Local, transparent property management across Hernando County, FL — Spring Hill, Brooksville, Weeki Wachee, and Hernando Beach. Free rental analysis and clear pricing.",
     h1: "Property Management Across Hernando County",
