@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { site } from "@/lib/site";
 import { posts } from "@/lib/blog";
 
-/** All public routes. Update when adding pages. Blog posts are appended below. */
+/** All public routes (English paths). Spanish equivalents live under /es. */
 const routes = [
   "/",
   "/property-management",
@@ -30,23 +30,40 @@ const routes = [
   "/terms-of-use",
   "/sms-email-consent",
   "/fair-housing",
+  ...posts.map((p) => `/resources/${p.slug}`),
 ];
+
+const enUrl = (path: string) => `${site.url}${path === "/" ? "" : path}`;
+const esUrl = (path: string) => `${site.url}${path === "/" ? "/es" : `/es${path}`}`;
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
-  const staticEntries: MetadataRoute.Sitemap = routes.map((path) => ({
-    url: `${site.url}${path === "/" ? "" : path}`,
-    lastModified: now,
-    changeFrequency: path === "/" ? "weekly" : "monthly",
-    priority: path === "/" ? 1 : ["/free-rental-analysis", "/pricing", "/property-management"].includes(path) ? 0.9 : 0.7,
-  }));
+  const priorityFor = (path: string) =>
+    path === "/" ? 1 : ["/free-rental-analysis", "/pricing", "/property-management"].includes(path) ? 0.9 : 0.7;
+  const freqFor = (path: string): "weekly" | "monthly" | "yearly" =>
+    path === "/" ? "weekly" : path.startsWith("/resources/") ? "yearly" : "monthly";
 
-  const postEntries: MetadataRoute.Sitemap = posts.map((p) => ({
-    url: `${site.url}/resources/${p.slug}`,
-    lastModified: new Date(p.date),
-    changeFrequency: "yearly",
-    priority: 0.6,
-  }));
-
-  return [...staticEntries, ...postEntries];
+  const entries: MetadataRoute.Sitemap = [];
+  for (const path of routes) {
+    const alternates = {
+      languages: { "en-US": enUrl(path), "es-US": esUrl(path), "x-default": enUrl(path) },
+    };
+    // English entry
+    entries.push({
+      url: enUrl(path),
+      lastModified: now,
+      changeFrequency: freqFor(path),
+      priority: priorityFor(path),
+      alternates,
+    });
+    // Spanish entry
+    entries.push({
+      url: esUrl(path),
+      lastModified: now,
+      changeFrequency: freqFor(path),
+      priority: Math.max(0.5, priorityFor(path) - 0.1),
+      alternates,
+    });
+  }
+  return entries;
 }

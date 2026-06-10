@@ -4,18 +4,33 @@ import { useState } from "react";
 import Link from "next/link";
 import type { Post, Category } from "@/lib/blog";
 import { Icon } from "@/components/ui/Icon";
+import type { Lang } from "@/lib/i18n";
 
-const fmtDate = (iso: string) =>
-  new Date(iso).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
-
-export function BlogList({ posts, categories }: { posts: Post[]; categories: readonly Category[] }) {
+export function BlogList({
+  posts,
+  categories,
+  lang = "en",
+  categoryLabels,
+}: {
+  posts: Post[];
+  categories: readonly Category[];
+  lang?: Lang;
+  /** Optional EN→localized category label map (e.g. for Spanish). */
+  categoryLabels?: Record<string, string>;
+}) {
   const [active, setActive] = useState<Category | "All">("All");
   const filtered = active === "All" ? posts : posts.filter((p) => p.category === active);
+  const base = lang === "es" ? "/es" : "";
+  const allLabel = lang === "es" ? "Todos" : "All";
+  const readLabel = lang === "es" ? "min de lectura" : "min read";
+  const filterLabel = lang === "es" ? "Filtrar publicaciones por categoría" : "Filter posts by category";
+  const label = (c: Category | "All") => (c === "All" ? allLabel : categoryLabels?.[c] ?? c);
+  const fmtDate = (iso: string) =>
+    new Date(iso).toLocaleDateString(lang === "es" ? "es-US" : "en-US", { year: "numeric", month: "long", day: "numeric" });
 
   return (
     <div>
-      {/* Category filter */}
-      <div className="flex flex-wrap gap-2" role="tablist" aria-label="Filter posts by category">
+      <div className="flex flex-wrap gap-2" role="tablist" aria-label={filterLabel}>
         {(["All", ...categories] as const).map((c) => (
           <button
             key={c}
@@ -26,12 +41,11 @@ export function BlogList({ posts, categories }: { posts: Post[]; categories: rea
               active === c ? "bg-navy-800 text-white" : "bg-white text-navy-700 ring-1 ring-navy-200 hover:bg-navy-50"
             }`}
           >
-            {c}
+            {label(c)}
           </button>
         ))}
       </div>
 
-      {/* Grid */}
       <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {filtered.map((p) => (
           <article key={p.slug} className="flex flex-col overflow-hidden rounded-2xl border border-navy-100 bg-white shadow-card transition-shadow hover:shadow-card-hover">
@@ -39,14 +53,14 @@ export function BlogList({ posts, categories }: { posts: Post[]; categories: rea
               <Icon name="compass" className="h-10 w-10 text-gold-400/70" />
             </div>
             <div className="flex flex-1 flex-col p-6">
-              <span className="text-xs font-semibold uppercase tracking-wider text-gold-600">{p.category}</span>
+              <span className="text-xs font-semibold uppercase tracking-wider text-gold-600">{categoryLabels?.[p.category] ?? p.category}</span>
               <h3 className="mt-2 font-display text-xl font-medium leading-snug text-navy-800">
-                <Link href={`/resources/${p.slug}`} className="hover:text-gold-700">{p.title}</Link>
+                <Link href={`${base}/resources/${p.slug}`} className="hover:text-gold-700">{p.title}</Link>
               </h3>
               <p className="mt-2 flex-1 text-sm leading-relaxed text-slate-600">{p.excerpt}</p>
               <div className="mt-4 flex items-center justify-between text-xs text-slate-500">
                 <span>{fmtDate(p.date)}</span>
-                <span>{p.readingMinutes} min read</span>
+                <span>{p.readingMinutes} {readLabel}</span>
               </div>
             </div>
           </article>
