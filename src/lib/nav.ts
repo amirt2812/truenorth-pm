@@ -16,6 +16,12 @@ export const primaryNav: NavGroup[] = [
       { label: "Investor Services", href: "/investor-services" },
       { label: "Owner Portal", href: "/owner-portal" },
       { label: "Tenant Portal", href: "/tenant-portal" },
+      // Service areas consolidated here from the former standalone "Areas" menu
+      { label: "Hernando County", href: "/hernando-county-property-management" },
+      { label: "Spring Hill", href: "/spring-hill-property-management" },
+      { label: "Brooksville", href: "/brooksville-property-management" },
+      { label: "Weeki Wachee", href: "/weeki-wachee-property-management" },
+      { label: "Hernando Beach", href: "/hernando-beach-property-management" },
     ],
   },
   { label: "Pricing", href: "/pricing" },
@@ -35,16 +41,6 @@ export const primaryNav: NavGroup[] = [
     children: [
       { label: "For Tenants", href: "/tenants" },
       { label: "Tenant Portal", href: "/tenant-portal" },
-    ],
-  },
-  {
-    label: "Areas",
-    children: [
-      { label: "Hernando County", href: "/hernando-county-property-management" },
-      { label: "Spring Hill", href: "/spring-hill-property-management" },
-      { label: "Brooksville", href: "/brooksville-property-management" },
-      { label: "Weeki Wachee", href: "/weeki-wachee-property-management" },
-      { label: "Hernando Beach", href: "/hernando-beach-property-management" },
     ],
   },
   {
