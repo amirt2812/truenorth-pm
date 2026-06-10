@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { Button } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
+import type { Lang } from "@/lib/i18n";
 
 /** Standard interior-page hero: navy band, breadcrumbs, eyebrow, H1, intro, CTAs. */
 export function PageHero({
@@ -12,6 +13,7 @@ export function PageHero({
   primary,
   secondary,
   children,
+  lang = "en",
 }: {
   eyebrow?: string;
   title: ReactNode;
@@ -20,11 +22,12 @@ export function PageHero({
   primary?: { label: string; href: string };
   secondary?: { label: string; href: string };
   children?: ReactNode;
+  lang?: Lang;
 }) {
   return (
     <section className="bg-navy-800 bg-compass">
       <div className="container-tn py-12 sm:py-16">
-        <Breadcrumbs items={breadcrumbs} />
+        <Breadcrumbs items={breadcrumbs} lang={lang} />
         <div className="mt-6 max-w-3xl">
           {eyebrow && (
             <p className="mb-3 text-sm font-semibold uppercase tracking-[0.14em] text-gold-300">{eyebrow}</p>
