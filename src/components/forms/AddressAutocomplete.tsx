@@ -5,15 +5,20 @@ import { Label } from "./Field";
 import type { Lang } from "@/lib/i18n";
 
 /**
- * Property-address input with as-you-type suggestions from Photon
- * (photon.komoot.io — free OpenStreetMap geocoder, no API key). Results are
- * biased toward Hernando County, FL. The field always accepts free text:
- * suggestions assist, they never block submission. If the geocoder is
- * unreachable it degrades silently to a plain input.
+ * Property-address input with as-you-type suggestions.
  *
- * Upgrade path: to switch to Google Places Autocomplete later, only this
- * component changes — the form contract (a plain `address` text field) stays.
+ * Data source (automatic):
+ *  - If NEXT_PUBLIC_GOOGLE_MAPS_API_KEY is set → Google Places API (New)
+ *    Autocomplete: USPS-grade house-number coverage. Key must have
+ *    "Places API (New)" enabled and be referrer-restricted to truenorthpm.co.
+ *  - Otherwise → Photon (photon.komoot.io, free OpenStreetMap geocoder, no key).
+ *
+ * Both are biased toward Hernando County, FL. The field always accepts free
+ * text — suggestions assist, they never block submission — and degrades to a
+ * plain input if the geocoder is unreachable.
  */
+
+const GOOGLE_KEY = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
 
 // Hernando County, FL — bias center for suggestion ranking.
 const BIAS = { lat: 28.56, lon: -82.42 };
@@ -22,11 +27,68 @@ const DEBOUNCE_MS = 250;
 
 type Suggestion = { label: string; key: string };
 
-function toLabel(p: Record<string, string | undefined>): string | null {
+async function fetchGoogle(q: string, lang: Lang, signal: AbortSignal): Promise<Suggestion[]> {
+  const res = await fetch("https://places.googleapis.com/v1/places:autocomplete", {
+    method: "POST",
+    signal,
+    headers: {
+      "Content-Type": "application/json",
+      "X-Goog-Api-Key": GOOGLE_KEY as string,
+    },
+    body: JSON.stringify({
+      input: q,
+      includedRegionCodes: ["us"],
+      locationBias: {
+        circle: { center: { latitude: BIAS.lat, longitude: BIAS.lon }, radius: 50000 },
+      },
+      languageCode: lang,
+    }),
+  });
+  if (!res.ok) throw new Error(`places ${res.status}`);
+  const data = (await res.json()) as {
+    suggestions?: { placePrediction?: { text?: { text?: string } } }[];
+  };
+  const out: Suggestion[] = [];
+  const seen = new Set<string>();
+  for (const s of data.suggestions ?? []) {
+    const raw = s.placePrediction?.text?.text;
+    if (!raw) continue;
+    const label = raw.replace(/, (USA|EE\. UU\.)$/, "");
+    if (!seen.has(label)) {
+      seen.add(label);
+      out.push({ label, key: label });
+      if (out.length === 5) break;
+    }
+  }
+  return out;
+}
+
+function photonLabel(p: Record<string, string | undefined>): string | null {
   const line1 = [p.housenumber, p.street].filter(Boolean).join(" ") || p.name;
   if (!line1) return null;
   const rest = [p.city || p.district, p.state, p.postcode].filter(Boolean).join(", ");
   return rest ? `${line1}, ${rest}` : line1;
+}
+
+async function fetchPhoton(q: string, signal: AbortSignal): Promise<Suggestion[]> {
+  const url = `https://photon.komoot.io/api/?q=${encodeURIComponent(q)}&lat=${BIAS.lat}&lon=${BIAS.lon}&limit=8&lang=en`;
+  const res = await fetch(url, { signal });
+  if (!res.ok) throw new Error(`photon ${res.status}`);
+  const data = (await res.json()) as { features?: { properties: Record<string, string> }[] };
+  const features = (data.features ?? []).filter((f) => f.properties?.countrycode === "US");
+  // Florida results first — the property being analyzed is local even if the owner isn't.
+  features.sort((a, b) => Number(b.properties.state === "Florida") - Number(a.properties.state === "Florida"));
+  const out: Suggestion[] = [];
+  const seen = new Set<string>();
+  for (const f of features) {
+    const l = photonLabel(f.properties);
+    if (l && !seen.has(l)) {
+      seen.add(l);
+      out.push({ label: l, key: l });
+      if (out.length === 5) break;
+    }
+  }
+  return out;
 }
 
 export function AddressAutocomplete({
@@ -62,23 +124,9 @@ export function AddressAutocomplete({
     const controller = new AbortController();
     abortRef.current = controller;
     try {
-      const url = `https://photon.komoot.io/api/?q=${encodeURIComponent(q)}&lat=${BIAS.lat}&lon=${BIAS.lon}&limit=8&lang=en`;
-      const res = await fetch(url, { signal: controller.signal });
-      if (!res.ok) return;
-      const data = (await res.json()) as { features?: { properties: Record<string, string> }[] };
-      const seen = new Set<string>();
-      const items: Suggestion[] = [];
-      const features = (data.features ?? []).filter((f) => f.properties?.countrycode === "US");
-      // Florida results first — the property being analyzed is local even if the owner isn't.
-      features.sort((a, b) => Number(b.properties.state === "Florida") - Number(a.properties.state === "Florida"));
-      for (const f of features) {
-        const l = toLabel(f.properties);
-        if (l && !seen.has(l)) {
-          seen.add(l);
-          items.push({ label: l, key: l });
-          if (items.length === 5) break;
-        }
-      }
+      const items = GOOGLE_KEY
+        ? await fetchGoogle(q, lang, controller.signal)
+        : await fetchPhoton(q, controller.signal);
       setSuggestions(items);
       setOpen(items.length > 0);
       setHighlight(-1);
@@ -165,8 +213,9 @@ export function AddressAutocomplete({
               {s.label}
             </li>
           ))}
+          {/* Required attribution for the active data source */}
           <li aria-hidden="true" className="border-t border-navy-100 px-4 py-1.5 text-[11px] text-slate-400">
-            © OpenStreetMap
+            {GOOGLE_KEY ? "Powered by Google" : "© OpenStreetMap"}
           </li>
         </ul>
       )}
