@@ -60,7 +60,8 @@ export default function FreeRentalAnalysisEs() {
               <Card className="shadow-card-hover">
                 <h2 className="font-display text-xl font-medium text-navy-800">Cuéntenos sobre su propiedad</h2>
                 <p className="mt-1 text-sm text-slate-500">
-                  Toma unos dos minutos. Entre más detalle comparta, más útil será la estimación.
+                  Toma unos 30 segundos — solo sus datos de contacto y la dirección de la propiedad.
+                  El resto lo obtenemos de los registros públicos.
                 </p>
                 <div className="mt-6">
                   <RentalAnalysisForm lang="es" />

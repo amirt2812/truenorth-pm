@@ -58,7 +58,8 @@ export default function FreeRentalAnalysisPage() {
               <Card className="shadow-card-hover">
                 <h2 className="font-display text-xl font-medium text-navy-800">Tell us about your property</h2>
                 <p className="mt-1 text-sm text-slate-500">
-                  Takes about two minutes. The more detail you share, the more useful the estimate.
+                  Takes about 30 seconds — just your contact info and the property address. We pull
+                  the rest from public records.
                 </p>
                 <div className="mt-6">
                   <RentalAnalysisForm />
