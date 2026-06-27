@@ -75,6 +75,27 @@ On success the user is routed to `/thank-you?type=…`.
 
 ---
 
+## Property listings (`/properties`)
+
+Listings live in **`src/lib/properties.ts`** — edit that one file to manage what shows.
+
+**To add a rental:**
+1. Drop photos in `public/properties/<slug>/` (e.g. `01.jpg`, `02.jpg` …). First image = cover.
+2. Copy a sample object in `properties.ts`, set a unique `slug`, fill in beds/baths/sqft/rent/etc.,
+   and list your photo filenames in `images: [...]`.
+3. Set `status: "available"` or `"leased"`. Leased homes stay listed and are filtered by the toggle.
+4. `descriptionEs` / `featuresEs` are optional Spanish overrides (English shows if omitted).
+5. Delete the three `isSample: true` placeholder entries once you have real listings.
+
+No photos yet? A branded "Photo coming soon" placeholder shows automatically. The index page has an
+**All / Available / Leased** toggle; each listing gets its own detail page at `/properties/<slug>`
+(and `/es/properties/<slug>`) with a photo gallery, facts, description, and apply/inquire CTAs.
+
+> Upgrade path: the same `Property` fields can later be fed from RentRedi, a CMS, or a synced
+> spreadsheet without touching the page components.
+
+---
+
 ## Design system
 
 - **Colors** (`tailwind.config.ts`): `navy` (deep navy brand), `gold` (warm muted accent),

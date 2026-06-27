@@ -32,6 +32,8 @@ export const navLabelEs: Record<string, string> = {
   "Realtor Referral Partners": "Socios Agentes de Bienes Raíces",
   Tenants: "Inquilinos",
   "For Tenants": "Para Inquilinos",
+  Rentals: "Rentas",
+  "Available Rentals": "Rentas Disponibles",
   Resources: "Recursos",
   "Resources & Blog": "Recursos y Blog",
   FAQ: "Preguntas Frecuentes",
@@ -66,6 +68,7 @@ export const primaryNav: NavGroup[] = [
       { label: "Hernando County", href: "/hernando-county-property-management" },
     ],
   },
+  { label: "Rentals", href: "/properties" },
   { label: "Pricing", href: "/pricing" },
   {
     label: "Owners",
@@ -82,6 +85,7 @@ export const primaryNav: NavGroup[] = [
     href: "/tenants",
     children: [
       { label: "For Tenants", href: "/tenants" },
+      { label: "Available Rentals", href: "/properties" },
       { label: "Tenant Portal", href: "/tenant-portal" },
     ],
   },
@@ -114,6 +118,7 @@ export const footerNav: { heading: string; links: NavLink[] }[] = [
       { label: "For Owners", href: "/owners" },
       { label: "Owner Portal", href: "/owner-portal" },
       { label: "For Tenants", href: "/tenants" },
+      { label: "Available Rentals", href: "/properties" },
       { label: "Tenant Portal", href: "/tenant-portal" },
       { label: "FAQ", href: "/faq" },
       { label: "Contact", href: "/contact" },

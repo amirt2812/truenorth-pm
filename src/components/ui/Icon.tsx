@@ -24,7 +24,11 @@ type IconName =
   | "dollar"
   | "clock"
   | "users"
-  | "bolt";
+  | "bolt"
+  | "bed"
+  | "bath"
+  | "ruler"
+  | "image";
 
 const paths: Record<IconName, string> = {
   compass: "M12 21a9 9 0 100-18 9 9 0 000 18zM15.5 8.5l-2 5-5 2 2-5 5-2z",
@@ -46,6 +50,10 @@ const paths: Record<IconName, string> = {
   clock: "M12 21a9 9 0 100-18 9 9 0 000 18zM12 7v5l3 2",
   users: "M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 11a4 4 0 100-8 4 4 0 000 8zM23 21v-2a4 4 0 00-3-3.9M16 3.1a4 4 0 010 7.8",
   bolt: "M13 2L4 14h7l-1 8 9-12h-7l1-8z",
+  bed: "M3 18v-6a2 2 0 012-2h14a2 2 0 012 2v6M3 14h18M3 18v2M21 18v2M7 10V8a2 2 0 012-2h6a2 2 0 012 2v2",
+  bath: "M4 12h16v3a4 4 0 01-4 4H8a4 4 0 01-4-4v-3zM6 12V6a2 2 0 012-2 2 2 0 012 2M6 20l-1 1M18 20l1 1",
+  ruler: "M3 8l5-5 13 13-5 5L3 8zM7 7l2 2M10 4l2 2M13 7l2 2M16 10l2 2",
+  image: "M4 4h16v16H4zM4 15l4-4 5 5M14 12l2-2 4 4M9 9a1.5 1.5 0 100-3 1.5 1.5 0 000 3z",
 };
 
 const filled: IconName[] = []; // all stroke-based for consistency

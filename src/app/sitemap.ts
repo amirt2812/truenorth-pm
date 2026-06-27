@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { site } from "@/lib/site";
 import { posts } from "@/lib/blog";
+import { properties } from "@/lib/properties";
 
 /** All public routes (English paths). Spanish equivalents live under /es. */
 const routes = [
@@ -17,6 +18,8 @@ const routes = [
   "/investor-services",
   "/hernando-county-property-management",
   "/roi-calculator",
+  "/properties",
+  ...properties.map((p) => `/properties/${p.slug}`),
   "/resources",
   "/faq",
   "/about",
