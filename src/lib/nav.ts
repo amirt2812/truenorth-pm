@@ -58,7 +58,7 @@ export function navLabel(label: string, lang: "en" | "es"): string {
 
 export const primaryNav: NavGroup[] = [
   {
-    label: "Property Management",
+    label: "Services",
     href: "/property-management",
     children: [
       { label: "Full-Service Management", href: "/property-management" },

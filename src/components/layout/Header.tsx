@@ -64,12 +64,9 @@ export function Header() {
 
         <div className="hidden items-center gap-2 lg:flex">
           <LangSwitcher pathname={pathname} lang={lang} />
-          <Button href={site.phoneHref} variant="ghost" size="sm" aria-label={tr.call}>
+          <Button href={site.phoneHref} variant="gold" size="sm" aria-label={tr.call}>
             <Icon name="phone" className="h-4 w-4" />
             {tr.call}
-          </Button>
-          <Button href={L("/free-rental-analysis")} variant="gold" size="sm">
-            {tr.cta}
           </Button>
         </div>
 
