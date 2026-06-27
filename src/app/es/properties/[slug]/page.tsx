@@ -12,9 +12,10 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
   const p = getProperty(params.slug);
   if (!p) return {};
   const desc = p.descriptionEs || p.description;
+  const price = p.rent ? ` por ${usd(p.rent)}/mes` : "";
   return pageMeta({
     title: `${p.title} — ${p.city}, FL`,
-    description: `Renta de ${p.beds} recámaras y ${p.baths} baños en ${p.city}, FL por ${usd(p.rent)}/mes. ${desc.slice(0, 120)}`,
+    description: `Renta de ${p.beds} recámaras y ${p.baths} baños en ${p.city}, FL${price}. ${desc.slice(0, 120)}`,
     path: `/properties/${p.slug}`,
     lang: "es",
     ogImage: coverImage(p),

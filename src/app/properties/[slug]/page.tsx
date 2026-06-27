@@ -11,9 +11,10 @@ export function generateStaticParams() {
 export function generateMetadata({ params }: { params: { slug: string } }): Metadata {
   const p = getProperty(params.slug);
   if (!p) return {};
+  const price = p.rent ? ` for ${usd(p.rent)}/mo` : "";
   return pageMeta({
     title: `${p.title} — ${p.city}, FL`,
-    description: `${p.beds} bed, ${p.baths} bath rental in ${p.city}, FL for ${usd(p.rent)}/mo. ${p.description.slice(0, 120)}`,
+    description: `${p.beds} bed, ${p.baths} bath rental in ${p.city}, FL${price}. ${p.description.slice(0, 120)}`,
     path: `/properties/${p.slug}`,
     ogImage: coverImage(p),
   });

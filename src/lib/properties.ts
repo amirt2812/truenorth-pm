@@ -27,7 +27,7 @@ export type Property = {
   slug: string;
   title: string;
   status: PropertyStatus;
-  rent: number; // monthly rent in USD
+  rent?: number; // monthly rent in USD — omit to hide the price (e.g. leased showcase homes)
   beds: number;
   baths: number;
   sqft?: number;
@@ -47,65 +47,66 @@ export type Property = {
 
 export const properties: Property[] = [
   {
-    slug: "sample-spring-hill-3-2",
-    title: "Updated 3 Bed / 2 Bath Home",
-    status: "available",
-    rent: 1895,
-    beds: 3,
-    baths: 2,
-    sqft: 1620,
-    address: "[Sample listing — replace in src/lib/properties.ts]",
-    city: "Spring Hill",
-    images: [], // add photos to /public/properties/sample-spring-hill-3-2/
-    description:
-      "A bright, move-in-ready single-family home in a quiet Spring Hill neighborhood. Open kitchen with stainless appliances, split floor plan, screened lanai, and a fenced backyard. Minutes from US-19 and Tampa-bound commuter routes.",
-    descriptionEs:
-      "Una casa unifamiliar luminosa y lista para mudarse en un tranquilo vecindario de Spring Hill. Cocina abierta con electrodomésticos de acero inoxidable, plano dividido, lanai con mosquitero y patio cercado. A minutos de la US-19 y de las rutas hacia Tampa.",
-    features: ["Screened lanai", "2-car garage", "Fenced backyard", "Stainless appliances"],
-    featuresEs: ["Lanai con mosquitero", "Garaje para 2 autos", "Patio cercado", "Electrodomésticos de acero inoxidable"],
-    availableDate: "",
-    petPolicy: "Pets considered with deposit",
-    isSample: true,
-  },
-  {
-    slug: "sample-brooksville-4-2",
-    title: "Spacious 4 Bed / 2 Bath with Office",
-    status: "available",
-    rent: 2250,
+    slug: "2168-godfrey-ave-spring-hill",
+    title: "2168 Godfrey Ave",
+    status: "leased",
+    // Beds/baths from public records (confirm). Sqft not found — fill in or leave blank.
     beds: 4,
     baths: 2,
-    sqft: 2080,
-    address: "[Sample listing — replace in src/lib/properties.ts]",
-    city: "Brooksville",
-    images: [],
+    sqft: undefined,
+    address: "2168 Godfrey Avenue",
+    city: "Spring Hill",
+    images: [], // add photos to /public/properties/2168-godfrey-ave-spring-hill/
     description:
-      "Roomy family home on a larger Brooksville lot. Four bedrooms plus a dedicated office, formal dining, and a two-car garage. Mature landscaping and plenty of space inside and out.",
+      "A 2022-built single-family home in Spring Hill, professionally managed by TrueNorth Property Management. Currently leased — contact us to be notified of similar rentals as they become available.",
     descriptionEs:
-      "Amplia casa familiar en un lote más grande de Brooksville. Cuatro recámaras más una oficina dedicada, comedor formal y garaje para dos autos. Jardinería madura y mucho espacio por dentro y por fuera.",
-    features: ["Home office", "Formal dining", "Large lot", "2-car garage"],
-    featuresEs: ["Oficina en casa", "Comedor formal", "Lote grande", "Garaje para 2 autos"],
+      "Una casa unifamiliar construida en 2022 en Spring Hill, administrada profesionalmente por TrueNorth Property Management. Actualmente arrendada — contáctenos para recibir aviso de rentas similares.",
+    features: [],
+    featuresEs: [],
     availableDate: "",
-    petPolicy: "No pets",
+    petPolicy: "",
     isSample: true,
   },
   {
-    slug: "sample-weeki-wachee-2-2",
-    title: "Coastal 2 Bed / 2 Bath Villa",
+    slug: "10387-belltower-st-spring-hill",
+    title: "10387 Belltower St",
     status: "leased",
-    rent: 1650,
-    beds: 2,
+    // Beds/baths from public records (confirm — sources conflicted). Sqft not found.
+    beds: 4,
     baths: 2,
-    sqft: 1240,
-    address: "[Sample listing — replace in src/lib/properties.ts]",
-    city: "Weeki Wachee",
-    images: [],
+    sqft: undefined,
+    address: "10387 Belltower Street",
+    city: "Spring Hill",
+    images: [], // add photos to /public/properties/10387-belltower-st-spring-hill/
     description:
-      "Low-maintenance villa near the water in Weeki Wachee. Tile throughout, a screened patio, and easy access to the river and gulf. Currently leased — contact us to be notified of similar homes.",
+      "A single-family home in Spring Hill, professionally managed by TrueNorth Property Management. Currently leased — contact us to be notified of similar rentals as they become available.",
     descriptionEs:
-      "Villa de bajo mantenimiento cerca del agua en Weeki Wachee. Pisos de loseta, patio con mosquitero y fácil acceso al río y al golfo. Actualmente arrendada — contáctenos para recibir aviso de casas similares.",
-    features: ["Tile throughout", "Screened patio", "Near the water"],
-    featuresEs: ["Pisos de loseta", "Patio con mosquitero", "Cerca del agua"],
-    petPolicy: "Pets considered with deposit",
+      "Una casa unifamiliar en Spring Hill, administrada profesionalmente por TrueNorth Property Management. Actualmente arrendada — contáctenos para recibir aviso de rentas similares.",
+    features: [],
+    featuresEs: [],
+    availableDate: "",
+    petPolicy: "",
+    isSample: true,
+  },
+  {
+    slug: "3118-windbrook-ave-spring-hill",
+    title: "3118 Windbrook Ave",
+    status: "leased",
+    // Beds/baths/sqft from public records (confirm).
+    beds: 4,
+    baths: 2,
+    sqft: 1828,
+    address: "3118 Windbrook Avenue",
+    city: "Spring Hill",
+    images: [], // add photos to /public/properties/3118-windbrook-ave-spring-hill/
+    description:
+      "A newer concrete-block single-family home in Spring Hill with an open-concept layout, professionally managed by TrueNorth Property Management. Currently leased — contact us to be notified of similar rentals as they become available.",
+    descriptionEs:
+      "Una casa unifamiliar más reciente de bloque de concreto en Spring Hill con un diseño de concepto abierto, administrada profesionalmente por TrueNorth Property Management. Actualmente arrendada — contáctenos para recibir aviso de rentas similares.",
+    features: [],
+    featuresEs: [],
+    availableDate: "",
+    petPolicy: "",
     isSample: true,
   },
 ];

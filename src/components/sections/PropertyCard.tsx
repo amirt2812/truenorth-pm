@@ -45,12 +45,16 @@ export function PropertyCard({ property, lang = "en" }: { property: Property; la
       </Link>
 
       <div className="flex flex-1 flex-col p-5">
-        <div className="flex items-baseline justify-between gap-2">
+        {property.rent ? (
           <p className="font-display text-xl font-semibold text-navy-900">
             {usd(property.rent)}
             <span className="text-sm font-normal text-slate-500">{t.mo}</span>
           </p>
-        </div>
+        ) : (
+          <p className="font-display text-sm font-semibold uppercase tracking-wide text-slate-400">
+            {property.status === "leased" ? t.leased : t.available}
+          </p>
+        )}
         <h3 className="mt-1 font-display text-lg font-medium leading-snug text-navy-800">
           <Link href={href} className="hover:text-gold-700">{property.title}</Link>
         </h3>

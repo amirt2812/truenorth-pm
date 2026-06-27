@@ -48,7 +48,7 @@ export function PropertyDetail({ property, lang = "en" }: { property: Property; 
     numberOfBathroomsTotal: property.baths,
     ...(property.sqft ? { floorSize: { "@type": "QuantitativeValue", value: property.sqft, unitCode: "FTK" } } : {}),
     address: { "@type": "PostalAddress", addressLocality: property.city, addressRegion: "FL", addressCountry: "US" },
-    ...(available
+    ...(available && property.rent
       ? {
           offers: {
             "@type": "Offer",
@@ -84,9 +84,11 @@ export function PropertyDetail({ property, lang = "en" }: { property: Property; 
                 {property.address !== "" && !property.address.startsWith("[") ? `${property.address}, ` : ""}{property.city}, FL
               </p>
             </div>
-            <p className="font-display text-3xl font-semibold text-gold-400">
-              {usd(property.rent)}<span className="text-lg text-navy-200">{t.mo}</span>
-            </p>
+            {property.rent ? (
+              <p className="font-display text-3xl font-semibold text-gold-400">
+                {usd(property.rent)}<span className="text-lg text-navy-200">{t.mo}</span>
+              </p>
+            ) : null}
           </div>
         </div>
       </section>
