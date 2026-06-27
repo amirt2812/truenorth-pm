@@ -19,6 +19,26 @@ export function PropertyGallery({ images, alt }: { images: string[]; alt: string
   const prev = () => go(active - 1);
   const nextImg = () => go(active + 1);
 
+  // Touch swipe (mobile): track horizontal drag, advance on a decisive swipe.
+  const touchStart = useRef<{ x: number; y: number } | null>(null);
+  const SWIPE_THRESHOLD = 45; // px of horizontal travel to count as a swipe
+
+  function onTouchStart(e: React.TouchEvent) {
+    const t = e.touches[0];
+    touchStart.current = { x: t.clientX, y: t.clientY };
+  }
+  function onTouchEnd(e: React.TouchEvent) {
+    if (!touchStart.current || !hasMultiple) return;
+    const t = e.changedTouches[0];
+    const dx = t.clientX - touchStart.current.x;
+    const dy = t.clientY - touchStart.current.y;
+    // Only act on mostly-horizontal swipes so vertical page scroll still works.
+    if (Math.abs(dx) > SWIPE_THRESHOLD && Math.abs(dx) > Math.abs(dy)) {
+      dx < 0 ? nextImg() : prev();
+    }
+    touchStart.current = null;
+  }
+
   // Keep the active thumbnail visible as you click/arrow through.
   useEffect(() => {
     thumbRefs.current[active]?.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
@@ -44,6 +64,9 @@ export function PropertyGallery({ images, alt }: { images: string[]; alt: string
         aria-label={`${alt} photo gallery`}
         tabIndex={hasMultiple ? 0 : -1}
         onKeyDown={onKeyDown}
+        onTouchStart={onTouchStart}
+        onTouchEnd={onTouchEnd}
+        style={{ touchAction: "pan-y" }}
       >
         <Image
           src={images[active]}
