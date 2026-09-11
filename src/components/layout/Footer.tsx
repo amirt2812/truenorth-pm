@@ -16,6 +16,7 @@ const ft = {
     holding: (h: string, p: string) => `Holding company: ${h}. Property management software: ${p}.`,
     rights: "All rights reserved.",
     privacy: "Privacy", terms: "Terms", sms: "SMS/Email Consent", fair: "Fair Housing", legal: "Legal Disclosures",
+    follow: "Follow TrueNorth",
   },
   es: {
     blurb: (s: string) => `Administración de propiedades local, transparente y con tecnología avanzada, sirviendo a ${s}`,
@@ -24,8 +25,14 @@ const ft = {
     holding: (h: string, p: string) => `Compañía matriz: ${h}. Software de administración: ${p}.`,
     rights: "Todos los derechos reservados.",
     privacy: "Privacidad", terms: "Términos", sms: "Consentimiento SMS/Email", fair: "Vivienda Justa", legal: "Avisos Legales",
+    follow: "Siga a TrueNorth",
   },
 };
+
+const socialLabels = { facebook: "Facebook", instagram: "Instagram", linkedin: "LinkedIn", youtube: "YouTube" } as const;
+const socials = (Object.keys(socialLabels) as (keyof typeof socialLabels)[])
+  .filter((name) => site.social[name])
+  .map((name) => ({ name, label: socialLabels[name], href: site.social[name] }));
 
 export function Footer() {
   const year = new Date().getFullYear();
@@ -63,6 +70,24 @@ export function Footer() {
                 <span>{site.businessHours}</span>
               </li>
             </ul>
+
+            {socials.length > 0 && (
+              <ul className="mt-6 flex gap-3" aria-label={f.follow}>
+                {socials.map((s) => (
+                  <li key={s.name}>
+                    <a
+                      href={s.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`${site.shortName} on ${s.label}`}
+                      className="flex h-10 w-10 items-center justify-center rounded-full ring-1 ring-navy-600 text-navy-200 transition-colors hover:bg-gold-500 hover:text-navy-900 hover:ring-gold-500"
+                    >
+                      <Icon name={s.name} className="h-5 w-5" />
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
 
           {/* Link columns */}

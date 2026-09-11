@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
 import { site } from "@/lib/site";
 import { localizeHref, type Lang } from "@/lib/i18n";
+import { getAttribution, trackLead } from "@/lib/attribution";
 
 type ExtraField =
   | { kind: "input"; id: string; label: string; type?: string; required?: boolean; half?: boolean }
@@ -72,9 +73,10 @@ export function LeadForm({
       const res = await fetch("/api/lead", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ form: formId, lang, ...data }),
+        body: JSON.stringify({ form: formId, lang, ...getAttribution(), ...data }),
       });
       if (!res.ok) throw new Error("Request failed");
+      trackLead(formId);
       router.push(localizeHref(`/thank-you?type=${thankYouType}`, lang));
     } catch {
       setStatus("error");

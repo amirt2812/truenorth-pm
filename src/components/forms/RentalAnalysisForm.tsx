@@ -7,6 +7,7 @@ import { AddressAutocomplete } from "./AddressAutocomplete";
 import { Button } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
 import { localizeHref, type Lang } from "@/lib/i18n";
+import { getAttribution, trackLead } from "@/lib/attribution";
 
 const T = {
   en: {
@@ -64,9 +65,10 @@ export function RentalAnalysisForm({ lang = "en" }: { lang?: Lang }) {
       const res = await fetch("/api/lead", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ form: "free-rental-analysis", lang, ...data }),
+        body: JSON.stringify({ form: "free-rental-analysis", lang, ...getAttribution(), ...data }),
       });
       if (!res.ok) throw new Error("Request failed");
+      trackLead("free-rental-analysis");
       router.push(localizeHref("/thank-you?type=rental-analysis", lang));
     } catch {
       setStatus("error");

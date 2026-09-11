@@ -13,6 +13,7 @@ const routes = [
   "/owner-portal",
   "/tenant-portal",
   "/owners",
+  "/switch-property-managers",
   "/tenants",
   "/realtor-referral-partners",
   "/investor-services",

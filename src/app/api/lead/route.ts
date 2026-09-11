@@ -57,7 +57,78 @@ const FIELD_LABELS: Record<string, string> = {
   notes: "Notes",
   message: "Message",
   consent: "Consent",
+  lang: "Language",
+  utm_source: "Source",
+  utm_medium: "Medium",
+  utm_campaign: "Campaign",
+  utm_content: "Ad / content",
+  utm_term: "Keyword",
+  gclid: "Google Ads click ID",
+  fbclid: "Meta click ID",
+  referrer: "Referring site",
+  landingPage: "Landing page",
+  firstSeen: "First visit",
 };
+
+/** One-line channel for the email subject: "postcard / direct_mail", "google.com", or "direct". */
+function channelOf(p: Record<string, unknown>): string {
+  if (typeof p.utm_source === "string") return [p.utm_source, p.utm_medium].filter((v) => typeof v === "string").join(" / ");
+  if (p.gclid) return "google ads";
+  if (p.fbclid) return "meta";
+  if (typeof p.referrer === "string" && p.referrer) {
+    try {
+      return new URL(p.referrer).hostname.replace(/^www\./, "");
+    } catch {}
+  }
+  return "direct";
+}
+
+async function sendMail(token: string, sender: string, message: Record<string, unknown>) {
+  const res = await fetch(`https://graph.microsoft.com/v1.0/users/${encodeURIComponent(sender)}/sendMail`, {
+    method: "POST",
+    headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+    body: JSON.stringify({ message, saveToSentItems: true }),
+  });
+  if (!res.ok) throw new Error(`sendMail failed: ${res.status} ${await res.text()}`);
+}
+
+/**
+ * Instant acknowledgment to the person who submitted (speed-to-lead). They
+ * consented to email contact on the form. Sent separately so a failure here
+ * never blocks delivery of the lead itself.
+ */
+function autoReply(p: Record<string, unknown>, to: string) {
+  const es = p.lang === "es";
+  const first = typeof p.firstName === "string" && p.firstName.trim() ? p.firstName.trim() : "";
+  const analysis = p.form === "free-rental-analysis";
+  const hi = es ? `Hola${first ? ` ${escapeHtml(first)}` : ""},` : `Hi${first ? ` ${escapeHtml(first)}` : ""},`;
+  const lines = es
+    ? [
+        analysis
+          ? "Recibimos su solicitud de análisis de renta. Revisaremos la propiedad y le enviaremos un rango de renta y una recomendación dentro de un día hábil."
+          : "Recibimos su mensaje y le responderemos dentro de un día hábil.",
+        `¿Prefiere hablar antes? <a href="${site.links.calendly}">Reserve una llamada</a> o llámenos al ${site.phone}.`,
+      ]
+    : [
+        analysis
+          ? "Your rental analysis request is in. We'll review the property and send you a rental range and recommendation within one business day."
+          : "We received your message and will reply within one business day.",
+        `Want to talk sooner? <a href="${site.links.calendly}">Book a call</a> or call ${site.phone}.`,
+      ];
+  const p2 = (t: string) => `<p style="font-family:Arial,sans-serif;font-size:15px;line-height:1.5;color:#0F2742;margin:0 0 14px">${t}</p>`;
+  return {
+    subject: es
+      ? analysis ? "Recibimos su solicitud de análisis de renta" : "Recibimos su mensaje — TrueNorth"
+      : analysis ? "Your rental analysis request is in" : "We got your message — TrueNorth",
+    body: {
+      contentType: "HTML",
+      content:
+        p2(hi) + lines.map(p2).join("") +
+        p2(`${site.founder.name}<br>${site.founder.title}, ${site.brand}<br>${site.phone} · <a href="${site.url}">${site.domain}</a>`),
+    },
+    toRecipients: [{ emailAddress: { address: to } }],
+  };
+}
 
 function escapeHtml(s: string) {
   return s.replace(/[&<>"']/g, (c) =>
@@ -201,7 +272,7 @@ export async function POST(request: Request) {
       const to = LEAD_TO || MS_SENDER;
 
       const message = {
-        subject: `New ${formName} lead — ${name}${enrichment.rentRange ? ` (est. ${enrichment.rentRange}/mo)` : ""}`,
+        subject: `New ${formName} lead — ${name}${enrichment.rentRange ? ` (est. ${enrichment.rentRange}/mo)` : ""} [${channelOf(payload)}]`,
         body: {
           contentType: "HTML",
           content: `<p style="font-family:Arial,sans-serif;font-size:14px;color:#0F2742">New lead from the ${site.domain} website (<strong>${escapeHtml(
@@ -212,16 +283,15 @@ export async function POST(request: Request) {
         ...(replyTo ? { replyTo: [{ emailAddress: { address: replyTo } }] } : {}),
       };
 
-      const sendRes = await fetch(
-        `https://graph.microsoft.com/v1.0/users/${encodeURIComponent(MS_SENDER)}/sendMail`,
-        {
-          method: "POST",
-          headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
-          body: JSON.stringify({ message, saveToSentItems: true }),
-        }
-      );
+      await sendMail(token, MS_SENDER, message);
 
-      if (!sendRes.ok) throw new Error(`sendMail failed: ${sendRes.status} ${await sendRes.text()}`);
+      if (replyTo && payload.consent) {
+        try {
+          await sendMail(token, MS_SENDER, autoReply(payload, replyTo));
+        } catch (err) {
+          console.error("[lead] auto-reply failed:", err);
+        }
+      }
       return NextResponse.json({ ok: true });
     } catch (err) {
       // Don't lose the lead if email fails — log it so it can be recovered.
@@ -231,7 +301,21 @@ export async function POST(request: Request) {
     }
   }
 
-  // Graph not configured yet — log and succeed so the form flow still works.
-  console.log("[lead] (Graph not configured) received:", JSON.stringify(payload), "enrichment:", JSON.stringify(enrichment.rows));
+  // Graph not configured — the lead exists only in this log line. GET /api/lead shows the config state.
+  console.error("[lead] NOT DELIVERED (email not configured):", JSON.stringify(payload), "enrichment:", JSON.stringify(enrichment.rows));
   return NextResponse.json({ ok: true });
+}
+
+/**
+ * Configuration check: visit https://truenorthpm.co/api/lead to confirm leads
+ * will be emailed and enriched. Reports booleans only — never secret values.
+ */
+export const dynamic = "force-dynamic";
+
+export function GET() {
+  const { MS_TENANT_ID, MS_CLIENT_ID, MS_CLIENT_SECRET, MS_SENDER } = process.env;
+  return NextResponse.json({
+    leadEmail: Boolean(MS_TENANT_ID && MS_CLIENT_ID && MS_CLIENT_SECRET && MS_SENDER),
+    rentcastEnrichment: Boolean(process.env.RENTCAST_API_KEY),
+  });
 }

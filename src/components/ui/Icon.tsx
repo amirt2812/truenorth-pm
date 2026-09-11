@@ -28,7 +28,11 @@ type IconName =
   | "bed"
   | "bath"
   | "ruler"
-  | "image";
+  | "image"
+  | "facebook"
+  | "instagram"
+  | "linkedin"
+  | "youtube";
 
 const paths: Record<IconName, string> = {
   compass: "M12 21a9 9 0 100-18 9 9 0 000 18zM15.5 8.5l-2 5-5 2 2-5 5-2z",
@@ -54,6 +58,10 @@ const paths: Record<IconName, string> = {
   bath: "M4 12h16v3a4 4 0 01-4 4H8a4 4 0 01-4-4v-3zM6 12V6a2 2 0 012-2 2 2 0 012 2M6 20l-1 1M18 20l1 1",
   ruler: "M3 8l5-5 13 13-5 5L3 8zM7 7l2 2M10 4l2 2M13 7l2 2M16 10l2 2",
   image: "M4 4h16v16H4zM4 15l4-4 5 5M14 12l2-2 4 4M9 9a1.5 1.5 0 100-3 1.5 1.5 0 000 3z",
+  facebook: "M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z",
+  instagram: "M7 2h10a5 5 0 015 5v10a5 5 0 01-5 5H7a5 5 0 01-5-5V7a5 5 0 015-5zM12 16a4 4 0 100-8 4 4 0 000 8zM17.5 6.5h.01",
+  linkedin: "M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-4 0v7h-4v-7a6 6 0 016-6zM2 9h4v12H2zM4 6a2 2 0 100-4 2 2 0 000 4z",
+  youtube: "M22.5 6.4a2.8 2.8 0 00-1.9-2C18.9 4 12 4 12 4s-6.9 0-8.6.5a2.8 2.8 0 00-1.9 2A29 29 0 001 11.8a29 29 0 00.5 5.3 2.8 2.8 0 001.9 1.9c1.7.5 8.6.5 8.6.5s6.9 0 8.6-.5a2.8 2.8 0 001.9-1.9 29 29 0 00.5-5.3 29 29 0 00-.5-5.4zM9.8 15l5.7-3.2-5.7-3.3V15z",
 };
 
 const filled: IconName[] = []; // all stroke-based for consistency

@@ -1,0 +1,597 @@
+<title>TrueNorth Growth Playbook</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --ground:#FBF8F2; --surface:#FFFFFF; --sunk:#F3EDE1;
+  --ink:#0F2742; --muted:#52627A; --line:#E4DCCB;
+  --gold:#C29A4A; --gold-ink:#8A6A2C; --navy:#0F2742; --on-navy:#F6F1E7;
+  --warn-bg:#FBF1DC; --warn-line:#E2C27F; --ok:#2F6B4F; --bad:#B4533A;
+  --display:'Fraunces',Georgia,'Times New Roman',serif;
+  --body:'Plus Jakarta Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#081627; --surface:#0F2742; --sunk:#0B1F36;
+    --ink:#EFE9DD; --muted:#A9B9CE; --line:#1F3A5C;
+    --gold:#D4AE63; --gold-ink:#DBB76A; --navy:#13314F; --on-navy:#F6F1E7;
+    --warn-bg:#2A2414; --warn-line:#6E5A2C; --ok:#7CC3A0; --bad:#E58C73;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#081627; --surface:#0F2742; --sunk:#0B1F36;
+  --ink:#EFE9DD; --muted:#A9B9CE; --line:#1F3A5C;
+  --gold:#D4AE63; --gold-ink:#DBB76A; --navy:#13314F; --on-navy:#F6F1E7;
+  --warn-bg:#2A2414; --warn-line:#6E5A2C; --ok:#7CC3A0; --bad:#E58C73;
+}
+*{box-sizing:border-box}
+body{background:var(--ground);color:var(--ink);font:15px/1.6 var(--body);-webkit-font-smoothing:antialiased}
+a{color:var(--gold-ink);text-underline-offset:3px}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--gold);outline-offset:2px;border-radius:4px}
+h1,h2,h3{font-family:var(--display);font-weight:500;text-wrap:balance;margin:0;letter-spacing:-.01em}
+p{margin:0}
+ul,ol{margin:0}
+.caps{font-size:11.5px;font-weight:600;text-transform:uppercase;letter-spacing:.16em;color:var(--gold-ink)}
+.mono{font-family:var(--mono)}
+
+.mast{background:var(--navy);color:var(--on-navy);position:relative;overflow:hidden}
+.mast-in{max-width:1180px;margin:0 auto;padding:44px 28px 40px;display:grid;gap:18px;position:relative}
+.mast .caps{color:#DBB76A}
+.mast h1{font-size:clamp(34px,5vw,54px);line-height:1.02;color:#fff}
+.mast h1 em{color:#DBB76A;font-style:italic}
+.mast p{max-width:66ch;color:#C9D5E4}
+.bearing{position:absolute;right:-120px;top:-150px;width:460px;height:460px;opacity:.22;pointer-events:none}
+.stats{display:flex;flex-wrap:wrap;gap:28px;margin-top:6px}
+.stat b{display:block;font:500 30px/1.1 var(--display);color:#fff;font-variant-numeric:tabular-nums}
+.stat span{font-size:12.5px;color:#AEC1D8}
+
+.shell{max-width:1180px;margin:0 auto;padding:36px 28px 80px;display:grid;grid-template-columns:200px minmax(0,1fr);gap:48px}
+nav.toc{position:sticky;top:24px;align-self:start;display:grid;gap:2px}
+nav.toc a{display:block;padding:6px 10px;border-left:2px solid var(--line);color:var(--muted);text-decoration:none;font-size:13.5px}
+nav.toc a:hover{color:var(--ink);border-left-color:var(--gold)}
+nav.toc .grp{font:600 10.5px var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--gold-ink);padding:14px 10px 4px}
+main{display:grid;gap:64px;min-width:0}
+section{display:grid;gap:22px;scroll-margin-top:20px}
+.sec-head{display:grid;gap:8px;max-width:70ch}
+.sec-head h2{font-size:30px;line-height:1.1}
+.sec-head p{color:var(--muted)}
+.platform{padding-top:26px;border-top:2px solid var(--ink)}
+
+.callout{background:var(--warn-bg);border:1px solid var(--warn-line);border-radius:10px;padding:18px 20px;display:grid;gap:8px}
+
+/* Your part */
+.yours{display:grid;gap:0;border-top:1px solid var(--line)}
+.task{display:grid;grid-template-columns:22px 1fr auto;gap:14px;align-items:start;padding:16px 0;border-bottom:1px solid var(--line)}
+.task input{margin:4px 0 0;accent-color:var(--gold);width:16px;height:16px}
+.task b{display:block;font-weight:600}
+.task p{color:var(--muted);font-size:14px;margin-top:3px}
+.task input:checked ~ div b{text-decoration:line-through;text-decoration-color:var(--gold);color:var(--muted)}
+.time{font:500 12px var(--mono);color:var(--muted);white-space:nowrap;padding-top:3px}
+.kv{font-family:var(--mono);font-size:12.5px;background:var(--sunk);padding:1px 6px;border-radius:4px;color:var(--ink)}
+
+/* Built */
+.built{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 28px}
+.built div{display:grid;grid-template-columns:18px 1fr;gap:10px;font-size:14px}
+.built div::before{content:"";width:10px;height:10px;margin-top:6px;transform:rotate(45deg);background:var(--gold)}
+.built span{color:var(--muted)}
+
+.cols{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:28px}
+.fields{display:grid;gap:14px}
+.field{display:grid;gap:6px}
+.f-top{display:flex;align-items:center;gap:10px}
+.f-label{font-size:12.5px;font-weight:600;color:var(--ink)}
+.count{font:12px var(--mono);color:var(--muted);margin-left:auto}
+.count.over{color:var(--bad);font-weight:600}
+.copy{font:600 12px var(--body);padding:4px 10px;border-radius:6px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
+.copy:hover{border-color:var(--gold)}
+.copy.done{color:var(--ok);border-color:var(--ok)}
+.val{margin:0;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:11px 13px;font:14px/1.55 var(--body);white-space:pre-wrap;word-break:break-word;color:var(--ink)}
+.val.mono{font:13.5px/1.5 var(--mono)}
+.side{display:grid;gap:18px;align-content:start}
+.box{background:var(--sunk);border-radius:10px;padding:16px 18px;display:grid;gap:10px}
+.box h3{font:600 12px var(--body);text-transform:uppercase;letter-spacing:.14em;color:var(--gold-ink)}
+.box ul{padding-left:18px;display:grid;gap:6px;font-size:14px}
+.box p{font-size:14px;color:var(--muted)}
+
+.prints{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.prints figure{margin:0;display:grid;gap:8px}
+.prints img{width:100%;border-radius:6px;border:1px solid var(--line);display:block;background:#fff}
+.prints figcaption{font:500 12.5px var(--mono);color:var(--muted)}
+.onepager{display:grid;grid-template-columns:260px minmax(0,1fr);gap:26px;align-items:start}
+.onepager img{width:100%;border-radius:6px;border:1px solid var(--line)}
+
+.math{width:100%;border-collapse:collapse;font-size:14px;font-variant-numeric:tabular-nums}
+.math td{padding:9px 0;border-bottom:1px solid var(--line)}
+.math td:last-child{text-align:right;font-family:var(--mono);font-size:13.5px}
+.math tr.sum td{font-weight:700;border-bottom:2px solid var(--ink)}
+.tbl{overflow-x:auto}
+
+.seq{display:grid;gap:26px}
+.email{display:grid;grid-template-columns:90px minmax(0,1fr);gap:20px}
+.day{font:500 13px var(--mono);color:var(--gold-ink);padding-top:4px}
+.email h3{font-size:19px;margin-bottom:10px}
+
+.kw{display:flex;flex-wrap:wrap;gap:6px}
+.kw span{font:12.5px var(--mono);padding:3px 9px;border-radius:999px;background:var(--sunk);color:var(--ink)}
+.kw.neg span{color:var(--bad);text-decoration:line-through;text-decoration-color:currentColor}
+
+footer.end{border-top:1px solid var(--line);padding-top:22px;color:var(--muted);font-size:13px}
+
+@media (max-width:900px){
+  .shell{grid-template-columns:1fr;gap:28px}
+  nav.toc{position:static;display:flex;flex-wrap:wrap;gap:4px}
+  nav.toc .grp{display:none}
+  nav.toc a{border-left:0;border:1px solid var(--line);border-radius:999px;padding:4px 12px}
+  .cols,.built,.prints,.onepager{grid-template-columns:1fr}
+  .email{grid-template-columns:1fr;gap:6px}
+}
+@media (prefers-reduced-motion:no-preference){ .copy{transition:border-color .15s,color .15s} }
+</style>
+
+<header class="mast">
+  <svg class="bearing" viewBox="-230 -230 460 460" aria-hidden="true"><g fill="none" stroke="#DBB76A" stroke-width="1.5" id="ring"></g></svg>
+  <div class="mast-in">
+    <div class="caps">TrueNorth Property Management · Growth system</div>
+    <h1>Growth Playbook: win doors, <em>measure</em> every one.</h1>
+    <p>The website now records where each lead came from, tracks conversions, sends an instant reply, and has a page built to win owners from other managers. Below: the six things only you can do, then every campaign ready to run, with copy you can paste.</p>
+    <div class="stats">
+      <div class="stat"><b>$2,763</b><span>revenue per door per year*</span></div>
+      <div class="stat"><b>$1,724</b><span>max to spend winning one door*</span></div>
+      <div class="stat"><b>46 doors</b><span>for a $100K income goal*</span></div>
+    </div>
+    <p style="font-size:12.5px;color:#AEC1D8">*Starting assumptions from the Growth Scoreboard spreadsheet. Change the inputs there and the numbers update.</p>
+  </div>
+</header>
+
+<div class="shell">
+  <nav class="toc" aria-label="Sections">
+    <a href="#yours">Your 6 tasks</a>
+    <a href="#built">What’s already built</a>
+    <div class="grp">Channels</div>
+    <a href="#gbp">Google Business Profile</a>
+    <a href="#reviews">Reviews</a>
+    <a href="#mail">Absentee-owner postcards</a>
+    <a href="#agents">Agent referrals</a>
+    <a href="#switch">Switch campaign</a>
+    <div class="grp">Convert</div>
+    <a href="#nurture">Follow-up emails</a>
+    <div class="grp">Paid</div>
+    <a href="#google-ads">Google Ads</a>
+    <a href="#meta-ads">Meta Ads</a>
+    <div class="grp">Measure</div>
+    <a href="#rhythm">Weekly rhythm</a>
+  </nav>
+
+  <main>
+    <!-- YOUR PART -->
+    <section id="yours">
+      <div class="sec-head">
+        <div class="caps">Only you can do these</div>
+        <h2>Six tasks, about three hours total</h2>
+        <p>Each one needs your login, a password, a signature, or a payment, so I can’t do them for you. Tasks 1 and 2 matter most: until they’re done, leads can be lost and nobody can find you on Google Maps.</p>
+      </div>
+      <div class="yours">
+        <label class="task"><input type="checkbox" data-step="t1"><div><b>1. Turn on lead emails and property data</b>
+          <p>In Vercel → Settings → Environment Variables, add <span class="kv">MS_TENANT_ID</span> <span class="kv">MS_CLIENT_ID</span> <span class="kv">MS_CLIENT_SECRET</span> <span class="kv">MS_SENDER</span> <span class="kv">LEAD_TO</span> (Azure steps are in <span class="mono">src/app/api/lead/route.ts</span>) and <span class="kv">RENTCAST_API_KEY</span> (free at app.rentcast.io). Redeploy, then open <span class="mono">truenorthpm.co/api/lead</span>: both values must say <span class="mono">true</span>.</p></div><span class="time">45 min</span></label>
+        <label class="task"><input type="checkbox" data-step="t2"><div><b>2. Create and verify the Google Business Profile</b>
+          <p>At business.google.com, using the copy in the section below. Google verifies by video or postcard, which can take a few days, so start today.</p></div><span class="time">30 min</span></label>
+        <label class="task"><input type="checkbox" data-step="t3"><div><b>3. Create the three tracking accounts and send me the IDs</b>
+          <p>A GA4 property (Measurement ID, <span class="mono">G-…</span>), a Meta Pixel in Events Manager (a number ID), and Google Search Console using the HTML-tag method (the <span class="mono">content="…"</span> value). None of these are secret. Paste them in chat and I’ll switch tracking on.</p></div><span class="time">30 min</span></label>
+        <label class="task"><input type="checkbox" data-step="t4"><div><b>4. Get the Founding Owner Offer Addendum reviewed</b>
+          <p>The draft is in your Legal folder: <span class="mono">03 Owner Agreements / 2026-09-11_18-Founding-Owner-Offer-Addendum</span>. The website now advertises these terms, so they must be in your contract before you push the site live. Add the licensed brokerage name while you’re there.</p></div><span class="time">attorney</span></label>
+        <label class="task"><input type="checkbox" data-step="t5"><div><b>5. Order the first postcard drop</b>
+          <p>Pick a mail house, get the absentee-owner list (criteria below), and upload <span class="mono">postcard-front.png</span> and <span class="mono">postcard-back.png</span>. Budget about $750 for 1,000 cards.</p></div><span class="time">45 min</span></label>
+        <label class="task"><input type="checkbox" data-step="t6"><div><b>6. Open a Google Ads account (after 1–3)</b>
+          <p>At ads.google.com, with billing. Don’t spend a dollar until tracking from task 3 is live; then use the campaign below.</p></div><span class="time">20 min</span></label>
+      </div>
+    </section>
+
+    <!-- BUILT -->
+    <section id="built">
+      <div class="sec-head">
+        <div class="caps">Done on the website</div>
+        <h2>What’s already built</h2>
+        <p>These changes are in your code but aren’t committed or live yet. They go live when you push.</p>
+      </div>
+      <div class="built">
+        <div><p><b>Lead source on every email.</b> <span>The subject ends in [postcard / direct_mail], [google.com], [direct] and so on.</span></p></div>
+        <div><p><b>Conversion tracking ready.</b> <span>GA4, Meta Pixel, and Tag Manager load the moment their IDs are pasted in.</span></p></div>
+        <div><p><b>Instant reply to every lead.</b> <span>English or Spanish, with your booking link, sent as soon as email is configured.</span></p></div>
+        <div><p><b>Email status check.</b> <span>Open truenorthpm.co/api/lead to see whether lead emails will send.</span></p></div>
+        <div><p><b>“Switch managers” page, EN + ES.</b> <span>/switch-property-managers, with the founding terms and its own form.</span></p></div>
+        <div><p><b>Spanish thank-you page.</b> <span>Spanish forms were landing on a 404 after submitting. Fixed.</span></p></div>
+        <div><p><b>Concrete Founding Owner offer.</b> <span>On the homepage: 20 spots, no setup fee, no leasing fee on an existing tenant, a 90-day exit.</span></p></div>
+        <div><p><b>Printable short links.</b> <span>truenorthpm.co/mail, /switch, and /agents, each tagged by campaign.</span></p></div>
+      </div>
+    </section>
+
+    <!-- GBP -->
+    <section id="gbp" class="platform">
+      <div class="sec-head">
+        <div class="caps">Channel 1 · highest return</div>
+        <h2>Google Business Profile</h2>
+        <p>Owners searching “property management near me” see the map results first. Set up as a <b>service-area business</b>: hide the street address and list the towns.</p>
+      </div>
+      <div class="cols">
+        <div class="fields">
+          <div class="field"><div class="f-top"><span class="f-label">Business name (your real name only; no keywords, or Google can suspend you)</span><button class="copy">Copy</button></div><pre class="val">TrueNorth Property Management</pre></div>
+          <div class="field"><div class="f-top"><span class="f-label">Primary category · Additional category</span></div><pre class="val">Property management company · Real estate rental agency</pre></div>
+          <div class="field"><div class="f-top"><span class="f-label">Description</span><span class="count"></span><button class="copy">Copy</button></div><pre class="val" data-limit="750">TrueNorth Property Management is a local, founder-led property management company serving landlords across Hernando County, Florida, including Spring Hill, Brooksville, Weeki Wachee, Hernando Beach, and Timber Pines. We handle tenant placement, rent collection, maintenance coordination, inspections, and lease renewals, with transparent pricing (plans start at $99/month), an online owner portal, and a reply to every owner within one business day. Own a rental here but live out of state? We're your local eyes on the property. Request a free, no-obligation rental analysis to see what your home could rent for. Se habla español.</pre></div>
+          <div class="field"><div class="f-top"><span class="f-label">Website (tagged, so Google Maps visits are counted)</span><button class="copy">Copy</button></div><pre class="val mono">https://truenorthpm.co/?utm_source=google_business_profile&amp;utm_medium=organic&amp;utm_campaign=gbp</pre></div>
+          <div class="field"><div class="f-top"><span class="f-label">Appointment link</span><button class="copy">Copy</button></div><pre class="val mono">https://calendly.com/alfredo-truenorthpm</pre></div>
+          <div class="field"><div class="f-top"><span class="f-label">Service areas</span><button class="copy">Copy</button></div><pre class="val">Hernando County, FL; Spring Hill, FL; Brooksville, FL; Weeki Wachee, FL; Hernando Beach, FL; Timber Pines, FL</pre></div>
+          <div class="field"><div class="f-top"><span class="f-label">Services (add each one)</span><button class="copy">Copy</button></div><pre class="val">Full-service property management
+Tenant placement and leasing
+Tenant screening
+Rent collection and owner statements
+Maintenance coordination
+Property inspections
+Lease renewals
+Free rental analysis
+Investor services</pre></div>
+        </div>
+        <div class="side">
+          <div class="box">
+            <h3>Photos to upload</h3>
+            <ul>
+              <li>Logo: <span class="mono">profile-navy.png</span></li>
+              <li>Cover: <span class="mono">fb-cover.png</span></li>
+              <li>Your headshot (<span class="mono">public/founder.jpg</span>)</li>
+              <li>Exterior and interior photos of the homes you manage (from <span class="mono">public/properties/</span>)</li>
+              <li>A new photo every week or two. Active profiles rank better.</li>
+            </ul>
+          </div>
+          <div class="box">
+            <h3>Every week</h3>
+            <ul>
+              <li>Publish one Google post. Reuse the six social graphics, each linking to its blog article.</li>
+              <li>Answer every review within 24 hours, good or bad.</li>
+              <li>Hours: Mon–Fri 9–5, the same as the website.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- REVIEWS -->
+    <section id="reviews" class="platform">
+      <div class="sec-head">
+        <div class="caps">Channel 1, continued</div>
+        <h2>Ten genuine reviews in 60 days</h2>
+        <p>Ask everyone who has experienced TrueNorth: the tenants in the homes you already manage, and every new owner about 30 days after onboarding. Google’s rules: <b>ask everyone, not only happy clients</b>, and never offer anything in exchange. In Google Business Profile, use “Ask for reviews” to get your review link.</p>
+      </div>
+      <div class="cols">
+        <div class="fields">
+          <div class="field"><div class="f-top"><span class="f-label">Text message</span><span class="count"></span><button class="copy">Copy</button></div><pre class="val" data-limit="320">Hi {first name}, it's Alfredo from TrueNorth Property Management. Would you share a quick Google review of your experience with us? It takes a minute and helps other Hernando County owners and renters find us: {review link}. Thank you!</pre></div>
+          <div class="field"><div class="f-top"><span class="f-label">Email</span><button class="copy">Copy</button></div><pre class="val">Subject: A quick favor?
+
+Hi {first name},
+
+Thank you for trusting TrueNorth with {your home / your property}. If you have a minute, would you share an honest Google review of your experience? Reviews help other owners in Hernando County decide who to trust with their homes.
+
+Leave a review: {review link}
+
+Thanks again,
+Alfredo Mirt
+TrueNorth Property Management · (727) 815-5245</pre></div>
+        </div>
+        <div class="side">
+          <div class="box">
+            <h3>When to ask</h3>
+            <ul>
+              <li>Tenants: right after a repair is finished quickly</li>
+              <li>Owners: after their first monthly statement</li>
+              <li>Agents: after a referral you handled well</li>
+            </ul>
+          </div>
+          <div class="box">
+            <h3>Replying to reviews</h3>
+            <p>Thank them by first name, mention one specific thing, and sign as Alfredo. For a negative review, respond calmly, don’t share private details, and offer to talk by phone.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MAIL -->
+    <section id="mail" class="platform">
+      <div class="sec-head">
+        <div class="caps">Channel 2 · the classic way property managers win owners</div>
+        <h2>Absentee-owner postcards</h2>
+        <p>Mail owners who own a home in Hernando County but live somewhere else. They’re the most likely to need a manager. The QR code and short link lead to the Free Rental Analysis, tagged <span class="mono">postcard / direct_mail</span>.</p>
+      </div>
+      <div class="prints">
+        <figure><img src="print/postcard-front.png" alt="Postcard front: 'What would your home rent for today?' in white serif on navy, with a QR code card"><figcaption>postcard-front.png · 9×6 in + bleed, 300 dpi</figcaption></figure>
+        <figure><img src="print/postcard-back.png" alt="Postcard back: founder note, founding terms, and contact details; the right half is left clear for the address"><figcaption>postcard-back.png · right half left clear for address and postage</figcaption></figure>
+      </div>
+      <div class="cols">
+        <div class="box" style="background:var(--surface);border:1px solid var(--line)">
+          <h3>List criteria (give these to the mail house or list vendor)</h3>
+          <ul>
+            <li>County: Hernando, FL</li>
+            <li>Property type: single-family homes, townhomes, and condos</li>
+            <li><b>No homestead exemption</b>, meaning the owner doesn’t live there</li>
+            <li>Owner mailing address different from the property address (absentee)</li>
+            <li>ZIPs: 34601, 34602, 34604, 34606, 34607, 34608, 34609, 34613, 34614</li>
+            <li>Optional: skip owners with 10+ properties (they usually self-manage) and properties listed for sale right now</li>
+          </ul>
+          <p>Sources: the Hernando County Property Appraiser’s public records, a list vendor, or a mail house that builds absentee-owner lists for you (many do: search “absentee owner postcard mailing”).</p>
+        </div>
+        <div class="side">
+          <div class="box">
+            <h3>The math, for one drop</h3>
+            <table class="math">
+              <tr><td>1,000 cards × $0.75 all-in</td><td>$750</td></tr>
+              <tr><td>1% respond</td><td>10 leads</td></tr>
+              <tr><td>1 in 5 sign</td><td>2 doors</td></tr>
+              <tr class="sum"><td>Cost per door</td><td>$375</td></tr>
+              <tr><td>Your max per door</td><td>$1,724</td></tr>
+            </table>
+            <p>Mail the same list three times, 3–4 weeks apart. Response usually improves with repetition. Assumptions are in the scoreboard; replace them with your real results.</p>
+          </div>
+          <div class="callout"><p><b>Before printing:</b> replace <span class="mono">[Brokerage name]</span> in <span class="mono">marketing/print/render_print.py</span> and re-run it. The return address is 7629 Odessa Ct; change it there if you’d rather not print it.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- AGENTS -->
+    <section id="agents" class="platform">
+      <div class="sec-head">
+        <div class="caps">Channel 3 · steady, free referrals</div>
+        <h2>Agent referrals</h2>
+        <p>Agents run into three kinds of owner every month who need a manager: investor buyers, sellers whose listing expired, and sellers who’d rather rent than cut their price. The pitch is simple: you help their clients and you don’t compete for sales.</p>
+      </div>
+      <div class="onepager">
+        <img src="print/agent-one-pager.png" alt="Agent one-pager: 'Keep your clients. We'll manage their rentals.' with three benefits, a referral process, and contact band">
+        <div class="fields">
+          <div class="field"><div class="f-top"><span class="f-label">First email to an agent</span><button class="copy">Copy</button></div><pre class="val">Subject: A rental option for your expired listings
+
+Hi {agent first name},
+
+I'm Alfredo Mirt, founder of TrueNorth Property Management in Brooksville. When a listing expires, or a seller would rather rent than cut the price, I can send them a free rental analysis within one business day so they can compare the two.
+
+We focus on management, not sales, so when that owner is ready to sell, I send them back to you.
+
+Would you be open to a 10-minute coffee this week? I'm also happy to give a 5-minute rental market update at your next office meeting.
+
+Alfredo Mirt
+TrueNorth Property Management · (727) 815-5245
+truenorthpm.co/agents · 7629 Odessa Ct, Brooksville, FL 34613</pre></div>
+          <div class="field"><div class="f-top"><span class="f-label">Follow-up, 5 days later</span><button class="copy">Copy</button></div><pre class="val">Hi {agent first name}, following up in case this got buried. If you have a client with an investment property or a listing that isn't moving, send me the address and I'll turn around a rental analysis within one business day, no cost to them. — Alfredo, (727) 815-5245</pre></div>
+          <div class="box"><h3>Where to find agents</h3><p>Listing agents on homes in your ZIPs that show as expired or withdrawn, plus the offices of local brokerages. Ask each office manager for 5 minutes at their weekly sales meeting and bring 20 printed one-pagers (<span class="mono">agent-one-pager.pdf</span>).</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SWITCH -->
+    <section id="switch" class="platform">
+      <div class="sec-head">
+        <div class="caps">Channel 4 · owners who already pay for management</div>
+        <h2>Switch campaign</h2>
+        <p>These owners already pay for management, so they’re the easiest to win: they just need a reason to leave and a way out without penalties. Read the 1- and 2-star Google reviews of other Hernando County managers. The recurring complaints (slow replies, surprise charges) are exactly what your offer addresses. Promote the page at <span class="mono">truenorthpm.co/switch</span>.</p>
+      </div>
+      <div class="fields">
+        <div class="field"><div class="f-top"><span class="f-label">Social post 1</span><button class="copy">Copy</button></div><pre class="val">Still waiting on a call back from your property manager?
+
+Switching is simpler than most owners think. Your tenant stays, your lease stays, and we handle the handoff: lease, deposit, records, and keys.
+
+Our first 20 founding owners also get: no setup fee, no leasing fee on the tenant already in place, and a 90-day window to cancel without a termination fee.
+
+See how it works: truenorthpm.co/switch</pre></div>
+        <div class="field"><div class="f-top"><span class="f-label">Social post 2</span><button class="copy">Copy</button></div><pre class="val">5 signs it's time to switch property managers:
+1. Calls go unanswered for days
+2. Statements you can't make sense of
+3. Repairs that drag on or cost too much
+4. Long vacancies or rent below market
+5. You hear about problems from your tenant first
+
+If two or more sound familiar, let's talk: truenorthpm.co/switch</pre></div>
+        <div class="field"><div class="f-top"><span class="f-label">Google post</span><span class="count"></span><button class="copy">Copy</button></div><pre class="val" data-limit="1500">Unhappy with your current property manager? You can switch in the middle of a lease. The tenant and lease stay, and we handle the transfer of records, deposit, and keys. Founding owners (first 20): no setup fee, no leasing fee on an existing tenant, and a 90-day window to cancel without a termination fee. Learn more on our website.</pre></div>
+      </div>
+    </section>
+
+    <!-- NURTURE -->
+    <section id="nurture" class="platform">
+      <div class="sec-head">
+        <div class="caps">Convert · most owners decide in weeks, not days</div>
+        <h2>Follow-up emails for owners who haven’t signed</h2>
+        <p>Day 0 is already automated: the website sends an instant reply. Send the rest from Outlook to anyone who requested an analysis but hasn’t signed yet. Save each one as an Outlook template (Home → New Email → ⋯ → My Templates).</p>
+      </div>
+      <div class="seq">
+        <div class="email"><div class="day">Day 0</div><div><h3>Instant reply (automatic)</h3><p style="color:var(--muted)">Sent by the website: confirms the request, promises an answer within one business day, and links your calendar.</p></div></div>
+        <div class="email"><div class="day">Day 1</div><div><h3>Deliver the analysis</h3><div class="field"><div class="f-top"><span class="f-label">Email</span><button class="copy">Copy</button></div><pre class="val">Subject: Your rental analysis for {street address}
+
+Hi {first name},
+
+Here's what I found for {street address}:
+
+• Estimated rent: {$low}–{$high}/month, based on comparable homes leased nearby
+• Before listing, I'd suggest: {1–2 rent-ready items}
+• My recommendation: {full management / leasing only / self-manage for now}
+
+The easiest next step is a 15-minute call to walk through it: {calendly link}
+
+Alfredo Mirt
+TrueNorth Property Management · (727) 815-5245
+
+This is a market-informed estimate, not an appraisal.</pre></div></div></div>
+        <div class="email"><div class="day">Day 4</div><div><h3>Answer the real question</h3><div class="field"><div class="f-top"><span class="f-label">Email</span><button class="copy">Copy</button></div><pre class="val">Subject: What it would cost to manage {street address}
+
+Hi {first name},
+
+The question most owners ask next is what management actually costs. For a home like yours:
+
+• Management: plans start at $99/month
+• Leasing: charged only when we place a new tenant
+• No setup fee, and no leasing fee on a tenant already in place (founding owners)
+
+Full pricing is here: https://truenorthpm.co/pricing. Happy to put together an exact proposal. Just reply to this email.
+
+Alfredo</pre></div></div></div>
+        <div class="email"><div class="day">Day 10</div><div><h3>Help them decide</h3><div class="field"><div class="f-top"><span class="f-label">Email</span><button class="copy">Copy</button></div><pre class="val">Subject: 3 questions to ask any property manager
+
+Hi {first name},
+
+Whether you choose TrueNorth or someone else, ask every manager these three questions:
+
+1. Do you mark up maintenance costs?
+2. What are the cancellation terms, and is there a fee?
+3. How fast will I hear back, and from whom?
+
+Our answers: no hidden markups, a 90-day window to cancel without a termination fee for founding owners, and a reply from me within one business day.
+
+More questions worth asking: https://truenorthpm.co/resources/questions-to-ask-before-hiring-a-property-manager
+
+Alfredo</pre></div></div></div>
+        <div class="email"><div class="day">Day 21</div><div><h3>Founding spots are limited</h3><div class="field"><div class="f-top"><span class="f-label">Email (send only while spots remain, and state the real number)</span><button class="copy">Copy</button></div><pre class="val">Subject: {N} founding owner spots left
+
+Hi {first name},
+
+A quick update: {N} of our 20 founding owner spots are still open. Founding terms include no setup fee, no leasing fee on your current tenant, and a 90-day window to cancel without a termination fee.
+
+If {street address} is still on your mind, grab a time here: {calendly link}
+
+Alfredo</pre></div></div></div>
+        <div class="email"><div class="day">Day 45</div><div><h3>A last, low-pressure check-in</h3><div class="field"><div class="f-top"><span class="f-label">Email</span><button class="copy">Copy</button></div><pre class="val">Subject: Should I close your file?
+
+Hi {first name},
+
+I haven't heard back, which usually means the timing isn't right, and that's completely fine. Should I close your file for now, or would it help if I checked back when your current lease is up?
+
+Either way, the rental analysis for {street address} is yours to keep.
+
+Alfredo</pre></div></div></div>
+      </div>
+    </section>
+
+    <!-- GOOGLE ADS -->
+    <section id="google-ads" class="platform">
+      <div class="sec-head">
+        <div class="caps">Paid · only after tracking is live</div>
+        <h2>Google Ads: one Search campaign</h2>
+        <p>Start at <b>$20/day</b> (about $600/month). Location: Hernando County, set to “presence or interest” so out-of-state owners searching for your area see the ads. Housing rules: Google doesn’t let housing-related ads target by age, gender, parental status, marital status, or ZIP code, so target by county and keywords only. Import the GA4 <span class="mono">generate_lead</span> event as your conversion.</p>
+      </div>
+      <div class="cols">
+        <div class="fields">
+          <div class="field"><div class="f-top"><span class="f-label">Keywords (phrase match)</span><button class="copy">Copy</button></div><pre class="val mono">"property management spring hill"
+"property management brooksville"
+"property management hernando county"
+"property manager spring hill fl"
+"rental property management near me"
+"property management companies near me"
+"switch property management company"
+"how much can i rent my house for"</pre></div>
+          <div class="field"><div class="f-top"><span class="f-label">Negative keywords</span><button class="copy">Copy</button></div><pre class="val mono">jobs
+careers
+salary
+license
+course
+apartments
+for rent
+houses for rent
+hoa
+commercial</pre></div>
+        </div>
+        <div class="side">
+          <div class="box">
+            <h3>Final URL</h3>
+            <p><span class="mono">https://truenorthpm.co/free-rental-analysis</span>. Google adds its click ID automatically, so leads show <span class="mono">[google ads]</span>.</p>
+          </div>
+          <div class="box">
+            <h3>Judge it at 60 days, not 6</h3>
+            <p>A new campaign needs roughly 30 clicks before its cost per lead means anything. Keep it if cost per door is under the scoreboard’s maximum.</p>
+          </div>
+        </div>
+      </div>
+      <div class="fields" id="rsa"></div>
+    </section>
+
+    <!-- META ADS -->
+    <section id="meta-ads" class="platform">
+      <div class="sec-head">
+        <div class="caps">Paid · after organic posts are working</div>
+        <h2>Meta Ads (Facebook + Instagram)</h2>
+        <p>Choose the <b>Housing</b> special ad category. It’s required for real estate and rental ads, and it limits targeting to location (15-mile minimum radius) with no age, gender, or ZIP targeting. Start at $10–15/day with the launch and switch graphics as the ads, and the Free Rental Analysis and switch pages as destinations.</p>
+      </div>
+      <div class="field"><div class="f-top"><span class="f-label">Primary text</span><span class="count"></span><button class="copy">Copy</button></div><pre class="val" data-limit="125">What would your Hernando County home rent for? Get a free rental analysis from a local manager. No obligation.</pre></div>
+    </section>
+
+    <!-- RHYTHM -->
+    <section id="rhythm" class="platform">
+      <div class="sec-head">
+        <div class="caps">Measure</div>
+        <h2>The weekly rhythm</h2>
+        <p>Open <span class="mono">marketing/TrueNorth-Growth-Scoreboard.xlsx</span> every Monday and fill in one row. It takes 5 minutes. The Channels tab tells you what to scale and what to cut.</p>
+      </div>
+      <div class="built">
+        <div><p><b>Every weekday:</b> <span>reply to new leads within an hour. Speed wins more owners than price does.</span></p></div>
+        <div><p><b>Monday:</b> <span>fill in the scoreboard; send the follow-up emails that are due.</span></p></div>
+        <div><p><b>Wednesday:</b> <span>publish a Google post; ask for two reviews.</span></p></div>
+        <div><p><b>Friday:</b> <span>one agent coffee or office visit.</span></p></div>
+        <div><p><b>Every 3–4 weeks:</b> <span>the next postcard drop.</span></p></div>
+        <div><p><b>At 60 days:</b> <span>cut any channel whose cost per door is over your maximum.</span></p></div>
+      </div>
+      <footer class="end">Files: <span class="mono">marketing/print/</span> (postcard, one-pager, and the script that renders them) · <span class="mono">marketing/TrueNorth-Growth-Scoreboard.xlsx</span> · <span class="mono">marketing/social/</span> (social kit) · the addendum is in your Legal folder under 03 Owner Agreements.</footer>
+    </section>
+  </main>
+</div>
+
+<script>
+(() => {
+  const g = document.getElementById('ring'); if (!g) return;
+  const r = 200, ns = 'http://www.w3.org/2000/svg';
+  const c = document.createElementNS(ns, 'circle'); c.setAttribute('r', r); g.appendChild(c);
+  for (let d = 0; d < 360; d += 5) {
+    const a = (d - 90) * Math.PI / 180, inner = r - (d % 30 === 0 ? 18 : 7);
+    const l = document.createElementNS(ns, 'line');
+    l.setAttribute('x1', inner * Math.cos(a)); l.setAttribute('y1', inner * Math.sin(a));
+    l.setAttribute('x2', r * Math.cos(a)); l.setAttribute('y2', r * Math.sin(a));
+    g.appendChild(l);
+  }
+})();
+
+// Responsive search ad assets, each checked against Google's limits
+const HEADLINES = [
+  'Hernando County Property Mgmt', 'Plans From $99/Month', 'Free Rental Analysis', 'Local Spring Hill Manager',
+  'Replies Within 1 Business Day', 'Switch Managers Without Hassle', 'Online Owner Portal', 'Transparent Pricing',
+  'Brooksville Property Managers', 'See What Your Home Rents For',
+];
+const DESCRIPTIONS = [
+  'Local property management for Hernando County landlords. Plans from $99/month.',
+  'Free, no-obligation rental analysis with a rent range and a clear recommendation.',
+  'Switching managers? We handle the lease, tenant, deposit, and keys for you.',
+  'Online owner portal, monthly statements, and a manager who answers the phone.',
+];
+const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;');
+document.getElementById('rsa').innerHTML =
+  HEADLINES.map((h, i) => `<div class="field"><div class="f-top"><span class="f-label">Headline ${i + 1}</span><span class="count"></span><button class="copy">Copy</button></div><pre class="val" data-limit="30">${esc(h)}</pre></div>`).join('') +
+  DESCRIPTIONS.map((d, i) => `<div class="field"><div class="f-top"><span class="f-label">Description ${i + 1}</span><span class="count"></span><button class="copy">Copy</button></div><pre class="val" data-limit="90">${esc(d)}</pre></div>`).join('');
+
+document.querySelectorAll('.val[data-limit]').forEach(v => {
+  const limit = +v.dataset.limit, n = [...v.textContent].length;
+  const out = v.parentElement.querySelector('.count');
+  if (out) { out.textContent = `${n} / ${limit}`; out.classList.toggle('over', n > limit); }
+});
+
+document.addEventListener('click', async e => {
+  const b = e.target.closest('.copy'); if (!b) return;
+  const text = b.closest('.field').querySelector('.val').textContent;
+  let ok = false;
+  try { await navigator.clipboard.writeText(text); ok = true; } catch {
+    const t = document.createElement('textarea'); t.value = text; document.body.appendChild(t); t.select();
+    try { ok = document.execCommand('copy'); } catch {} t.remove();
+  }
+  b.textContent = ok ? 'Copied' : 'Select & copy';
+  b.classList.toggle('done', ok);
+  setTimeout(() => { b.textContent = 'Copy'; b.classList.remove('done'); }, 1600);
+});
+
+const KEY = 'tn-growth-playbook';
+let state = {};
+try { state = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch {}
+document.querySelectorAll('[data-step]').forEach(c => {
+  c.checked = !!state[c.dataset.step];
+  c.addEventListener('change', () => { state[c.dataset.step] = c.checked; try { localStorage.setItem(KEY, JSON.stringify(state)); } catch {} });
+});
+</script>

@@ -19,7 +19,9 @@ export function BlogList({
   categoryLabels?: Record<string, string>;
 }) {
   const [active, setActive] = useState<Category | "All">("All");
-  const filtered = active === "All" ? posts : posts.filter((p) => p.category === active);
+  // Newest first; posts sharing a date keep their authored order.
+  const sorted = [...posts].sort((a, b) => b.date.localeCompare(a.date));
+  const filtered = active === "All" ? sorted : sorted.filter((p) => p.category === active);
   const base = lang === "es" ? "/es" : "";
   const allLabel = lang === "es" ? "Todos" : "All";
   const readLabel = lang === "es" ? "min de lectura" : "min read";

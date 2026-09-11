@@ -5,7 +5,7 @@ import { site, serviceAreas, isPreLaunch, isBrokerageNamed } from "./site";
  * brokerage entity is confirmed. Render with the <JsonLd /> component.
  */
 
-const sameAs = [site.social.facebook, site.social.instagram, site.social.linkedin].filter(Boolean);
+const sameAs = Object.values(site.social).filter(Boolean);
 
 export function organizationSchema() {
   return {

@@ -30,6 +30,7 @@ export const navLabelEs: Record<string, string> = {
   "Free Rental Analysis": "Análisis de Renta Gratis",
   "Landlord ROI Calculator": "Calculadora de Rentabilidad",
   "Realtor Referral Partners": "Socios Agentes de Bienes Raíces",
+  "Switching Managers": "Cambiar de Administrador",
   Tenants: "Inquilinos",
   "For Tenants": "Para Inquilinos",
   Rentals: "Rentas",
@@ -78,6 +79,7 @@ export const primaryNav: NavGroup[] = [
       { label: "Free Rental Analysis", href: "/free-rental-analysis" },
       { label: "Landlord ROI Calculator", href: "/roi-calculator" },
       { label: "Realtor Referral Partners", href: "/realtor-referral-partners" },
+      { label: "Switching Managers", href: "/switch-property-managers" },
     ],
   },
   {

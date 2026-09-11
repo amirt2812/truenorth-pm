@@ -20,10 +20,21 @@ const nextConfig = {
       "weeki-wachee-property-management",
       "hernando-beach-property-management",
     ];
-    return cities.flatMap((slug) => [
-      { source: `/${slug}`, destination: "/hernando-county-property-management", permanent: true },
-      { source: `/es/${slug}`, destination: "/es/hernando-county-property-management", permanent: true },
-    ]);
+    // Short, printable campaign links (postcard, outreach, agent one-pager). Each
+    // lands with UTM tags so the lead email names the channel. 302 so they can change.
+    const campaigns = [
+      { source: "/mail", destination: "/free-rental-analysis?utm_source=postcard&utm_medium=direct_mail&utm_campaign=absentee_owners_2026" },
+      { source: "/switch", destination: "/switch-property-managers?utm_source=outreach&utm_medium=offline&utm_campaign=switch_2026" },
+      { source: "/agents", destination: "/realtor-referral-partners?utm_source=agent_onepager&utm_medium=print&utm_campaign=agent_referrals_2026" },
+    ].map((c) => ({ ...c, permanent: false }));
+
+    return [
+      ...cities.flatMap((slug) => [
+        { source: `/${slug}`, destination: "/hernando-county-property-management", permanent: true },
+        { source: `/es/${slug}`, destination: "/es/hernando-county-property-management", permanent: true },
+      ]),
+      ...campaigns,
+    ];
   },
 };
 

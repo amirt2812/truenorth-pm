@@ -24,6 +24,10 @@ const messages: Record<string, { title: string; body: string }> = {
     title: "You're on the Founding Landlord List.",
     body: "Thanks for your interest. We'll be in touch as we open founding owner spots in Hernando County.",
   },
+  switch: {
+    title: "Thanks — let's get your switch started.",
+    body: "We'll review your situation and reach out within one business day with next steps and a checklist of what to request from your current manager.",
+  },
   default: {
     title: "Thank you for reaching out.",
     body: "We've received your message and will follow up as soon as possible.",

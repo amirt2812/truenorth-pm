@@ -1,0 +1,600 @@
+<title>TrueNorth Social Launch Kit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --ground:#FBF8F2; --surface:#FFFFFF; --sunk:#F3EDE1;
+  --ink:#0F2742; --muted:#52627A; --line:#E4DCCB;
+  --gold:#C29A4A; --gold-ink:#8A6A2C; --navy:#0F2742; --on-navy:#F6F1E7;
+  --warn-bg:#FBF1DC; --warn-line:#E2C27F; --ok:#2F6B4F;
+  --display:'Fraunces',Georgia,'Times New Roman',serif;
+  --body:'Plus Jakarta Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#081627; --surface:#0F2742; --sunk:#0B1F36;
+    --ink:#EFE9DD; --muted:#A9B9CE; --line:#1F3A5C;
+    --gold:#D4AE63; --gold-ink:#DBB76A; --navy:#13314F; --on-navy:#F6F1E7;
+    --warn-bg:#2A2414; --warn-line:#6E5A2C; --ok:#7CC3A0;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#081627; --surface:#0F2742; --sunk:#0B1F36;
+  --ink:#EFE9DD; --muted:#A9B9CE; --line:#1F3A5C;
+  --gold:#D4AE63; --gold-ink:#DBB76A; --navy:#13314F; --on-navy:#F6F1E7;
+  --warn-bg:#2A2414; --warn-line:#6E5A2C; --ok:#7CC3A0;
+}
+*{box-sizing:border-box}
+body{background:var(--ground);color:var(--ink);font:15px/1.6 var(--body);-webkit-font-smoothing:antialiased}
+a{color:var(--gold-ink);text-underline-offset:3px}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--gold);outline-offset:2px;border-radius:4px}
+h1,h2,h3{font-family:var(--display);font-weight:500;text-wrap:balance;margin:0;letter-spacing:-.01em}
+p{margin:0}
+.caps{font-size:11.5px;font-weight:600;text-transform:uppercase;letter-spacing:.16em;color:var(--gold-ink)}
+.mono{font-family:var(--mono)}
+
+/* Masthead */
+.mast{background:var(--navy);color:var(--on-navy);position:relative;overflow:hidden}
+.mast-in{max-width:1180px;margin:0 auto;padding:44px 28px 40px;display:grid;gap:18px;position:relative}
+.mast .caps{color:#DBB76A}
+.mast h1{font-size:clamp(34px,5vw,54px);line-height:1.02;color:#fff}
+.mast h1 em{color:#DBB76A;font-style:italic}
+.mast p{max-width:62ch;color:#C9D5E4}
+.bearing{position:absolute;right:-120px;top:-150px;width:460px;height:460px;opacity:.22;pointer-events:none}
+.progress{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
+.chip{display:inline-flex;align-items:center;gap:9px;padding:7px 14px 7px 10px;border-radius:999px;border:1px solid rgba(219,183,106,.4);color:#E8EEF6;font-size:13px;font-weight:500;cursor:pointer;background:transparent;font-family:var(--body)}
+.chip .dot{width:14px;height:14px;border-radius:50%;border:1.5px solid #DBB76A;display:grid;place-items:center}
+.chip[aria-pressed="true"]{background:rgba(219,183,106,.16)}
+.chip[aria-pressed="true"] .dot{background:#DBB76A}
+.chip[aria-pressed="true"] .dot::after{content:"";width:5px;height:8px;border:solid #0F2742;border-width:0 2px 2px 0;transform:translateY(-1px) rotate(45deg)}
+
+/* Shell */
+.shell{max-width:1180px;margin:0 auto;padding:36px 28px 80px;display:grid;grid-template-columns:190px minmax(0,1fr);gap:48px}
+nav.toc{position:sticky;top:24px;align-self:start;display:grid;gap:2px}
+nav.toc a{display:block;padding:6px 10px;border-left:2px solid var(--line);color:var(--muted);text-decoration:none;font-size:13.5px}
+nav.toc a:hover{color:var(--ink);border-left-color:var(--gold)}
+main{display:grid;gap:64px;min-width:0}
+section{display:grid;gap:22px;scroll-margin-top:20px}
+.sec-head{display:grid;gap:8px;max-width:68ch}
+.sec-head h2{font-size:30px;line-height:1.1}
+.sec-head p{color:var(--muted)}
+
+/* Blocker callout */
+.callout{background:var(--warn-bg);border:1px solid var(--warn-line);border-radius:10px;padding:18px 20px;display:grid;gap:8px}
+.callout strong{font-weight:700}
+.todo{display:grid;gap:12px;counter-reset:t;margin:0;padding:0;list-style:none}
+.todo li{display:grid;grid-template-columns:28px 1fr;gap:12px;align-items:start}
+.todo li::before{counter-increment:t;content:counter(t);width:28px;height:28px;border-radius:50%;background:var(--navy);color:var(--on-navy);display:grid;place-items:center;font:600 13px var(--body)}
+.todo b{display:block}
+.todo span{color:var(--muted)}
+
+/* Handle table */
+.handles{width:100%;border-collapse:collapse;font-size:14px}
+.handles th{text-align:left;font-weight:600;color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.1em;padding:0 12px 8px 0;border-bottom:1px solid var(--line)}
+.handles td{padding:11px 12px 11px 0;border-bottom:1px solid var(--line);vertical-align:top}
+.tbl{overflow-x:auto}
+.pill{display:inline-block;font-size:12px;font-weight:600;padding:2px 9px;border-radius:999px;background:var(--sunk);color:var(--muted)}
+.pill.ok{color:var(--ok)}
+.pill.no{color:#B4533A}
+
+/* Platform block */
+.platform{display:grid;gap:18px;padding-top:26px;border-top:2px solid var(--ink)}
+.p-head{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:12px}
+.p-head h2{font-size:30px}
+.p-head .meta{color:var(--muted);font-size:13.5px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:9px 16px;border-radius:8px;background:var(--navy);color:var(--on-navy);font:600 13.5px var(--body);text-decoration:none;border:0;cursor:pointer}
+:root[data-theme="dark"] .btn{background:#D4AE63;color:#0A1B30}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .btn{background:#D4AE63;color:#0A1B30}}
+.cols{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:28px}
+.fields{display:grid;gap:14px}
+.field{display:grid;gap:6px}
+.f-top{display:flex;align-items:center;gap:10px}
+.f-label{font-size:12.5px;font-weight:600;color:var(--ink)}
+.count{font:12px var(--mono);color:var(--muted);margin-left:auto}
+.count.over{color:#B4533A;font-weight:600}
+.copy{font:600 12px var(--body);padding:4px 10px;border-radius:6px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
+.copy:hover{border-color:var(--gold)}
+.copy.done{color:var(--ok);border-color:var(--ok)}
+.val{margin:0;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:11px 13px;font:14px/1.55 var(--body);white-space:pre-wrap;word-break:break-word;color:var(--ink)}
+.val.mono{font:13.5px/1.5 var(--mono)}
+.side{display:grid;gap:18px;align-content:start}
+.assets{display:grid;gap:10px}
+.asset{display:grid;grid-template-columns:64px 1fr;gap:12px;align-items:center}
+.asset img{width:64px;height:64px;object-fit:cover;border-radius:6px;border:1px solid var(--line);background:var(--sunk)}
+.asset img.wide{object-fit:contain}
+.asset b{display:block;font:500 12.5px var(--mono)}
+.asset span{font-size:12.5px;color:var(--muted)}
+.steps{margin:0;padding:0;list-style:none;display:grid;gap:8px}
+.steps label{display:grid;grid-template-columns:18px 1fr;gap:10px;align-items:start;font-size:14px;cursor:pointer}
+.steps input{margin:3px 0 0;accent-color:var(--gold)}
+.steps input:checked + span{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--gold)}
+.box{background:var(--sunk);border-radius:10px;padding:16px 18px;display:grid;gap:12px}
+.box h3{font:600 12px var(--body);text-transform:uppercase;letter-spacing:.14em;color:var(--gold-ink)}
+
+/* Cover preview */
+.cover{border-radius:8px;border:1px solid var(--line);width:100%;display:block}
+
+/* Posts */
+.posts{display:grid;gap:36px}
+.post{display:grid;grid-template-columns:240px minmax(0,1fr);gap:26px;align-items:start}
+.post img{width:100%;border-radius:8px;border:1px solid var(--line);display:block}
+.post .when{font:500 12.5px var(--mono);color:var(--muted);margin-top:8px}
+.post-copy{display:grid;gap:14px}
+.post-copy h3{font-size:21px;line-height:1.2}
+
+/* Calendar */
+.cal{width:100%;border-collapse:collapse;font-size:14px;font-variant-numeric:tabular-nums}
+.cal th{text-align:left;font:600 12px var(--body);text-transform:uppercase;letter-spacing:.1em;color:var(--muted);padding:0 14px 8px 0;border-bottom:1px solid var(--line)}
+.cal td{padding:10px 14px 10px 0;border-bottom:1px solid var(--line);vertical-align:top}
+.cal td:first-child{font-family:var(--mono);font-size:13px;white-space:nowrap;color:var(--muted)}
+.cal tr.wk td{padding-top:20px;font:600 13px var(--body);color:var(--gold-ink);border-bottom:0;font-family:var(--body)}
+.tag{font-size:11.5px;font-weight:600;color:var(--muted);white-space:nowrap}
+
+footer.end{border-top:1px solid var(--line);padding-top:22px;color:var(--muted);font-size:13px}
+
+@media (max-width:900px){
+  .shell{grid-template-columns:1fr;gap:28px}
+  nav.toc{position:static;display:flex;flex-wrap:wrap;gap:4px}
+  nav.toc a{border-left:0;border:1px solid var(--line);border-radius:999px;padding:4px 12px}
+  .cols{grid-template-columns:1fr}
+  .post{grid-template-columns:1fr}
+  .post img{max-width:320px}
+}
+@media (prefers-reduced-motion:no-preference){ .copy{transition:border-color .15s,color .15s} }
+</style>
+
+<header class="mast">
+  <svg class="bearing" viewBox="-230 -230 460 460" aria-hidden="true">
+    <g fill="none" stroke="#DBB76A" stroke-width="1.5" id="ring"></g>
+  </svg>
+  <div class="mast-in">
+    <div class="caps">TrueNorth Property Management · Social launch</div>
+    <h1>Social Launch Kit: four profiles, one <em>direction.</em></h1>
+    <p>Everything needed to open the Facebook, Instagram, LinkedIn, and YouTube accounts: handles, bios sized to each platform’s limits, profile and cover art, and six ready-to-post launch graphics with captions. You create each account yourself (about 15 minutes each), then paste from here.</p>
+    <div class="progress" role="group" aria-label="Accounts created">
+      <button class="chip" data-done="facebook" aria-pressed="false"><span class="dot"></span>Facebook</button>
+      <button class="chip" data-done="instagram" aria-pressed="false"><span class="dot"></span>Instagram</button>
+      <button class="chip" data-done="linkedin" aria-pressed="false"><span class="dot"></span>LinkedIn</button>
+      <button class="chip" data-done="youtube" aria-pressed="false"><span class="dot"></span>YouTube</button>
+    </div>
+  </div>
+</header>
+
+<div class="shell">
+  <nav class="toc" aria-label="Sections">
+    <a href="#first">Before you start</a>
+    <a href="#handle">Handle</a>
+    <a href="#facebook">Facebook</a>
+    <a href="#instagram">Instagram</a>
+    <a href="#linkedin">LinkedIn</a>
+    <a href="#youtube">YouTube</a>
+    <a href="#posts">Launch posts</a>
+    <a href="#calendar">First 30 days</a>
+    <a href="#after">After launch</a>
+  </nav>
+
+  <main>
+    <!-- BEFORE YOU START -->
+    <section id="first">
+      <div class="sec-head">
+        <div class="caps">Before you start</div>
+        <h2>Three things to settle first</h2>
+      </div>
+      <div class="callout">
+        <p><strong>Florida advertising rule.</strong> Social profiles and posts count as advertising, and Florida Rule 61J2-10.025 requires real-estate ads to show the licensed name of the brokerage firm. The website still shows the placeholder <span class="mono">[Licensed Brokerage LLC Name]</span>. Before you publish, confirm that “TrueNorth Property Management” is the name registered with DBPR, or add the registered brokerage name to every About section below (marked <span class="mono">[Brokerage name]</span>).</p>
+      </div>
+      <ol class="todo">
+        <li><div><b>Use one business login for everything.</b><span>Sign up with alfredo@truenorthpm.co (not a personal Gmail) so the accounts belong to the business. Turn on two-factor authentication on each one.</span></div></li>
+        <li><div><b>Decide on the street address.</b><span>If 7629 Odessa Ct is a residence, set Facebook and Google up as a <em>service-area business</em> (hide the address, list the five towns).</span></div></li>
+        <li><div><b>Create Facebook first.</b><span>Instagram and LinkedIn are faster once the Facebook Page exists, and Meta Business Suite lets you schedule Facebook and Instagram posts together.</span></div></li>
+      </ol>
+    </section>
+
+    <!-- HANDLE -->
+    <section id="handle">
+      <div class="sec-head">
+        <div class="caps">Handle</div>
+        <h2>Claim <span class="mono" style="font-size:.85em">@truenorthpmfl</span> everywhere</h2>
+        <p>The matching handle <span class="mono">@truenorthpm</span> is already taken on YouTube, so it can’t be consistent across all four. <span class="mono">@truenorthpmfl</span> is free on YouTube, still reads as the brand, and adds Florida. Facebook, Instagram, and LinkedIn can’t be checked without logging in, so try it there first and use the fallbacks in order.</p>
+      </div>
+      <div class="tbl">
+        <table class="handles">
+          <thead><tr><th>Platform</th><th>First choice</th><th>Fallbacks</th><th>Checked</th></tr></thead>
+          <tbody>
+            <tr><td>YouTube</td><td class="mono">@truenorthpmfl</td><td class="mono">@truenorthpropertymgmt</td><td><span class="pill ok">Available</span> <span class="pill no">@truenorthpm taken</span></td></tr>
+            <tr><td>Instagram</td><td class="mono">truenorthpmfl</td><td class="mono">truenorth.pm.fl · truenorthhernando</td><td><span class="pill">Check at signup</span></td></tr>
+            <tr><td>Facebook</td><td class="mono">facebook.com/truenorthpmfl</td><td class="mono">truenorthpropertymgmt</td><td><span class="pill">Check at signup</span></td></tr>
+            <tr><td>LinkedIn</td><td class="mono">linkedin.com/company/truenorthpmfl</td><td class="mono">truenorth-property-management</td><td><span class="pill">Check at signup</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- FACEBOOK -->
+    <section id="facebook" class="platform">
+      <div class="p-head">
+        <h2>Facebook Page</h2>
+        <span class="meta">Created from your personal profile · ~15 min</span>
+        <a class="btn" href="https://www.facebook.com/pages/create" target="_blank" rel="noopener">Open Facebook Page setup ↗</a>
+      </div>
+      <div class="cols">
+        <div class="fields">
+          <div class="field"><div class="f-top"><span class="f-label">Page name</span><button class="copy">Copy</button></div><pre class="val">TrueNorth Property Management</pre></div>
+          <div class="field"><div class="f-top"><span class="f-label">Category</span><button class="copy">Copy</button></div><pre class="val">Property Management Company</pre></div>
+          <div class="field"><div class="f-top"><span class="f-label">Bio</span><span class="count"></span><button class="copy">Copy</button></div><pre class="val" data-limit="101">Local, transparent property management for Hernando County, FL landlords.</pre></div>
+          <div class="field"><div class="f-top"><span class="f-label">Website · Phone · Email</span><button class="copy">Copy</button></div><pre class="val mono">https://truenorthpm.co
+(727) 815-5245
+alfredo@truenorthpm.co</pre></div>
+          <div class="field"><div class="f-top"><span class="f-label">Service area</span><button class="copy">Copy</button></div><pre class="val">Spring Hill, FL; Brooksville, FL; Weeki Wachee, FL; Hernando Beach, FL; Timber Pines, FL</pre></div>
+          <div class="field"><div class="f-top"><span class="f-label">Hours</span></div><pre class="val">Monday–Friday, 9:00 AM – 5:00 PM</pre></div>
+          <div class="field"><div class="f-top"><span class="f-label">Action button → “Book now” or “Learn more”</span><button class="copy">Copy</button></div><pre class="val mono">https://truenorthpm.co/free-rental-analysis</pre></div>
+        </div>
+        <div class="side">
+          <div class="box">
+            <h3>Upload</h3>
+            <div class="assets">
+              <div class="asset"><img src="images/profile-navy.png" alt="Navy profile picture"><div><b>profile-navy.png</b><span>Profile picture</span></div></div>
+              <div class="asset"><img class="wide" src="images/fb-cover.png" alt="Facebook cover"><div><b>fb-cover.png</b><span>Cover · 1640×624, mobile-safe center</span></div></div>
+            </div>
+          </div>
+          <div class="box">
+            <h3>Steps</h3>
+            <ul class="steps">
+              <li><label><input type="checkbox" data-step="fb1"><span>Create the Page, then set the username</span></label></li>
+              <li><label><input type="checkbox" data-step="fb2"><span>Upload the profile picture and cover</span></label></li>
+              <li><label><input type="checkbox" data-step="fb3"><span>Fill in contact info, service area, and hours</span></label></li>
+              <li><label><input type="checkbox" data-step="fb4"><span>Add the action button</span></label></li>
+              <li><label><input type="checkbox" data-step="fb5"><span>Open business.facebook.com (Meta Business Suite) and confirm the Page appears</span></label></li>
+              <li><label><input type="checkbox" data-step="fb6"><span>Pin the launch post once it’s up</span></label></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <img class="cover" src="images/fb-cover.png" alt="Facebook cover: TrueNorth logo in white on navy with a faint gold bearing ring, service towns listed below">
+    </section>
+
+    <!-- INSTAGRAM -->
+    <section id="instagram" class="platform">
+      <div class="p-head">
+        <h2>Instagram</h2>
+        <span class="meta">Professional → Business account · ~10 min</span>
+        <a class="btn" href="https://www.instagram.com/accounts/emailsignup/" target="_blank" rel="noopener">Open Instagram signup ↗</a>
+      </div>
+      <div class="cols">
+        <div class="fields">
+          <div class="field"><div class="f-top"><span class="f-label">Username</span><span class="count"></span><button class="copy">Copy</button></div><pre class="val mono" data-limit="30">truenorthpmfl</pre></div>
+          <div class="field"><div class="f-top"><span class="f-label">Name (searchable)</span><span class="count"></span><button class="copy">Copy</button></div><pre class="val" data-limit="30">TrueNorth Property Management</pre></div>
+          <div class="field"><div class="f-top"><span class="f-label">Bio</span><span class="count"></span><button class="copy">Copy</button></div><pre class="val" data-limit="150">Hernando County property management with direction.
+Transparent pricing · Owner portal · Local
+Free rental analysis ↓</pre></div>
+          <div class="field"><div class="f-top"><span class="f-label">Link in bio</span><button class="copy">Copy</button></div><pre class="val mono">https://truenorthpm.co/free-rental-analysis</pre></div>
+          <div class="field"><div class="f-top"><span class="f-label">Category</span></div><pre class="val">Property Management Company (or “Real Estate Service” if that one isn’t offered)</pre></div>
+        </div>
+        <div class="side">
+          <div class="box">
+            <h3>Upload</h3>
+            <div class="assets">
+              <div class="asset"><img src="images/profile-navy.png" alt="Navy profile picture"><div><b>profile-navy.png</b><span>Profile picture, shown as a circle</span></div></div>
+            </div>
+          </div>
+          <div class="box">
+            <h3>Steps</h3>
+            <ul class="steps">
+              <li><label><input type="checkbox" data-step="ig1"><span>Sign up with the business email</span></label></li>
+              <li><label><input type="checkbox" data-step="ig2"><span>Settings → Account type → switch to Professional → Business</span></label></li>
+              <li><label><input type="checkbox" data-step="ig3"><span>Connect it to the Facebook Page in Accounts Center</span></label></li>
+              <li><label><input type="checkbox" data-step="ig4"><span>Add email and call contact buttons</span></label></li>
+              <li><label><input type="checkbox" data-step="ig5"><span>Post the first 3 launch graphics the same day so the grid isn’t empty</span></label></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- LINKEDIN -->
+    <section id="linkedin" class="platform">
+      <div class="p-head">
+        <h2>LinkedIn Company Page</h2>
+        <span class="meta">Needs your personal LinkedIn profile · ~10 min</span>
+        <a class="btn" href="https://www.linkedin.com/company/setup/new/" target="_blank" rel="noopener">Open Company Page setup ↗</a>
+      </div>
+      <div class="cols">
+        <div class="fields">
+          <div class="field"><div class="f-top"><span class="f-label">Page name</span><button class="copy">Copy</button></div><pre class="val">TrueNorth Property Management</pre></div>
+          <div class="field"><div class="f-top"><span class="f-label">Public URL</span><button class="copy">Copy</button></div><pre class="val mono">truenorthpmfl</pre></div>
+          <div class="field"><div class="f-top"><span class="f-label">Tagline</span><span class="count"></span><button class="copy">Copy</button></div><pre class="val" data-limit="120">Transparent, tech-forward property management for Hernando County, FL landlords.</pre></div>
+          <div class="field"><div class="f-top"><span class="f-label">Industry · Size · Type</span></div><pre class="val">Real Estate · 0–1 or 2–10 employees (whichever is accurate) · Privately held</pre></div>
+          <div class="field"><div class="f-top"><span class="f-label">About</span><span class="count"></span><button class="copy">Copy</button></div><pre class="val" data-limit="2000">TrueNorth Property Management helps Hernando County, Florida landlords lease, manage, maintain, and optimize their rental homes, with transparent pricing, clear communication, modern technology, and local accountability.
+
+What we do:
+• Full-service residential property management
+• Tenant placement and leasing
+• Maintenance coordination with owner approval thresholds
+• Online owner and tenant portals
+• Free rental analysis for owners
+
+Serving Spring Hill, Brooksville, Weeki Wachee, Hernando Beach, Timber Pines, and surrounding Hernando County communities.
+
+Founded by Alfredo Mirt, a local Hernando County real estate investor.
+
+[Brokerage name] · Equal Housing Opportunity.</pre></div>
+          <div class="field"><div class="f-top"><span class="f-label">Website</span><button class="copy">Copy</button></div><pre class="val mono">https://truenorthpm.co</pre></div>
+        </div>
+        <div class="side">
+          <div class="box">
+            <h3>Upload</h3>
+            <div class="assets">
+              <div class="asset"><img src="images/profile-navy.png" alt="Navy logo"><div><b>profile-navy.png</b><span>Logo</span></div></div>
+              <div class="asset"><img class="wide" src="images/linkedin-cover.png" alt="LinkedIn banner"><div><b>linkedin-cover.png</b><span>Cover · 1128×191, copy kept right of the logo</span></div></div>
+            </div>
+          </div>
+          <div class="box">
+            <h3>Steps</h3>
+            <ul class="steps">
+              <li><label><input type="checkbox" data-step="li1"><span>Create the page as “Company”</span></label></li>
+              <li><label><input type="checkbox" data-step="li2"><span>Add the logo, cover, tagline, and About</span></label></li>
+              <li><label><input type="checkbox" data-step="li3"><span>On your personal profile, add “Founder, TrueNorth Property Management” under Experience, linked to the page</span></label></li>
+              <li><label><input type="checkbox" data-step="li4"><span>Invite your connections to follow (LinkedIn gives free monthly invite credits)</span></label></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <img class="cover" src="images/linkedin-cover.png" alt="LinkedIn banner: 'Property management with direction.' in white serif on navy">
+    </section>
+
+    <!-- YOUTUBE -->
+    <section id="youtube" class="platform">
+      <div class="p-head">
+        <h2>YouTube Channel</h2>
+        <span class="meta">Uses the Google account for alfredo@truenorthpm.co · ~10 min</span>
+        <a class="btn" href="https://www.youtube.com/create_channel" target="_blank" rel="noopener">Open channel setup ↗</a>
+      </div>
+      <div class="cols">
+        <div class="fields">
+          <div class="field"><div class="f-top"><span class="f-label">Channel name</span><button class="copy">Copy</button></div><pre class="val">TrueNorth Property Management</pre></div>
+          <div class="field"><div class="f-top"><span class="f-label">Handle</span><span class="count"></span><button class="copy">Copy</button></div><pre class="val mono" data-limit="30">@truenorthpmfl</pre></div>
+          <div class="field"><div class="f-top"><span class="f-label">Description</span><span class="count"></span><button class="copy">Copy</button></div><pre class="val" data-limit="1000">TrueNorth Property Management is a local property management company serving landlords in Hernando County, Florida, including Spring Hill, Brooksville, Weeki Wachee, Hernando Beach, and Timber Pines.
+
+On this channel: rental home tours, plain-English guides for Florida landlords (pricing, tenant screening, security deposits, hurricane prep), and walkthroughs of how we manage properties.
+
+Free rental analysis: https://truenorthpm.co/free-rental-analysis
+Website: https://truenorthpm.co
+Phone: (727) 815-5245
+
+Videos are general information, not legal, tax, or investment advice. [Brokerage name] · Equal Housing Opportunity.</pre></div>
+          <div class="field"><div class="f-top"><span class="f-label">Channel links</span><button class="copy">Copy</button></div><pre class="val mono">Free Rental Analysis — https://truenorthpm.co/free-rental-analysis
+Website — https://truenorthpm.co</pre></div>
+        </div>
+        <div class="side">
+          <div class="box">
+            <h3>Upload</h3>
+            <div class="assets">
+              <div class="asset"><img src="images/profile-navy.png" alt="Navy profile picture"><div><b>profile-navy.png</b><span>Profile picture</span></div></div>
+              <div class="asset"><img class="wide" src="images/youtube-banner.png" alt="YouTube banner"><div><b>youtube-banner.png</b><span>Banner · 2560×1440, logo inside the 1546×423 safe area</span></div></div>
+            </div>
+          </div>
+          <div class="box">
+            <h3>First five videos</h3>
+            <ul class="steps">
+              <li><label><input type="checkbox" data-step="yt1"><span>Home tour: a current Spring Hill listing</span></label></li>
+              <li><label><input type="checkbox" data-step="yt2"><span>What a free rental analysis includes (3 min)</span></label></li>
+              <li><label><input type="checkbox" data-step="yt3"><span>Florida security deposit rules in plain English</span></label></li>
+              <li><label><input type="checkbox" data-step="yt4"><span>Hurricane prep for rental owners</span></label></li>
+              <li><label><input type="checkbox" data-step="yt5"><span>Owner portal walkthrough</span></label></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- POSTS -->
+    <section id="posts">
+      <div class="sec-head">
+        <div class="caps">Launch posts</div>
+        <h2>Six posts, each tied to the website</h2>
+        <p>Every graphic is 1080×1350 (4:5), which works on Instagram, Facebook, and LinkedIn. Four of them promote the new blog posts on the site. Instagram captions point to the link in bio; Facebook and LinkedIn captions carry the direct link.</p>
+      </div>
+      <div class="posts" id="postList"></div>
+    </section>
+
+    <!-- CALENDAR -->
+    <section id="calendar">
+      <div class="sec-head">
+        <div class="caps">First 30 days</div>
+        <h2>A steady rhythm, not a burst</h2>
+        <p>Three posts a week on Facebook and Instagram, two on LinkedIn, and one YouTube video a month to start. Consistency does more than volume.</p>
+      </div>
+      <div class="tbl">
+        <table class="cal">
+          <thead><tr><th>Date</th><th>Post</th><th>Where</th></tr></thead>
+          <tbody>
+            <tr class="wk"><td colspan="3">Week 1: Launch</td></tr>
+            <tr><td>Mon Sep 14</td><td>Launch announcement (post 1); pin it on Facebook</td><td class="tag">FB · IG · LI</td></tr>
+            <tr><td>Wed Sep 16</td><td>Hurricane checklist (post 3), while peak season is in the news</td><td class="tag">FB · IG · LI</td></tr>
+            <tr><td>Fri Sep 18</td><td>Pricing your Spring Hill rental (post 2)</td><td class="tag">FB · IG</td></tr>
+            <tr class="wk"><td colspan="3">Week 2: Owner education</td></tr>
+            <tr><td>Mon Sep 21</td><td>Fair, consistent tenant screening (post 4)</td><td class="tag">FB · IG · LI</td></tr>
+            <tr><td>Wed Sep 23</td><td>Florida security deposit rules (post 5)</td><td class="tag">FB · IG</td></tr>
+            <tr><td>Fri Sep 25</td><td>Run the numbers before buying (post 6)</td><td class="tag">FB · IG · LI</td></tr>
+            <tr class="wk"><td colspan="3">Week 3: Faces and homes</td></tr>
+            <tr><td>Mon Sep 28</td><td>Meet the founder: your headshot plus why you started TrueNorth</td><td class="tag">FB · IG · LI</td></tr>
+            <tr><td>Wed Sep 30</td><td>Property spotlight: one listing from /properties, with Equal Housing Opportunity in the caption</td><td class="tag">FB · IG</td></tr>
+            <tr><td>Fri Oct 2</td><td>YouTube video 1: what a free rental analysis includes</td><td class="tag">YT → share to all</td></tr>
+            <tr class="wk"><td colspan="3">Week 4: Trust and reach</td></tr>
+            <tr><td>Mon Oct 5</td><td>Three owner FAQs from the site as a carousel</td><td class="tag">FB · IG · LI</td></tr>
+            <tr><td>Wed Oct 7</td><td>Owner portal: what you see each month (screenshots)</td><td class="tag">FB · IG</td></tr>
+            <tr><td>Fri Oct 9</td><td>Spanish repost of a guide, linking the matching /es page</td><td class="tag">FB · IG</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- AFTER -->
+    <section id="after">
+      <div class="sec-head">
+        <div class="caps">After launch</div>
+        <h2>Send me the four profile links</h2>
+        <p>Once the accounts exist, paste their URLs into chat. I’ll add them to <span class="mono">src/lib/site.ts</span>, which turns on the social icons in the website footer and adds the profiles to Google’s structured data (<span class="mono">sameAs</span>). Nothing shows on the site until real links are in.</p>
+      </div>
+      <div class="callout">
+        <p><strong>Running ads later?</strong> Meta requires the <em>Housing</em> special ad category for rental listings and most real-estate ads. It limits age, ZIP-code, and gender targeting to comply with fair housing law, so plan audiences around it.</p>
+      </div>
+      <footer class="end">All graphics are in <span class="mono">truenorth-pm/marketing/social/images/</span>. To change the copy or colors, edit <span class="mono">render.py</span> in the same folder and re-run <span class="mono">python3 marketing/social/render.py</span>.</footer>
+    </section>
+  </main>
+</div>
+
+<script>
+// Bearing ring in the masthead (5° ticks, longer every 30°)
+(() => {
+  const g = document.getElementById('ring'); if (!g) return;
+  const r = 200, ns = 'http://www.w3.org/2000/svg';
+  const c = document.createElementNS(ns, 'circle'); c.setAttribute('r', r); g.appendChild(c);
+  for (let d = 0; d < 360; d += 5) {
+    const a = (d - 90) * Math.PI / 180, inner = r - (d % 30 === 0 ? 18 : 7);
+    const l = document.createElementNS(ns, 'line');
+    l.setAttribute('x1', inner * Math.cos(a)); l.setAttribute('y1', inner * Math.sin(a));
+    l.setAttribute('x2', r * Math.cos(a)); l.setAttribute('y2', r * Math.sin(a));
+    g.appendChild(l);
+  }
+})();
+
+const POSTS = [
+  { img: 'post-01-launch.png', title: 'Launch announcement', when: 'Mon Sep 14',
+    ig: `TrueNorth Property Management is now serving Hernando County landlords.
+
+Transparent pricing (plans from $99/month), online owner and tenant portals, and a local team that answers the phone.
+
+Spring Hill · Brooksville · Weeki Wachee · Hernando Beach · Timber Pines
+
+Curious what your home could rent for? Free rental analysis at the link in bio.
+
+#HernandoCounty #SpringHillFL #BrooksvilleFL #PropertyManagement #FloridaLandlord`,
+    fb: `We're open. TrueNorth Property Management helps Hernando County landlords lease, manage, and maintain their rentals with transparent pricing, clear communication, and local accountability. Plans start at $99/month.
+
+Curious what your home could rent for? Request a free rental analysis, no obligation:
+https://truenorthpm.co/free-rental-analysis` },
+  { img: 'post-03-hurricane.png', title: 'Hurricane checklist', when: 'Wed Sep 16',
+    ig: `Mid-September is the statistical peak of Atlantic hurricane season.
+
+If you own a rental in Florida, run the checklist this week:
+→ Insurance coverage reviewed with your agent
+→ Roof, gutters, and drainage inspected
+→ Trees trimmed, outdoor items secured
+→ Tenant emergency contacts current
+→ Pre-storm photos of the property on file
+
+Full checklist at the link in bio.
+
+#HurricaneSeason #FloridaLandlord #HernandoCounty #RentalProperty`,
+    fb: `Mid-September is the statistical peak of Atlantic hurricane season. Florida landlords can't control the weather, but they can be ready: before, during, and after a storm.
+
+Our rental property hurricane checklist:
+https://truenorthpm.co/resources/rental-property-hurricane-preparedness-checklist-florida` },
+  { img: 'post-02-pricing.png', title: 'Pricing your Spring Hill rental', when: 'Fri Sep 18',
+    ig: `On a $2,200 rental, one extra vacant month costs $2,200. A $50 price cut costs $600 over a full year.
+
+Pricing a rental is a method, not a hunch:
+→ Use leased comps, not asking prices
+→ Adjust for garages, fenced yards, and pet policies
+→ Let the first 10 days of inquiries tell you if you're right
+
+Full guide at the link in bio.
+
+#SpringHillFL #LandlordTips #RentalProperty #HernandoCounty`,
+    fb: `Overpricing is the number-one cause of long vacancies. On a $2,200 rental, one empty month costs $2,200, while a $50 price cut costs $600 over a year.
+
+Here's how to price a Spring Hill rental without guessing:
+https://truenorthpm.co/resources/how-to-price-your-spring-hill-rental` },
+  { img: 'post-04-screening.png', title: 'Fair, consistent screening', when: 'Mon Sep 21',
+    ig: `2.5–3× the rent is a common income guideline, but the number matters less than consistency.
+
+Good screening means written criteria, applied the same way to every applicant, in the order applications arrive. It protects owners, and it's what fair housing requires.
+
+Guide at the link in bio.
+
+#FairHousing #TenantScreening #FloridaLandlord #PropertyManagement`,
+    fb: `Most tenant problems start at the application. A strong screening process isn't about being strict. It's about being consistent: the same written criteria for every applicant, every time.
+
+How to screen tenants fairly and consistently in Florida:
+https://truenorthpm.co/resources/tenant-screening-process-florida-landlords` },
+  { img: 'post-05-deposits.png', title: 'Florida security deposit rules', when: 'Wed Sep 23',
+    ig: `Florida landlords, know your deadlines:
+
+15 days to return a deposit when there's no claim.
+30 days to send a certified-mail notice if you are making a claim.
+
+Miss the 30-day notice and you generally lose the right to claim at all. Full breakdown at the link in bio.
+
+General information, not legal advice.
+
+#FloridaLandlord #SecurityDeposit #RentalProperty #HernandoCounty`,
+    fb: `Florida's security deposit rules have short deadlines, and missing one can cost a landlord the right to deduct anything. Here's the timeline, from move-in notice to move-out claim:
+https://truenorthpm.co/resources/florida-security-deposit-rules-for-landlords
+
+General information, not legal advice.` },
+  { img: 'post-06-investing.png', title: 'Run the numbers first', when: 'Fri Sep 25',
+    ig: `This home rents for $950 more than its mortgage. It still nets about −$4/month.
+
+Taxes, insurance, HOA, management, vacancy, and repair reserves add up. Run every number before you make an offer.
+
+Illustrative example only. Try our ROI calculator at the link in bio. Not investment advice.
+
+#RealEstateInvesting #HernandoCounty #RentalProperty #FloridaRealEstate`,
+    fb: `A home that rents for more than the mortgage can still lose money. Before you buy a rental in Hernando County, build the full monthly budget: taxes, insurance, HOA, management, vacancy, and reserves.
+
+Read the guide: https://truenorthpm.co/resources/numbers-to-run-before-buying-a-rental-in-hernando-county
+Try the ROI calculator: https://truenorthpm.co/roi-calculator
+
+Illustrative only, not investment advice.` },
+];
+
+const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;');
+document.getElementById('postList').innerHTML = POSTS.map((p, i) => `
+  <article class="post">
+    <div><img src="images/${p.img}" alt="Launch graphic ${i + 1}: ${esc(p.title)}" loading="lazy"><div class="when">${p.when} · ${p.img}</div></div>
+    <div class="post-copy">
+      <h3>${i + 1}. ${esc(p.title)}</h3>
+      <div class="field"><div class="f-top"><span class="f-label">Instagram caption</span><span class="count"></span><button class="copy">Copy</button></div><pre class="val" data-limit="2200">${esc(p.ig)}</pre></div>
+      <div class="field"><div class="f-top"><span class="f-label">Facebook + LinkedIn caption</span><button class="copy">Copy</button></div><pre class="val">${esc(p.fb)}</pre></div>
+    </div>
+  </article>`).join('');
+
+// Character counts against each platform's limit
+document.querySelectorAll('.val[data-limit]').forEach(v => {
+  const limit = +v.dataset.limit, n = [...v.textContent].length;
+  const out = v.parentElement.querySelector('.count');
+  if (out) { out.textContent = `${n} / ${limit}`; out.classList.toggle('over', n > limit); }
+});
+
+// Copy buttons (clipboard API with a selection fallback for sandboxed frames)
+document.addEventListener('click', async e => {
+  const b = e.target.closest('.copy'); if (!b) return;
+  const text = b.closest('.field').querySelector('.val').textContent;
+  let ok = false;
+  try { await navigator.clipboard.writeText(text); ok = true; } catch {
+    const t = document.createElement('textarea'); t.value = text; document.body.appendChild(t); t.select();
+    try { ok = document.execCommand('copy'); } catch {} t.remove();
+  }
+  b.textContent = ok ? 'Copied' : 'Select & copy';
+  b.classList.toggle('done', ok);
+  setTimeout(() => { b.textContent = 'Copy'; b.classList.remove('done'); }, 1600);
+});
+
+// Remember progress in this browser
+const KEY = 'tn-social-kit';
+let state = {};
+try { state = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch {}
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch {} };
+document.querySelectorAll('[data-step]').forEach(c => {
+  c.checked = !!state[c.dataset.step];
+  c.addEventListener('change', () => { state[c.dataset.step] = c.checked; save(); });
+});
+document.querySelectorAll('.chip').forEach(ch => {
+  const k = 'acct-' + ch.dataset.done;
+  ch.setAttribute('aria-pressed', String(!!state[k]));
+  ch.addEventListener('click', () => { state[k] = !state[k]; ch.setAttribute('aria-pressed', String(state[k])); save(); });
+});
+</script>

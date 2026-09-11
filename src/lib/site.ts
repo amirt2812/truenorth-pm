@@ -76,19 +76,33 @@ export const site = {
     googleBusinessProfile: "[INSERT Google Business Profile Link]",
   },
 
-  // ── Analytics / tag placeholders (wire in layout.tsx) ────────────────────
+  // ── Analytics (layout.tsx loads each tag only when its ID is filled in) ───
+  // Use GA4 directly OR through a GTM container — not both, or leads double-count.
   analytics: {
-    gtmId: "GTM-XXXXXXX", // INSERT Google Tag Manager container ID
-    ga4Id: "G-XXXXXXXXXX", // INSERT GA4 measurement ID
-    facebookPixelId: "INSERT_PIXEL_ID",
-    callTracking: "INSERT_CALL_TRACKING_SNIPPET",
+    gtmId: "", // Google Tag Manager container, e.g. "GTM-ABC1234"
+    ga4Id: "", // GA4 measurement ID, e.g. "G-ABC123XYZ"
+    metaPixelId: "", // Meta (Facebook/Instagram) Pixel ID, e.g. "123456789012345"
+    googleSiteVerification: "", // Search Console → HTML tag method → the content="…" value
   },
 
+  // ── Founding owner offer (homepage + switch page) ────────────────────────
+  // Hidden until the Founding Owner Offer Addendum (Legal/03 Owner Agreements,
+  // #18) is attorney-approved. Set `enabled: true` only then — the terms shown
+  // on the site must match the signed addendum.
+  foundingOffer: {
+    enabled: false,
+    spots: 20,
+    cancelWindowDays: 90,
+  },
+  responseTime: { en: "one business day", es: "un día hábil" },
+
   social: {
-    // Add real profile URLs when available; left empty so nothing fake renders.
+    // Paste full profile URLs once each account exists (e.g. "https://www.instagram.com/truenorthpmfl").
+    // Empty values render nothing — the footer icons and schema sameAs only show live profiles.
     facebook: "",
     instagram: "",
     linkedin: "",
+    youtube: "",
   },
 } as const;
 

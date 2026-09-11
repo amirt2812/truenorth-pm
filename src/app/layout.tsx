@@ -7,6 +7,7 @@ import { AlertBanner } from "@/components/layout/AlertBanner";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { MobileCtaBar } from "@/components/layout/MobileCtaBar";
+import { Attribution } from "@/components/layout/Attribution";
 import { JsonLd } from "@/components/ui/JsonLd";
 import { organizationSchema, localBusinessSchema } from "@/lib/schema";
 
@@ -23,6 +24,8 @@ const sans = Plus_Jakarta_Sans({
   display: "swap",
 });
 
+const { gtmId, ga4Id, metaPixelId, googleSiteVerification } = site.analytics;
+
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   // pageMeta() builds complete, brand-inclusive titles, so the template is a
@@ -36,26 +39,39 @@ export const metadata: Metadata = {
   applicationName: site.brand,
   // Favicon + apple icon are auto-wired from app/icon.svg and app/apple-icon.png.
   openGraph: { siteName: site.brand, type: "website", locale: "en_US" },
+  ...(googleSiteVerification ? { verification: { google: googleSiteVerification } } : {}),
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${display.variable} ${sans.variable}`}>
       <head>
-        {/* ── Google Tag Manager (INSERT real container ID in src/lib/site.ts) ── */}
-        {site.analytics.gtmId !== "GTM-XXXXXXX" && (
+        {/* Tags load only once their IDs are set in site.analytics (src/lib/site.ts). */}
+        {gtmId && (
           <Script id="gtm" strategy="afterInteractive">
-            {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','${site.analytics.gtmId}');`}
+            {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','${gtmId}');`}
           </Script>
         )}
-        {/* GA4, Facebook Pixel, and call-tracking snippets: add here once IDs are set in site.analytics. */}
+        {ga4Id && (
+          <>
+            <Script src={`https://www.googletagmanager.com/gtag/js?id=${ga4Id}`} strategy="afterInteractive" />
+            <Script id="ga4" strategy="afterInteractive">
+              {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}window.gtag=gtag;gtag('js',new Date());gtag('config','${ga4Id}');`}
+            </Script>
+          </>
+        )}
+        {metaPixelId && (
+          <Script id="meta-pixel" strategy="afterInteractive">
+            {`!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','${metaPixelId}');fbq('track','PageView');`}
+          </Script>
+        )}
       </head>
       <body className="font-sans">
         {/* GTM noscript fallback */}
-        {site.analytics.gtmId !== "GTM-XXXXXXX" && (
+        {gtmId && (
           <noscript>
             <iframe
-              src={`https://www.googletagmanager.com/ns.html?id=${site.analytics.gtmId}`}
+              src={`https://www.googletagmanager.com/ns.html?id=${gtmId}`}
               height="0"
               width="0"
               style={{ display: "none", visibility: "hidden" }}
@@ -72,6 +88,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </a>
 
         <JsonLd data={[organizationSchema(), localBusinessSchema()]} />
+        <Attribution />
 
         <AlertBanner />
         <Header />
