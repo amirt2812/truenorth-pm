@@ -86,11 +86,11 @@ export const site = {
   },
 
   // ── Founding owner offer (homepage + switch page) ────────────────────────
-  // Hidden until the Founding Owner Offer Addendum (Legal/03 Owner Agreements,
-  // #18) is attorney-approved. Set `enabled: true` only then — the terms shown
-  // on the site must match the signed addendum.
+  // Live terms must match the Founding Owner Offer Addendum (Legal/03 Owner
+  // Agreements, #18), signed with each founding owner. Set `enabled: false` to
+  // hide the terms, or once all spots are filled.
   foundingOffer: {
-    enabled: false,
+    enabled: true,
     spots: 20,
     cancelWindowDays: 90,
   },
