@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { pageMeta } from "@/lib/seo";
-import { site, compliance, activeBrokerageDisclosure, isBrokerageNamed } from "@/lib/site";
+import { site, compliance, activeBrokerageDisclosure } from "@/lib/site";
 import { LegalLayout } from "@/components/sections/LegalLayout";
 
 export const metadata: Metadata = pageMeta({
@@ -19,19 +19,20 @@ export default function LegalDisclosuresPage() {
       <h2>Brokerage & licensing</h2>
       <p>{activeBrokerageDisclosure()}</p>
       <ul>
-        {isBrokerageNamed && <li>Brokerage legal name: {site.brokerageLegalName}</li>}
-        {isBrokerageNamed && <li>Florida real estate brokerage license number: {site.brokerageLicenseNumber}</li>}
+        <li>Brokerage legal name: {site.brokerageLegalName}</li>
+        <li>Registered trade name (d/b/a): {site.brokerageTradeName}</li>
+        {site.brokerageLicenseNumber && (
+          <li>Florida real estate brokerage license number: {site.brokerageLicenseNumber}</li>
+        )}
+        <li>Broker: {site.broker.name}, Florida real estate broker license {site.broker.licenseNumber}</li>
+        <li>Brokerage office: {site.address}</li>
         <li>Holding company: {site.holdingCompany}</li>
       </ul>
-      {!isBrokerageNamed && (
-        <p className="text-sm text-slate-500">[Brokerage legal name and Florida license number to be published here.]</p>
-      )}
 
       <h2>Advertising & licensing disclosure</h2>
       <p>
-        [INSERT any advertising disclosures required for a Florida real estate licensee/brokerage,
-        including the brokerage name as registered and any required license identifiers, upon attorney
-        review and active registration.]
+        As required by Florida Administrative Code Rule 61J2-10.025, our advertising identifies the
+        brokerage by its full name as filed with the Florida DBPR: {site.brokerageLicensedName}.
       </p>
 
       <h2>Equal housing opportunity</h2>
@@ -55,7 +56,7 @@ export default function LegalDisclosuresPage() {
 
       <h2>Contact</h2>
       <p>
-        {site.brand} · {site.address} · {site.phone} · {site.email}
+        {site.brokerageLicensedName} · {site.address} · {site.phone} · {site.email}
       </p>
     </LegalLayout>
   );

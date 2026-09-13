@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { pageMeta } from "@/lib/seo";
-import { site, compliance, activeBrokerageDisclosure, isBrokerageNamed } from "@/lib/site";
+import { site, compliance, activeBrokerageDisclosure } from "@/lib/site";
 import { LegalLayout } from "@/components/sections/LegalLayout";
 
 export const metadata: Metadata = pageMeta({
@@ -21,19 +21,21 @@ export default function LegalDisclosuresEs() {
       <h2>Corretaje y licencias</h2>
       <p>{activeBrokerageDisclosure("es")}</p>
       <ul>
-        {isBrokerageNamed && <li>Nombre legal de la correduría: {site.brokerageLegalName}</li>}
-        {isBrokerageNamed && <li>Número de licencia de correduría de bienes raíces de Florida: {site.brokerageLicenseNumber}</li>}
+        <li>Nombre legal de la correduría: {site.brokerageLegalName}</li>
+        <li>Nombre comercial registrado (d/b/a): {site.brokerageTradeName}</li>
+        {site.brokerageLicenseNumber && (
+          <li>Número de licencia de correduría de bienes raíces de Florida: {site.brokerageLicenseNumber}</li>
+        )}
+        <li>Corredor: {site.broker.name}, licencia de corredor de bienes raíces de Florida {site.broker.licenseNumber}</li>
+        <li>Oficina de la correduría: {site.address}</li>
         <li>Compañía matriz: {site.holdingCompany}</li>
       </ul>
-      {!isBrokerageNamed && (
-        <p className="text-sm text-slate-500">[El nombre legal de la correduría y el número de licencia de Florida se publicarán aquí.]</p>
-      )}
 
       <h2>Aviso de publicidad y licencias</h2>
       <p>
-        [INSERTAR cualquier aviso de publicidad requerido para un licenciatario/correduría de bienes
-        raíces de Florida, incluyendo el nombre de la correduría tal como está registrado y cualquier
-        identificador de licencia requerido, tras la revisión del abogado y el registro activo.]
+        Conforme a la Regla 61J2-10.025 del Código Administrativo de Florida, nuestra publicidad
+        identifica a la correduría con su nombre completo tal como está registrado ante el DBPR de
+        Florida: {site.brokerageLicensedName}.
       </p>
 
       <h2>Igualdad de oportunidad de vivienda</h2>
@@ -58,7 +60,7 @@ export default function LegalDisclosuresEs() {
 
       <h2>Contacto</h2>
       <p>
-        {site.brand} · {site.address} · {site.phone} · {site.email}
+        {site.brokerageLicensedName} · {site.address} · {site.phone} · {site.email}
       </p>
     </LegalLayout>
   );

@@ -66,6 +66,7 @@ export default function ContactPage() {
           <div className="space-y-6 lg:col-span-5">
             <Card>
               <h2 className="font-display text-lg font-medium text-navy-800">Get in touch</h2>
+              <p className="mt-1 text-sm text-slate-600">{site.brokerageLicensedName}</p>
               <ul className="mt-4 space-y-4 text-[15px]">
                 <li className="flex items-center gap-3">
                   <Icon name="phone" className="h-5 w-5 text-gold-600" />
@@ -119,9 +120,9 @@ export default function ContactPage() {
 
             {isPreLaunch && (
               <div className="rounded-2xl border border-navy-200 bg-white p-5 text-sm text-slate-600">
-                <strong className="text-navy-800">Pre-launch note:</strong> Brokerage registration and
-                service launch are pending. You can still reach out and join the Founding Landlord List —
-                no services are provided until licensing is active.
+                <strong className="text-navy-800">Pre-launch note:</strong> Our brokerage registration has
+                been submitted to the Florida DBPR and is pending approval. You can still reach out and join
+                the Founding Landlord List — no services are provided until the registration is active.
               </div>
             )}
           </div>

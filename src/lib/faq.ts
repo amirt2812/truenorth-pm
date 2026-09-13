@@ -1,6 +1,6 @@
-import { site, serviceAreaSentence, isBrokerageNamed } from "./site";
+import { site, serviceAreaSentence, isPreLaunch } from "./site";
 
-/** Master FAQ list for /faq. License answer uses the required placeholder. */
+/** Master FAQ list for /faq. The license answer follows `launchStatus`. */
 export const faqs: { q: string; a: string }[] = [
   { q: "What areas do you serve?", a: `We serve ${serviceAreaSentence}` },
   { q: "What types of properties do you manage?", a: "We manage residential rentals — single-family homes, townhomes, condos, and small multi-unit and portfolio properties across Hernando County." },
@@ -16,9 +16,9 @@ export const faqs: { q: string; a: string }[] = [
   { q: "What software do you use?", a: `We use ${site.softwarePlatform} as our primary property management suite for rent payments, maintenance requests, owner visibility, and centralized communication.` },
   { q: "Can I switch from another property manager?", a: "Yes. Many owners come to us from another manager. We'll walk you through a clean transition, subject to the terms of your current agreement and a signed management agreement with us." },
   { q: "Do you work with out-of-state owners?", a: "Yes. Our RentRedi owner portal and clear monthly reporting are built so out-of-area owners stay fully informed." },
-  { q: "Are you a licensed brokerage?", a: isBrokerageNamed
-      ? `Property management and leasing services are provided through ${site.brokerageLegalName}, a Florida licensed real estate brokerage (license ${site.brokerageLicenseNumber}), in accordance with applicable Florida law.`
-      : "Property management and leasing services are provided in accordance with applicable Florida real estate law. Our full brokerage name and license number will be published here." },
+  { q: "Are you a licensed brokerage?", a: isPreLaunch
+      ? `${site.brand} is the trade name of ${site.brokerageLegalName}. Our Florida real estate brokerage registration has been submitted to the DBPR and is pending approval, and we'll publish the license number here once it's issued. No property management, leasing, or brokerage services are provided until then.`
+      : `Yes. ${site.brokerageLicensedName} is a Florida licensed real estate brokerage${site.brokerageLicenseNumber ? ` (license ${site.brokerageLicenseNumber})` : ""}. Our broker is ${site.broker.name} (license ${site.broker.licenseNumber}).` },
 ];
 
 /** Spanish master FAQ list for /es/faq. */
@@ -37,7 +37,7 @@ export const faqsEs: { q: string; a: string }[] = [
   { q: "¿Qué software usan?", a: `Usamos ${site.softwarePlatform} como nuestra suite principal de administración de propiedades para pagos de renta, solicitudes de mantenimiento, visibilidad del propietario y comunicación centralizada.` },
   { q: "¿Puedo cambiar de otro administrador?", a: "Sí. Muchos propietarios llegan a nosotros desde otro administrador. Le guiaremos en una transición limpia, sujeta a los términos de su acuerdo actual y a un acuerdo de administración firmado con nosotros." },
   { q: "¿Trabajan con propietarios de fuera del estado?", a: "Sí. Nuestro portal del propietario con RentRedi y los reportes mensuales claros están diseñados para que los propietarios de fuera del área se mantengan plenamente informados." },
-  { q: "¿Son una correduría con licencia?", a: isBrokerageNamed
-      ? `Los servicios de administración y arrendamiento se brindan a través de ${site.brokerageLegalName}, una correduría de bienes raíces con licencia en Florida (licencia ${site.brokerageLicenseNumber}), de acuerdo con la ley aplicable de Florida.`
-      : "Los servicios de administración y arrendamiento se brindan de acuerdo con la ley de bienes raíces aplicable de Florida. Nuestro nombre completo de correduría y número de licencia se publicarán aquí." },
+  { q: "¿Son una correduría con licencia?", a: isPreLaunch
+      ? `${site.brand} es el nombre comercial de ${site.brokerageLegalName}. Nuestro registro como correduría de bienes raíces en Florida fue presentado ante el DBPR y está pendiente de aprobación; publicaremos aquí el número de licencia una vez emitido. No se brindan servicios de administración de propiedades, arrendamiento ni corretaje hasta entonces.`
+      : `Sí. ${site.brokerageLicensedName} es una correduría de bienes raíces con licencia en Florida${site.brokerageLicenseNumber ? ` (licencia ${site.brokerageLicenseNumber})` : ""}. Nuestro corredor es ${site.broker.name} (licencia ${site.broker.licenseNumber}).` },
 ];

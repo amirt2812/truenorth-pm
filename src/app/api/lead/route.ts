@@ -124,7 +124,7 @@ function autoReply(p: Record<string, unknown>, to: string) {
       contentType: "HTML",
       content:
         p2(hi) + lines.map(p2).join("") +
-        p2(`${site.founder.name}<br>${site.founder.title}, ${site.brand}<br>${site.phone} · <a href="${site.url}">${site.domain}</a>`),
+        p2(`${site.founder.name}, ${site.founder.title}<br>${site.brokerageLicensedName}<br>${site.phone} · <a href="${site.url}">${site.domain}</a>`),
     },
     toRecipients: [{ emailAddress: { address: to } }],
   };

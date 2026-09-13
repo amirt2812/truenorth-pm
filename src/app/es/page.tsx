@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { pageMeta } from "@/lib/seo";
-import { site, serviceAreas } from "@/lib/site";
+import { site, serviceAreas, isPreLaunch } from "@/lib/site";
 import { managementPlansEs } from "@/lib/pricing";
 import { Button } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
@@ -27,7 +27,7 @@ const trustBullets = [
   { icon: "key", text: "Experiencia para propietario e inquilino con RentRedi" },
   { icon: "wrench", text: "Umbrales claros de aprobación de mantenimiento" },
   { icon: "chart", text: "Reportes mensuales para el propietario" },
-  { icon: "shield", text: "Marco de cumplimiento dirigido por corredor, una vez activo" },
+  { icon: "shield", text: isPreLaunch ? "Marco de cumplimiento dirigido por corredor, una vez activo" : "Marco de cumplimiento dirigido por corredor" },
 ] as const;
 
 const painPoints = [
@@ -278,7 +278,7 @@ export default function HomeEs() {
             &ldquo;Tratar la propiedad de cada propietario como un activo que vale la pena proteger, y
             darle a los propietarios la visibilidad y capacidad de respuesta que merecen.&rdquo;
           </blockquote>
-          <p className="mt-6 text-sm text-slate-500">{site.founder.name}, {site.founder.title}</p>
+          <p className="mt-6 text-sm text-slate-500">{site.founder.name}, {site.founder.titleEs}</p>
           <div className="mt-8">
             <Button href="/es/about" variant="secondary">Conozca TrueNorth</Button>
           </div>

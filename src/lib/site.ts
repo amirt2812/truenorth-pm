@@ -18,14 +18,22 @@
  * "licensed"    → Version B language. Requires a confirmed, active Florida
  *                 brokerage registration. Only switch this AFTER the user
  *                 confirms licensing is active (per compliance instruction #1).
+ *
+ * DBPR approved TrueNorth Brokerage Group LLC d/b/a TrueNorth Property
+ * Management in September 2026. Paste the brokerage (CQ) license number into
+ * `brokerageLicenseNumber` below; it shows on the legal pages and FAQ once set.
  */
 export type LaunchStatus = "pre-launch" | "licensed";
 export const launchStatus = "licensed" as LaunchStatus;
 
 export const isPreLaunch = launchStatus === "pre-launch";
 
+// Exactly as filed with DBPR and Sunbiz.
+const brokerageLegalName = "TrueNorth Brokerage Group LLC";
+const brokerageTradeName = "TrueNorth Property Management";
+
 export const site = {
-  brand: "TrueNorth Property Management",
+  brand: brokerageTradeName,
   shortName: "TrueNorth",
   tagline: "Property Management With Direction.",
   domain: "truenorthpm.co",
@@ -37,15 +45,21 @@ export const site = {
 
   // ── Legal entities ───────────────────────────────────────────────────────
   holdingCompany: "MAGNA CAPITAL LLC",
-  // The legal brokerage name is intentionally a placeholder (name conflict noted).
-  brokerageLegalName: "[Licensed Brokerage LLC Name]",
-  brokerageLicenseNumber: "[INSERT Florida Brokerage License Number]",
+  brokerageLegalName,
+  brokerageTradeName,
+  // Full licensed name. Fla. R. 61J2-10.025 requires it in all real estate
+  // advertising, and on web pages next to the contact information.
+  brokerageLicensedName: `${brokerageLegalName} d/b/a ${brokerageTradeName}`,
+  // DBPR brokerage (CQ) license number, e.g. "CQ1234567".
+  brokerageLicenseNumber: "",
+  broker: { name: "Alfredo Mirt", licenseNumber: "BK3589651" },
   softwarePlatform: "RentRedi",
 
   // ── Founder ──────────────────────────────────────────────────────────────
   founder: {
     name: "Alfredo Mirt",
-    title: "Founder",
+    title: isPreLaunch ? "Founder" : "Founder & Broker",
+    titleEs: isPreLaunch ? "Fundador" : "Fundador y Corredor",
     // Drop the headshot at public/founder.jpg — until then a clean "AM" monogram shows.
     photo: "/founder.jpg",
     bio: "Alfredo Mirt is the founder of TrueNorth Property Management and a local Hernando County real estate investor. He started TrueNorth to bring institutional-quality systems — transparent pricing, modern technology, and clear, proactive communication — to local residential landlords who've been underserved by traditional property managers. His approach is simple: treat every owner's property like an asset worth protecting, and give owners the visibility and responsiveness they deserve.",
@@ -120,19 +134,18 @@ export const serviceAreaSentence =
 
 export type Lang2 = "en" | "es";
 
+const licenseNo = (label: string) =>
+  site.brokerageLicenseNumber ? `, ${label} ${site.brokerageLicenseNumber}` : "";
+
 // ── Compliance copy blocks (bilingual; used by Footer + legal pages) ─────────
 export const compliance = {
   preLaunchDisclosure: {
-    en: "Brokerage registration and service launch pending. Website content is for informational and pre-launch purposes only. No property management, leasing, or brokerage services are provided until all required licensing and registrations are active.",
-    es: "Registro de corretaje y lanzamiento de servicios pendientes. El contenido del sitio web es solo para fines informativos y de prelanzamiento. No se brindan servicios de administración de propiedades, arrendamiento ni corretaje hasta que todas las licencias y registros requeridos estén activos.",
+    en: `${brokerageTradeName} is the trade name of ${brokerageLegalName}. Its Florida real estate brokerage registration has been submitted to the Florida Department of Business and Professional Regulation (DBPR) and is pending approval. Website content is for informational and pre-launch purposes only. No property management, leasing, or brokerage services are provided until the registration is active.`,
+    es: `${brokerageTradeName} es el nombre comercial de ${brokerageLegalName}. Su registro como correduría de bienes raíces en Florida fue presentado ante el Departamento de Regulación Comercial y Profesional de Florida (DBPR) y está pendiente de aprobación. El contenido del sitio web es solo para fines informativos y de prelanzamiento. No se brindan servicios de administración de propiedades, arrendamiento ni corretaje hasta que el registro esté activo.`,
   },
   licensedDisclosure: {
-    en: `TrueNorth Property Management is operated by ${site.brokerageLegalName}, a Florida licensed real estate brokerage. License number: ${site.brokerageLicenseNumber}.`,
-    es: `TrueNorth Property Management es operada por ${site.brokerageLegalName}, una correduría de bienes raíces con licencia en Florida. Número de licencia: ${site.brokerageLicenseNumber}.`,
-  },
-  licensedInterimDisclosure: {
-    en: "TrueNorth Property Management provides property management and leasing services in accordance with applicable Florida real estate law. Full brokerage name and license number will be published here.",
-    es: "TrueNorth Property Management brinda servicios de administración de propiedades y arrendamiento de acuerdo con la ley de bienes raíces aplicable de Florida. El nombre completo de la correduría y el número de licencia se publicarán aquí.",
+    en: `${site.brokerageLicensedName}, a Florida licensed real estate brokerage${licenseNo("License No.")}. Broker: ${site.broker.name}, License No. ${site.broker.licenseNumber}.`,
+    es: `${site.brokerageLicensedName}, correduría de bienes raíces con licencia en Florida${licenseNo("licencia n.°")}. Corredor: ${site.broker.name}, licencia n.° ${site.broker.licenseNumber}.`,
   },
   fairHousing: {
     en: "TrueNorth Property Management supports equal housing opportunity and does not discriminate on the basis of race, color, national origin, religion, sex, familial status, disability, or any other protected class under applicable law.",
@@ -152,13 +165,8 @@ export const compliance = {
   },
 } as const;
 
-/** True once the real brokerage legal name has been filled in (no placeholder brackets). */
-export const isBrokerageNamed = !site.brokerageLegalName.includes("[");
-
 /**
  * Returns the correct brokerage disclosure for the current state + language.
  */
-export const activeBrokerageDisclosure = (lang: Lang2 = "en"): string => {
-  if (isPreLaunch) return compliance.preLaunchDisclosure[lang];
-  return isBrokerageNamed ? compliance.licensedDisclosure[lang] : compliance.licensedInterimDisclosure[lang];
-};
+export const activeBrokerageDisclosure = (lang: Lang2 = "en"): string =>
+  isPreLaunch ? compliance.preLaunchDisclosure[lang] : compliance.licensedDisclosure[lang];

@@ -77,7 +77,7 @@ export default function AboutEs() {
           <div className="flex flex-col items-center gap-6 sm:flex-row sm:items-start">
             <FounderAvatar className="h-28 w-28" />
             <div>
-              <p className="text-sm font-semibold uppercase tracking-wider text-gold-600">Fundador</p>
+              <p className="text-sm font-semibold uppercase tracking-wider text-gold-600">{site.founder.titleEs}</p>
               <h2 className="mt-1 font-display text-2xl text-navy-800">{site.founder.name}</h2>
               <p className="mt-3 leading-relaxed text-slate-600">{founderBioEs}</p>
             </div>

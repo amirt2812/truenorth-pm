@@ -1,8 +1,7 @@
-import { site, serviceAreas, isPreLaunch, isBrokerageNamed } from "./site";
+import { site, serviceAreas, isPreLaunch } from "./site";
 
 /**
- * JSON-LD structured data builders. All use placeholder legal name until the
- * brokerage entity is confirmed. Render with the <JsonLd /> component.
+ * JSON-LD structured data builders. Render with the <JsonLd /> component.
  */
 
 const sameAs = Object.values(site.social).filter(Boolean);
@@ -13,7 +12,7 @@ export function organizationSchema() {
     "@type": "Organization",
     "@id": `${site.url}/#organization`,
     name: site.brand,
-    ...(isBrokerageNamed ? { legalName: site.brokerageLegalName } : {}),
+    legalName: site.brokerageLegalName,
     url: site.url,
     logo: `${site.url}/logo-stacked.png`,
     slogan: site.tagline,

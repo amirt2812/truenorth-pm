@@ -68,6 +68,7 @@ export default function ContactEs() {
           <div className="space-y-6 lg:col-span-5">
             <Card>
               <h2 className="font-display text-lg font-medium text-navy-800">Póngase en contacto</h2>
+              <p className="mt-1 text-sm text-slate-600">{site.brokerageLicensedName}</p>
               <ul className="mt-4 space-y-4 text-[15px]">
                 <li className="flex items-center gap-3">
                   <Icon name="phone" className="h-5 w-5 text-gold-600" />

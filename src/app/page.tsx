@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { pageMeta } from "@/lib/seo";
-import { site, serviceAreas, serviceAreaSentence } from "@/lib/site";
+import { site, serviceAreas, serviceAreaSentence, isPreLaunch } from "@/lib/site";
 import { managementPlans } from "@/lib/pricing";
 import { Button } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
@@ -28,7 +28,7 @@ const trustBullets = [
   { icon: "key", text: "RentRedi-powered owner & tenant experience" },
   { icon: "wrench", text: "Clear maintenance approval thresholds" },
   { icon: "chart", text: "Monthly owner reporting" },
-  { icon: "shield", text: "Broker-led compliance framework, once active" },
+  { icon: "shield", text: isPreLaunch ? "Broker-led compliance framework, once active" : "Broker-led compliance framework" },
 ] as const;
 
 const painPoints = [

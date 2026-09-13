@@ -27,11 +27,14 @@ The entire site flips between **pre-launch** and **licensed** messaging from one
 
 `src/lib/site.ts` → `export const launchStatus = "pre-launch" | "licensed"`
 
-- **`"pre-launch"`** (default): shows the license-pending alert banner and Version A
-  brokerage disclosure. No claim of an active brokerage. **Keep this until brokerage
-  registration is confirmed active.**
-- **`"licensed"`**: shows Version B disclosure with the legal brokerage name + license
-  number. **Only switch after the brokerage registration is active.**
+- **`"pre-launch"`**: shows the license-pending alert banner and Version A
+  brokerage disclosure. No claim of an active brokerage.
+- **`"licensed"`** (current): shows Version B disclosure with the licensed brokerage name,
+  license number, and broker.
+
+Brokerage: **TrueNorth Brokerage Group LLC d/b/a TrueNorth Property Management**, broker
+Alfredo Mirt (BK3589651). DBPR approved the brokerage in September 2026. Put its CQ license
+number in `site.brokerageLicenseNumber` (`src/lib/site.ts`).
 
 Compliance copy (fair housing, no-advice, pricing disclaimer, both disclosure versions)
 lives in `compliance` / `activeBrokerageDisclosure()` in `src/lib/site.ts`.
@@ -45,8 +48,7 @@ lives in `compliance` / `activeBrokerageDisclosure()` in `src/lib/site.ts`.
 
 | Placeholder | Where |
 | --- | --- |
-| `[Licensed Brokerage LLC Name]` | `site.brokerageLegalName` |
-| `[Florida Brokerage License Number]` | `site.brokerageLicenseNumber` |
+| Brokerage CQ license number (pending DBPR) | `site.brokerageLicenseNumber` |
 | `[Business Phone]` + `phoneHref` (E.164) | `site.phone`, `site.phoneHref` |
 | `[Business Email]` (Outlook domain) | `site.email`, `site.emailHref` |
 | `[Business Address / Mailing Address]` | `site.address` |

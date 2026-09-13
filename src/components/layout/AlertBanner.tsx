@@ -12,8 +12,8 @@ export function AlertBanner() {
       <div className="container-tn flex items-center justify-center gap-2 py-2">
         <span className="inline-block h-1.5 w-1.5 rounded-full bg-gold-400" aria-hidden="true" />
         <p>
-          <span className="font-semibold text-white">Pre-launch:</span> Brokerage registration and
-          service launch pending. Content is informational only.
+          <span className="font-semibold text-white">Pre-launch:</span> Brokerage registration
+          submitted to the Florida DBPR and pending approval. Content is informational only.
         </p>
       </div>
     </div>

@@ -52,7 +52,9 @@ export function Footer() {
               {f.blurb(serviceAreaSentence)}
             </p>
 
-            <ul className="mt-6 space-y-2 text-sm">
+            {/* Fla. R. 61J2-10.025: licensed brokerage name adjacent to the contact info. */}
+            <p className="mt-6 text-sm font-semibold text-white">{site.brokerageLicensedName}</p>
+            <ul className="mt-3 space-y-2 text-sm">
               <li className="flex items-center gap-2">
                 <Icon name="phone" className="h-4 w-4 text-gold-400" />
                 <a href={site.phoneHref} className="hover:text-white">{site.phone}</a>
@@ -123,7 +125,7 @@ export function Footer() {
 
         {/* Bottom bar */}
         <div className="mt-8 flex flex-col items-start justify-between gap-4 border-t border-navy-700 pt-6 text-xs text-navy-300 sm:flex-row sm:items-center">
-          <p>© {year} {site.brand}. {f.rights}</p>
+          <p>© {year} {site.brokerageLicensedName}. {f.rights}</p>
           <div className="flex flex-wrap gap-x-5 gap-y-2">
             <Link href={L("/privacy-policy")} className="hover:text-white">{f.privacy}</Link>
             <Link href={L("/terms-of-use")} className="hover:text-white">{f.terms}</Link>
