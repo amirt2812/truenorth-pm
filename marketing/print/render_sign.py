@@ -3,14 +3,16 @@ Brokerage office entrance sign, as a print-ready decal (Fla. Stat. s. 475.22).
 
 Florida requires a sign on or about the office entrance, easily read by anyone
 about to enter, showing the firm or trade name, at least one broker's name, and
-the words "Licensed Real Estate Broker". Two colorways, same layout:
+the words "Licensed Real Estate Broker". License numbers are not required on the
+sign, but they are cheap proof for anyone who asks. Two colorways, same layout:
 
   office-sign-navy.pdf / .png    white logo on navy (best on a door or glass)
   office-sign-white.pdf / .png   navy logo on white
 
 Finished size 12" x 8". Each file includes 0.125" bleed on every side
 (12.25" x 8.25"); the sign shop cuts at the trim. All copy sits well inside a
-0.5" safe area. PDFs are vector text; PNGs are previews.
+0.5" safe area. PDFs are vector text; PNGs are previews. To print smaller, scale
+the whole file proportionally — don't retype it at a different size.
 
     python3 marketing/print/render_sign.py
 """
@@ -20,7 +22,7 @@ import tempfile
 
 HERE = pathlib.Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
-from render_print import BROKERAGE, ROOT, chrome  # noqa: E402  (also puts marketing/social on the path)
+from render_print import BROKERAGE, BROKER_LICENSE, BROKERAGE_LICENSE, PHONE, ROOT, URL, chrome  # noqa: E402
 from render import BASE_CSS, GOLD, GOLD_LT, H_LOGO, MIST, NAVY, SLATE  # noqa: E402
 
 BROKER = "Alfredo Mirt"
@@ -41,8 +43,10 @@ html,body{{width:{W_IN}in;height:{H_IN}in;background:{bg};-webkit-print-color-ad
   <div style="margin-top:.34in;width:1.1in;height:2pt;background:{GOLD}"></div>
   <div class="serif" style="margin-top:.3in;color:{ink};font-size:36pt;line-height:1.1;font-weight:500;letter-spacing:-.01em">{LEGAL_NAME}</div>
   <div style="margin-top:.08in;color:{sub};font-size:20pt;font-weight:500">d/b/a {TRADE_NAME}</div>
-  <div class="serif" style="margin-top:.44in;color:{ink};font-size:30pt;line-height:1.1;font-weight:500">{BROKER}</div>
+  <div class="serif" style="margin-top:.4in;color:{ink};font-size:30pt;line-height:1.1;font-weight:500">{BROKER}</div>
   <div class="caps" style="margin-top:.08in;color:{accent};font-size:18pt;letter-spacing:.2em">Licensed Real Estate Broker</div>
+  <div style="margin-top:.26in;color:{sub};font-size:12.5pt">Brokerage License {BROKERAGE_LICENSE} · Broker License {BROKER_LICENSE}</div>
+  <div style="margin-top:.09in;color:{sub};font-size:12.5pt">{URL} · {PHONE}</div>
 </div></body></html>"""
 
 

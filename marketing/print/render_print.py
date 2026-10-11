@@ -24,7 +24,11 @@ from render import (  # noqa: E402
 )
 
 ROOT = HERE.parents[1]
-PHONE = "(727) 815-5245"
+PHONE = "(352) 995-2355"
+EMAIL = "alfredo@truenorthpm.co"
+URL = "truenorthpm.co"
+BROKERAGE_LICENSE = "CQ1075599"  # DBPR brokerage (CQ) license
+BROKER_LICENSE = "BK3589651"  # principal broker
 BROKERAGE = "TrueNorth Brokerage Group LLC d/b/a TrueNorth Property Management"  # Fla. R. 61J2-10.025 — licensed name, required on all advertising
 RETURN_ADDRESS = "7629 Odessa Ct · Brooksville, FL 34613"
 QR_JS = (
@@ -75,7 +79,7 @@ def postcard_back():
         f'<div style="width:230px;flex:none" class="qr" data-url="https://truenorthpm.co/mail"></div>'
         f'<div><div style="color:{NAVY};font-size:50px;font-weight:700">{PHONE}</div>'
         f'<div style="color:{NAVY};font-size:44px;font-weight:600">truenorthpm.co/mail</div>'
-        f'<p style="margin-top:18px;color:{SLATE};font-size:22px;line-height:1.45">{BROKERAGE} · Equal Housing Opportunity. The rental analysis is a market-informed estimate, not an appraisal. '
+        f'<p style="margin-top:18px;color:{SLATE};font-size:22px;line-height:1.45">{BROKERAGE} · License {BROKERAGE_LICENSE} · Equal Housing Opportunity. The rental analysis is a market-informed estimate, not an appraisal. '
         f"If your property is currently listed for sale or under a management agreement, please disregard this notice.</p></div></div></div>"
     )
     right = (
@@ -138,7 +142,7 @@ html,body{{width:8.5in;height:11in;background:#fff;-webkit-print-color-adjust:ex
       <div class="qr" data-url="https://truenorthpm.co/agents"></div>
     </div>
   </div>
-  <p style="margin-top:.16in;font-size:7.5pt;line-height:1.45;color:{SLATE}">{BROKERAGE} · Equal Housing Opportunity · Any referral arrangement complies with Florida real estate law.
+  <p style="margin-top:.16in;font-size:7.5pt;line-height:1.45;color:{SLATE}">{BROKERAGE} · License {BROKERAGE_LICENSE} · Equal Housing Opportunity · Any referral arrangement complies with Florida real estate law.
     truenorthpm.co/agents</p>
 </div>{QR_JS}</body></html>"""
     return html

@@ -50,8 +50,8 @@ export const site = {
   // Full licensed name. Fla. R. 61J2-10.025 requires it in all real estate
   // advertising, and on web pages next to the contact information.
   brokerageLicensedName: `${brokerageLegalName} d/b/a ${brokerageTradeName}`,
-  // DBPR brokerage (CQ) license number, e.g. "CQ1234567".
-  brokerageLicenseNumber: "",
+  // DBPR brokerage (CQ) license number.
+  brokerageLicenseNumber: "CQ1075599",
   broker: { name: "Alfredo Mirt", licenseNumber: "BK3589651" },
   softwarePlatform: "RentRedi",
 
@@ -66,8 +66,8 @@ export const site = {
   },
 
   // ── Contact ──────────────────────────────────────────────────────────────
-  phone: "(727) 815-5245",
-  phoneHref: "tel:+17278155245",
+  phone: "(352) 995-2355",
+  phoneHref: "tel:+13529952355",
   email: "alfredo@truenorthpm.co",
   emailHref: "mailto:alfredo@truenorthpm.co",
   address: "7629 Odessa Ct, Brooksville, FL 34613",
