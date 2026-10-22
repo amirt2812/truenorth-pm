@@ -46,6 +46,10 @@ export default function ContactPage() {
                   formId="contact"
                   thankYouType="default"
                   topicOptions={[
+                    "Sell my home",
+                    "Buy a home",
+                    "New construction — register me",
+                    "Join the brokerage as an agent",
                     "Request a management proposal",
                     "Schedule an owner consultation",
                     "Free rental analysis",

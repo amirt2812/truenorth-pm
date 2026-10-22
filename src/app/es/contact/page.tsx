@@ -49,6 +49,10 @@ export default function ContactEs() {
                   lang="es"
                   thankYouType="default"
                   topicOptions={[
+                    "Vender mi casa",
+                    "Comprar una casa",
+                    "Obra nueva — regístrenme",
+                    "Unirme a la correduría como agente",
                     "Solicitar una propuesta de administración",
                     "Agendar una consulta de propietario",
                     "Análisis de renta gratis",

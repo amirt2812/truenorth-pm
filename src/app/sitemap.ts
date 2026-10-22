@@ -6,6 +6,11 @@ import { properties } from "@/lib/properties";
 /** All public routes (English paths). Spanish equivalents live under /es. */
 const routes = [
   "/",
+  "/brokerage",
+  "/sell",
+  "/buy",
+  "/new-construction",
+  "/join",
   "/property-management",
   "/pricing",
   "/free-rental-analysis",
@@ -39,7 +44,7 @@ const esUrl = (path: string) => `${site.url}${path === "/" ? "/es" : `/es${path}
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
   const priorityFor = (path: string) =>
-    path === "/" ? 1 : ["/free-rental-analysis", "/pricing", "/property-management"].includes(path) ? 0.9 : 0.7;
+    path === "/" ? 1 : ["/free-rental-analysis", "/pricing", "/property-management", "/sell", "/buy", "/new-construction", "/join"].includes(path) ? 0.9 : 0.7;
   const freqFor = (path: string): "weekly" | "monthly" | "yearly" =>
     path === "/" ? "weekly" : path.startsWith("/resources/") ? "yearly" : "monthly";
 

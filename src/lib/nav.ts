@@ -13,6 +13,16 @@ export type NavGroup = { label: string; href?: string; children?: NavLink[] };
  * separately via localizeHref(), so we only translate display text.
  */
 export const navLabelEs: Record<string, string> = {
+  // Brokerage (sales side)
+  "Buy & Sell": "Comprar y Vender",
+  Brokerage: "Correduría",
+  Sell: "Vender",
+  "Sell Your Home": "Venda su Casa",
+  Buy: "Comprar",
+  "Buy a Home": "Comprar una Casa",
+  "New Construction Rebate": "Reembolso de Obra Nueva",
+  "Join the Brokerage": "Únase a la Correduría",
+  "For Agents": "Para Agentes",
   // Primary nav
   "Property Management": "Administración de Propiedades",
   "Full-Service Management": "Administración Integral",
@@ -69,6 +79,16 @@ export const primaryNav: NavGroup[] = [
       { label: "Hernando County", href: "/hernando-county-property-management" },
     ],
   },
+  {
+    label: "Buy & Sell",
+    href: "/brokerage",
+    children: [
+      { label: "Sell Your Home", href: "/sell" },
+      { label: "Buy a Home", href: "/buy" },
+      { label: "New Construction Rebate", href: "/new-construction" },
+      { label: "Join the Brokerage", href: "/join" },
+    ],
+  },
   { label: "Rentals", href: "/properties" },
   { label: "Pricing", href: "/pricing" },
   {
@@ -112,6 +132,16 @@ export const footerNav: { heading: string; links: NavLink[] }[] = [
       { label: "Investor Services", href: "/investor-services" },
       { label: "Landlord ROI Calculator", href: "/roi-calculator" },
       { label: "Realtor Referral Partners", href: "/realtor-referral-partners" },
+    ],
+  },
+  {
+    heading: "Buy & Sell",
+    links: [
+      { label: "Brokerage", href: "/brokerage" },
+      { label: "Sell Your Home", href: "/sell" },
+      { label: "Buy a Home", href: "/buy" },
+      { label: "New Construction Rebate", href: "/new-construction" },
+      { label: "Join the Brokerage", href: "/join" },
     ],
   },
   {

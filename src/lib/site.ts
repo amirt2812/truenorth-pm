@@ -50,6 +50,9 @@ export const site = {
   // Full licensed name. Fla. R. 61J2-10.025 requires it in all real estate
   // advertising, and on web pages next to the contact information.
   brokerageLicensedName: `${brokerageLegalName} d/b/a ${brokerageTradeName}`,
+  // Sales side trades under the legal name, without the LLC suffix, so a
+  // property-management name never lands on a for-sale listing.
+  salesBrand: "TrueNorth Brokerage Group",
   // DBPR brokerage (CQ) license number.
   brokerageLicenseNumber: "CQ1075599",
   broker: { name: "Alfredo Mirt", licenseNumber: "BK3589651" },
@@ -88,6 +91,9 @@ export const site = {
     calendly: "https://calendly.com/alfredo-truenorthpm",
 
     googleBusinessProfile: "[INSERT Google Business Profile Link]",
+    // DocuSign PowerForm for the new agent packet. Until it is pasted in, the
+    // Join page routes agents to the contact form instead.
+    agentPacket: "",
   },
 
   // ── Analytics (layout.tsx loads each tag only when its ID is filled in) ───
@@ -158,6 +164,14 @@ export const compliance = {
   noAdvice: {
     en: "Website content is for general informational purposes only and is not legal, tax, financial, or investment advice.",
     es: "El contenido del sitio web es solo para fines informativos generales y no constituye asesoramiento legal, fiscal, financiero ni de inversión.",
+  },
+  commissionsNegotiable: {
+    en: "Real estate commissions are not set by law and are fully negotiable between a client and a brokerage.",
+    es: "Las comisiones de bienes raíces no están fijadas por ley y son totalmente negociables entre el cliente y la correduría.",
+  },
+  rebateShort: {
+    en: "New-construction rebates are paid as a credit at closing, require the builder to pay a cooperating commission, and are disclosed to the builder, your lender, and the closing agent. Your lender may limit or decline a credit.",
+    es: "Los reembolsos de obra nueva se pagan como crédito en el cierre, requieren que el constructor pague una comisión cooperativa, y se divulgan al constructor, a su prestamista y al agente de cierre. Su prestamista puede limitar o rechazar un crédito.",
   },
   pricingDisclaimer: {
     en: "Pricing is subject to property type, location, condition, service scope, and signed management agreement.",
