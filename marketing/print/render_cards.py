@@ -21,7 +21,7 @@ from render_print import (BROKERAGE, BROKER_LICENSE, BROKERAGE_LICENSE, EMAIL, P
                           ROOT, URL, chrome)
 from render import BASE_CSS, GOLD, GOLD_LT, H_LOGO, MIST, NAVY, SLATE, compass  # noqa: E402
 
-BROKER, BROKER_TITLE = "Alfredo Mirt", "Founder &amp; Broker"
+BROKER, BROKER_TITLE = "Alfredo Mirt", "Broker-Owner"
 # Tagged so scans show up as their own source in analytics.
 CARD_QR_URL = "https://truenorthpm.co/?utm_source=business_card&utm_medium=print"
 ADDRESS = "7629 Odessa Ct · Brooksville, FL 34613"

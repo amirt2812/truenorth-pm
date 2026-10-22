@@ -134,7 +134,7 @@ html,body{{width:8.5in;height:11in;background:#fff;-webkit-print-color-adjust:ex
   </div>
   <div style="margin-top:auto;background:{NAVY};border-radius:.14in;padding:.3in .34in;display:flex;align-items:center;justify-content:space-between;gap:.3in">
     <div style="color:#fff">
-      <div class="serif" style="font-size:17pt;font-weight:500">Alfredo Mirt, Founder &amp; Broker</div>
+      <div class="serif" style="font-size:17pt;font-weight:500">Alfredo Mirt, Broker-Owner</div>
       <div style="margin-top:.06in;font-size:11pt;color:{GOLD_LT};font-weight:600">{PHONE} · alfredo@truenorthpm.co</div>
       <div style="margin-top:.04in;font-size:9.5pt;color:{MIST}">Spring Hill · Brooksville · Weeki Wachee · Hernando Beach · Timber Pines</div>
     </div>
