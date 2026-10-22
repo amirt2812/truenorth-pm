@@ -91,8 +91,10 @@ export const site = {
     calendly: "https://calendly.com/alfredo-truenorthpm",
 
     googleBusinessProfile: "[INSERT Google Business Profile Link]",
-    // DocuSign PowerForm for the new agent packet. Until it is pasted in, the
-    // Join page routes agents to the contact form instead.
+    // DocuSign PowerForm for the new agent packet. Paste the PowerForm URL here
+    // and three things switch over at once: the two buttons on /join, and the
+    // short links truenorthpm.co/apply and /es/apply. Until it is set, those
+    // fall back to the Join page and the contact form.
     agentPacket: "",
   },
 
