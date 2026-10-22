@@ -95,7 +95,8 @@ export const site = {
     // and three things switch over at once: the two buttons on /join, and the
     // short links truenorthpm.co/apply and /es/apply. Until it is set, those
     // fall back to the Join page and the contact form.
-    agentPacket: "",
+    agentPacket:
+      "https://na4.docusign.net/Member/PowerFormSigning.aspx?PowerFormId=79729008-2314-4064-859a-2e0981f48bd0&env=na4&acct=2e2d9ce7-76ef-4868-91cc-ffcf9d70fd0b&v=2",
   },
 
   // ── Analytics (layout.tsx loads each tag only when its ID is filled in) ───
