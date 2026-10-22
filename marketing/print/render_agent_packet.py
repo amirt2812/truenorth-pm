@@ -32,9 +32,9 @@ TERMS = {
     "desk_fee": "$0",
     "franchise_fee": "$0",
     "sign_fee": "$0",
-    # CONFIRM before sending: if the brokerage E&O policy does not extend to
-    # agents, change this to "Agent provides proof of coverage" and say so.
-    "eo": "Carried by the brokerage",
+    # The brokerage does not provide E&O. Each agent carries their own and
+    # files a certificate before their first transaction.
+    "eo": "Agent carries their own",
     "file_deadline": "2 business days",
     "payout": "within 1 business day of the brokerage receiving the commission",
 }
@@ -67,13 +67,14 @@ FEES = [
     ("Desk fee", TERMS["desk_fee"], "The brokerage is virtual. No desk fee now, and none when the office opens."),
     ("Franchise or royalty fee", TERMS["franchise_fee"], "TrueNorth is independent. Nothing comes off the top."),
     ("Sign and lockbox use", TERMS["sign_fee"], "Brokerage signage and electronic lockboxes are provided for your listings."),
-    ("Errors and omissions coverage", TERMS["eo"], "Covers transactions closed through the brokerage."),
+    ("Errors and omissions coverage", TERMS["eo"], "You carry your own policy and file a certificate before your first transaction. The brokerage does not provide E&O."),
     ("Listing marketing package", "Included", "Photography, aerial, video, floor plan, flyers, open house support."),
 ]
 
 AGENT_PAYS = [
     "Your Florida license renewal and post-licensing or continuing education.",
     "Your Realtor association dues, MLS fees, and lockbox key fob or app subscription.",
+    "Your own errors and omissions insurance. The brokerage does not carry coverage for agents, and you may not take a listing or write an offer until your certificate is on file.",
     "Your own prospecting and personal branding beyond the listing package.",
     "Your vehicle, phone, and anything else you would pay for as an independent contractor.",
 ]

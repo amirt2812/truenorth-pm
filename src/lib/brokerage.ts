@@ -201,6 +201,11 @@ export const feeTable: { label: L<string>; tn: L<string>; typical: L<string> }[]
     typical: { en: "5% – 6% off the top", es: "5% – 6% desde el inicio" },
   },
   {
+    label: { en: "Errors and omissions insurance", es: "Seguro de errores y omisiones" },
+    tn: { en: "You carry your own", es: "Usted contrata el suyo" },
+    typical: { en: "Bundled, or billed per file", es: "Incluido, o cobrado por expediente" },
+  },
+  {
     label: { en: "Listing marketing package", es: "Paquete de marketing de listados" },
     tn: { en: "Included", es: "Incluido" },
     typical: { en: "Agent pays per listing", es: "El agente paga por listado" },
