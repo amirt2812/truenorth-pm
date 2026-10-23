@@ -338,11 +338,11 @@ fixed = [
     ("General liability", 45, ""),
     ("Broker association and MLS dues", 85, "Your own dues, annualized to a month."),
     ("Website, hosting, domain, email", 35, ""),
-    ("Transaction management platform", 85, "Base tier for a small firm."),
-    ("E-signature", 45, "DocuSign Business Pro is about $45/user/month annually — needed for PowerForms."),
+    ("Transaction management platform", 0, "Form Simplicity Professional is free with Florida Realtors membership and does transaction management. Upgrade only when volume demands it."),
+    ("E-signature — broker seat only", 45, "DocuSign Business Pro, the one seat you need for the agent-packet PowerForm. Agents e-sign through Form Simplicity Ultimate, about $72-84/yr, which they buy."),
     ("Accounting and bookkeeping", 250, "Trust accounting is not a DIY job once agents are closing."),
     ("Legal and compliance retainer", 125, "Annual attorney review amortized."),
-    ("Phone system and call routing", 35, ""),
+    ("Phone system and call routing", 0, "Agents use their own mobile. A brokerage phone system is overhead that buys you nothing."),
     ("Banking, escrow account fees, software", 40, ""),
     ("Marketing and recruiting spend", 200, "Cards, cap hats, event table fees, boosted posts."),
 ]
@@ -356,8 +356,8 @@ r += 2
 r = section(ws, r, "Per agent, per month")
 agent_first = r
 per_agent = [
-    ("CRM seat", 65, "Follow Up Boss class tool. Only charged for tiers that include it."),
-    ("Email, storage, phone line", 18, "Charged for every agent."),
+    ("CRM seat, if the brokerage provides one", 0, "Lean stack: agents bring their own CRM or go without. Set to 65 if you decide to provide one."),
+    ("Email alias, storage, admin", 8, "Google Workspace per seat. The only unavoidable per-agent cost."),
 ]
 for name, amt, note in per_agent:
     put(ws, r, 1, name, F_N); put(ws, r, 2, amt, F_IN, USD); put(ws, r, 3, note, F_NOTE); r += 1
