@@ -226,8 +226,8 @@ put(ws, r, 2, f"=(B{a0}*B{a0+3}+B{a0+1}*B{a0+4})*B{a0+2}", F_B, USD2)
 ADDON = f"Costs!$B${r}"
 
 # ─────────────────────────────── P&L
-ws = sheet("P&L", [34] + [11] * 24 + [13])
-put(ws, 1, 1, "P&L — 24 months", F_TITLE, border=False)
+ws = sheet("Profit and Loss", [34] + [11] * 24 + [13])
+put(ws, 1, 1, "Profit and Loss — 24 months", F_TITLE, border=False)
 put(ws, 2, 1, "Brokerage only. Property management is on PM and EV.", F_NOTE, border=False)
 r = 4
 put(ws, r, 1, "Month", F_B)
@@ -392,10 +392,10 @@ def mrow(label, f, fmt=USD, bold=False):
     return this
 
 
-r_rtx = mrow("Closings by her recruits", lambda m, L: f"=P&L!{L}{PL['txn']}*{I['share']}", NUM)
+r_rtx = mrow("Closings by her recruits", lambda m, L: f"='Profit and Loss'!{L}{PL['txn']}*{I['share']}", NUM)
 r_ovr = mrow("Override earned", lambda m, L: f"={L}{r_rtx}*{I['override']}")
 r_new = mrow("New agents this month", lambda m, L: (
-    "=0" if m == 1 else f"=MAX(0,P&L!{L}{PL['eop']}-P&L!{get_column_letter(m)}{PL['eop']})"), NUM)
+    "=0" if m == 1 else f"=MAX(0,'Profit and Loss'!{L}{PL['eop']}-'Profit and Loss'!{get_column_letter(m)}{PL['eop']})"), NUM)
 r_men = mrow("Mentor split, paid by mentees", lambda m, L: (
     f"={L}{r_new}*{I['mentor_share']}*{I['mentee_txns']}*{I['commission']}*{I['mentor_pct']}"))
 r_bas = mrow("Base, if selected", lambda m, L: f'=IF($B$3="Override + base",{I["base"]},0)')
@@ -440,7 +440,7 @@ for col, v in ((2, 1.5), (3, 2.5), (4, 3.5)):
 put(ws, r, 5, "Small brokerages trade low. Rosters walk and fee income is not contracted.", F_NOTE)
 bm = r; r += 1
 put(ws, r, 1, "Brokerage profit, year 2", F_N)
-put(ws, r, 2, f"=SUM('P&L'!N{PL['eb']}:Y{PL['eb']})", F_LINK, USD); be = r; r += 1
+put(ws, r, 2, f"=SUM('Profit and Loss'!N{PL['eb']}:Y{PL['eb']})", F_LINK, USD); be = r; r += 1
 put(ws, r, 1, "Brokerage value", F_B)
 for col in (2, 3, 4):
     put(ws, r, col, f"=MAX(0,$B${be}*{get_column_letter(col)}{bm})", F_B, USD)
