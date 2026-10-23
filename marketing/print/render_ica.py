@@ -31,7 +31,7 @@ LOGO = pathlib.Path(ROOT, "public", "logo-horizontal.png").as_uri()
 TERMS = {
     "split": "100%",
     "transaction_fee": "$399",
-    "monthly_fee": "$20",
+    "monthly_fee": "$29",
     "payout_days": "1 business day",
     "file_deadline": "2 business days",
     "notice_days": "10 days",
@@ -118,8 +118,9 @@ P2 = f"""
 
 <h2>4. The Brokerage's obligations</h2>
 <p>The Brokerage will: register the Agent's license and supervise as Chapter 475 requires; maintain escrow accounts and
-handle trust funds in compliance with s. 475.25(1)(k), Florida Statutes, and Rule 61J2-14, F.A.C.; provide the CRM,
-transaction management, and e-signature tools covered by the monthly fee; provide the listing marketing package
+handle trust funds in compliance with s. 475.25(1)(k), Florida Statutes, and Rule 61J2-14, F.A.C.; provide the
+brokerage email alias, shared drive, templates, signage, and lockboxes covered by the monthly fee; provide the listing
+marketing package
 described in Exhibit A for the Agent's listings; make the Broker reasonably available for contract and compliance
 questions; provide training sessions as scheduled; and disburse compensation as provided in Exhibit A.</p>
 
@@ -149,7 +150,7 @@ and any staff or assistant the Agent engages. The Brokerage does not reimburse t
 act requiring a real estate license, they must be licensed and registered with the Brokerage first.</p>
 
 <h2>7. Confidentiality, records, and Brokerage property</h2>
-<p>Client lists, contact records, transaction files, pricing information, and data in the Brokerage's CRM are
+<p>Client lists, contact records, transaction files, pricing information, and data in the Brokerage's systems are
 confidential and remain the property of the Brokerage and its clients during and after this Agreement. The Agent will
 not copy, export, or use them except to perform services for the Brokerage's clients.</p>
 <p>Listings and listing agreements belong to the Brokerage, not to the Agent. Transaction records belong to the
@@ -246,7 +247,7 @@ P5 = f"""
   <tr class="hd"><td style="width:2.1in">Item</td><td style="width:1.5in">Amount</td><td>Terms</td></tr>
   <tr><td><b>Commission split</b></td><td>{TERMS['split']} to the Agent</td><td>Of the commission the Brokerage receives on the Agent's transaction, after any written co-broke, referral, or team split.</td></tr>
   <tr><td><b>Transaction fee</b></td><td>{TERMS['transaction_fee']}</td><td>Per closed transaction, each side. Deducted at disbursement.</td></tr>
-  <tr><td><b>Monthly technology fee</b></td><td>{TERMS['monthly_fee']} per month</td><td>Billed on the 1st. Covers CRM, transaction management, e-signature, and templates. Not prorated for a partial first month.</td></tr>
+  <tr><td><b>Monthly fee</b></td><td>{TERMS['monthly_fee']} per month</td><td>Billed on the 1st. Covers the brokerage email alias, shared drive and templates, signage and lockbox use, and broker file review. Not prorated for a partial first month.</td></tr>
   <tr><td><b>Desk fee</b></td><td>$0</td><td>None now, and none when a physical office opens.</td></tr>
   <tr><td><b>Franchise or royalty</b></td><td>$0</td><td>The Brokerage is independent.</td></tr>
   <tr><td><b>Signage and lockboxes</b></td><td>$0</td><td>Brokerage signage and electronic lockboxes provided for the Agent's listings.</td></tr>

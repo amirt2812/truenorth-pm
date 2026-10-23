@@ -42,7 +42,7 @@ def card():
     bullets = [
         ("100%", "commission to you. No split, no cap."),
         ("$399", "per closed transaction"),
-        ("$20", "a month for the CRM. No desk or franchise fee."),
+        ("$29", "a month, flat. No desk fee, no franchise fee."),
     ]
     rows = "".join(
         f'<div style="display:flex;gap:.14in;align-items:baseline;margin-bottom:.075in">'

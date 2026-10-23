@@ -22,8 +22,8 @@ export const economics = {
   agentSplit: "100%",
   /** Per closed transaction, charged to the agent. */
   transactionFee: "$399",
-  /** Monthly, covers the CRM and tooling. */
-  monthlyFee: "$20",
+  /** Monthly, covers brokerage tools, your email alias, and file systems. */
+  monthlyFee: "$29",
   deskFee: "$0",
   franchiseFee: "$0",
   /** Headline new-construction rebate (the $300k–$499,999 tier). */
@@ -127,8 +127,8 @@ export const agentBenefits: { icon: string; title: L<string>; body: L<string> }[
     icon: "dollar",
     title: { en: "You keep 100% of your commission", es: "Usted conserva el 100% de su comisión" },
     body: {
-      en: `No split. ${economics.transactionFee} per closed transaction and ${economics.monthlyFee} a month for the tech stack. No desk fee, no franchise fee, no royalty, no monthly minimum.`,
-      es: `Sin división. ${economics.transactionFee} por transacción cerrada y ${economics.monthlyFee} al mes por la plataforma. Sin cuota de escritorio, sin franquicia, sin regalías, sin mínimo mensual.`,
+      en: `No split. ${economics.transactionFee} per closed transaction and ${economics.monthlyFee} a month. No desk fee, no franchise fee, no royalty, no monthly minimum, and no cap to chase.`,
+      es: `Sin división. ${economics.transactionFee} por transacción cerrada y ${economics.monthlyFee} al mes. Sin cuota de escritorio, sin franquicia, sin regalías, sin mínimo mensual y sin tope que perseguir.`,
     },
   },
   {
@@ -149,10 +149,10 @@ export const agentBenefits: { icon: string; title: L<string>; body: L<string> }[
   },
   {
     icon: "doc",
-    title: { en: "Full CRM and transaction management", es: "CRM completo y gestión de transacciones" },
+    title: { en: "Your files and forms, organised", es: "Sus expedientes y formularios, organizados" },
     body: {
-      en: "Pipeline, drip campaigns, e-signature, and a document checklist per file, so nothing sits unsigned the night before closing.",
-      es: "Pipeline, campañas automatizadas, firma electrónica y lista de documentos por expediente, para que nada quede sin firmar la noche antes del cierre.",
+      en: "A shared drive with every template, checklist, and closed file, plus broker review on each one so nothing reaches the table with a disclosure missing. Bring whatever CRM you already like — we will not bill you for one you would not use.",
+      es: "Una unidad compartida con cada plantilla, lista de verificación y expediente cerrado, más la revisión del corredor en cada uno para que nada llegue al cierre sin una divulgación. Traiga el CRM que ya usa — no le cobraremos por uno que no usaría.",
     },
   },
   {
@@ -187,8 +187,8 @@ export const feeTable: { label: L<string>; tn: L<string>; typical: L<string> }[]
   },
   {
     label: { en: "Monthly", es: "Mensual" },
-    tn: { en: `${economics.monthlyFee} for the CRM and tools`, es: `${economics.monthlyFee} por el CRM y herramientas` },
-    typical: { en: "$50 – $150 tech and desk fees", es: "$50 – $150 en cuotas de tecnología y escritorio" },
+    tn: { en: `${economics.monthlyFee}, flat`, es: `${economics.monthlyFee}, fijo` },
+    typical: { en: "$50 – $150 in tech and desk fees", es: "$50 – $150 en cuotas de tecnología y escritorio" },
   },
   {
     label: { en: "Desk fee", es: "Cuota de escritorio" },
@@ -199,6 +199,11 @@ export const feeTable: { label: L<string>; tn: L<string>; typical: L<string> }[]
     label: { en: "Franchise or royalty fee", es: "Franquicia o regalías" },
     tn: { en: economics.franchiseFee, es: economics.franchiseFee },
     typical: { en: "5% – 6% off the top", es: "5% – 6% desde el inicio" },
+  },
+  {
+    label: { en: "E-signature and forms", es: "Firma electrónica y formularios" },
+    tn: { en: "Form Simplicity, through your association", es: "Form Simplicity, por su asociación" },
+    typical: { en: "Bundled, or $25 – $45 per seat", es: "Incluido, o $25 – $45 por usuario" },
   },
   {
     label: { en: "Errors and omissions insurance", es: "Seguro de errores y omisiones" },

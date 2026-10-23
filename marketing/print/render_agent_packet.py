@@ -28,7 +28,7 @@ LOGO = pathlib.Path(ROOT, "public", "logo-horizontal.png").as_uri()
 TERMS = {
     "split": "100%",
     "transaction_fee": "$399",
-    "monthly_fee": "$20",
+    "monthly_fee": "$29",
     "desk_fee": "$0",
     "franchise_fee": "$0",
     "sign_fee": "$0",
@@ -42,16 +42,16 @@ TERMS = {
 BENEFITS = [
     ("You keep 100% of your commission",
      f"No split, no cap to chase, no graduated tiers. {TERMS['transaction_fee']} per closed transaction and "
-     f"{TERMS['monthly_fee']} a month for the CRM. That is the entire cost of hanging your license here."),
+     f"{TERMS['monthly_fee']} a month. That is the entire cost of hanging your license here."),
     ("The listing marketing package, on your listings",
      "Professional photography, aerial photos and video, an edited listing video, floor plan, printed flyers, "
      "signage, and open house support. You win listings against agents who pay for every piece of that themselves."),
     ("The broker answers his own phone",
      "Contract questions go to the broker-owner directly and get an answer the same day. You are not routed to a "
      "team lead, and you are not waiting until Monday."),
-    ("Full CRM and transaction management",
-     "Pipeline, drip campaigns, e-signature, and a per-file document checklist, so nothing sits unsigned the night "
-     "before closing."),
+    ("Your files and forms, organised",
+     "A shared drive with every template, checklist, and closed file, plus broker review on each one. Bring whatever "
+     "CRM you already like; we will not bill you for one you would not use."),
     ("Training that is actually scheduled",
      "Contract-to-close walkthroughs, pricing and CMA workshops, and lead conversion practice. Newly licensed "
      "agents get the broker at their first listing appointment and first offer."),
@@ -63,7 +63,7 @@ BENEFITS = [
 FEES = [
     ("Commission split", f"{TERMS['split']} to the agent", "Paid on every transaction, from the first one."),
     ("Transaction fee", TERMS["transaction_fee"], "Per closed transaction, deducted from the commission at disbursement."),
-    ("Monthly fee", f"{TERMS['monthly_fee']} per month", "CRM, transaction management, e-signature, and brokerage tools."),
+    ("Monthly fee", f"{TERMS['monthly_fee']} per month", "Your brokerage email alias, the shared drive and templates, signage and lockbox use, and broker file review."),
     ("Desk fee", TERMS["desk_fee"], "The brokerage is virtual. No desk fee now, and none when the office opens."),
     ("Franchise or royalty fee", TERMS["franchise_fee"], "TrueNorth is independent. Nothing comes off the top."),
     ("Sign and lockbox use", TERMS["sign_fee"], "Brokerage signage and electronic lockboxes are provided for your listings."),
@@ -74,6 +74,7 @@ FEES = [
 AGENT_PAYS = [
     "Your Florida license renewal and post-licensing or continuing education.",
     "Your Realtor association dues, MLS fees, and lockbox key fob or app subscription.",
+    "Form Simplicity for forms and e-signature, about $7 a month through your association, and a CRM if you want one.",
     "Your own errors and omissions insurance. The brokerage does not carry coverage for agents, and you may not take a listing or write an offer until your certificate is on file.",
     "Your own prospecting and personal branding beyond the listing package.",
     "Your vehicle, phone, and anything else you would pay for as an independent contractor.",
@@ -83,7 +84,7 @@ GETTING_STARTED = [
     ("Send in this packet", "Agent information sheet, signed acknowledgment, signed independent contractor agreement, W-9, and a copy of your license."),
     ("Transfer your license at DBPR", "We submit the change of employer through DBPR online. Do not work a TrueNorth transaction until the transfer shows active — it is a misdemeanor under s. 475.42(1)(b), Fla. Stat."),
     ("Move your association and MLS record", "Update your board and MLS profile to TrueNorth Brokerage Group so your listings publish under the right brokerage."),
-    ("Set up your tools", "CRM login, e-signature account, shared document templates, and your @truenorthpm.co email alias."),
+    ("Set up your tools", "Your @truenorthpm.co email alias, access to the shared drive and templates, and Form Simplicity through your association for forms and e-signature."),
     ("Send your headshot and bio", "For the website agent page, your listing presentations, and your signature block."),
     ("Sit down with the broker", "Ninety minutes on contracts, our file standards, and your first ninety days of prospecting."),
 ]
@@ -142,11 +143,11 @@ P_WELCOME = f"""
 join if you do. It is short on purpose.</p>
 <p>I built this brokerage around a simple idea: an agent who produces should keep what they earn, and a broker should be
 worth calling. You keep {TERMS['split']} of your commission. The brokerage charges {TERMS['transaction_fee']} per closed
-transaction and {TERMS['monthly_fee']} a month for the technology. There is no desk fee, no franchise fee, no royalty,
+transaction and {TERMS['monthly_fee']} a month. There is no desk fee, no franchise fee, no royalty,
 and no cap to work toward, because there is nothing to cap.</p>
-<p>What you get in return is not a bigger building. It is the marketing package behind your listings, a CRM that keeps
-your pipeline straight, training that is scheduled instead of promised, and a broker who picks up the phone when you
-have a contract question at 6 p.m. on a Friday.</p>
+<p>What you get in return is not a bigger building. It is the marketing package behind your listings, files and
+templates that keep you compliant, training that is scheduled instead of promised, and a broker who picks up the phone
+when you have a contract question at 6 p.m. on a Friday.</p>
 <p>We are a virtual brokerage today, and that is deliberate — low overhead is exactly why these numbers work. As the
 roster grows we expect to open a physical office in Hernando County. When that happens, you still will not pay a desk
 fee for it.</p>
@@ -190,7 +191,7 @@ calendar.</p>
 <h2>Who this works for</h2>
 <table class="tbl">
   <tr><td style="width:2.5in"><b>The producing agent</b></td><td>You close six or more a year and you are tired of watching a split and a franchise fee come off every check.</td></tr>
-  <tr><td><b>The part-time agent</b></td><td>You close two or three a year. A $20 monthly fee does not punish you for a slow quarter, and there is no minimum production requirement.</td></tr>
+  <tr><td><b>The part-time agent</b></td><td>You close two or three a year. A $29 monthly fee does not punish you for a slow quarter, and there is no minimum production requirement.</td></tr>
   <tr><td><b>The newly licensed agent</b></td><td>You want a broker who will sit in on your first listing appointment instead of handing you a login and a coffee mug.</td></tr>
   <tr><td><b>The investor-facing agent</b></td><td>You work with landlords and buyers of rental property, and you want a brokerage that can underwrite and then manage what your client buys.</td></tr>
 </table>
@@ -220,9 +221,9 @@ through TrueNorth on these same terms, and you are paid normally. Listings belon
 you or to your seller on request, in writing, with no release fee.</p>
 
 <h2>Monthly fee, in plain terms</h2>
-<p>The {TERMS['monthly_fee']} monthly fee is billed on the first of each month and covers the CRM, transaction
-management, e-signature, and shared templates. It is not prorated for a partial first month, and it stops the month
-after you notify us in writing that you are leaving.</p>
+<p>The {TERMS['monthly_fee']} monthly fee is billed on the first of each month and covers your brokerage email
+alias, the shared drive and templates, signage and lockbox use, and broker file review. It is not prorated for a partial
+first month, and it stops the month after you notify us in writing that you are leaving.</p>
 """
 
 P_POL1 = f"""
@@ -250,7 +251,7 @@ and the transaction fee applies.</p>
 advertising policy above. Return or destroy signage and marketing bearing the brokerage name when you leave.</p>
 
 <h3>Confidentiality</h3>
-<p>Client lists, contact records, transaction files, and anything in the CRM stay confidential during and after your
+<p>Client lists, contact records, and transaction files stay confidential during and after your
 time here. Client information collected under the brokerage belongs to the brokerage and the client, not to a vendor
 and not to a competitor.</p>
 """
@@ -267,7 +268,7 @@ P_START = f"""
 <p>{cb()} Your license shows TrueNorth Brokerage Group as your employer on the DBPR licensee search<br>
 {cb()} Your MLS and association records show the brokerage<br>
 {cb()} Your signature block, business cards, and social profiles carry the brokerage name<br>
-{cb()} You have CRM access and have uploaded your first contact list<br>
+{cb()} You have shared drive access and Form Simplicity set up through your association<br>
 {cb()} You have read the advertising and escrow policies on pages 4 and 5</p>
 
 <h2>Who to call</h2>
@@ -368,8 +369,8 @@ Agreement, Chapter 475, Florida Statutes, or the rules of the Florida Real Estat
 those authorities differ, the law and the signed agreement control.</p>
 """
 
-_FEES_MAIN, _FEES_TAIL = P_FEES.split("<p><b>Leaving.</b>", 1)
-_FEES_TAIL = "<p><b>Leaving.</b>" + _FEES_TAIL
+_FEES_MAIN, _FEES_TAIL = P_FEES.split("<p><b>Commission disputes.</b>", 1)
+_FEES_TAIL = "<p><b>Commission disputes.</b>" + _FEES_TAIL
 
 PAGES = [P_WELCOME, P_WHY, _FEES_MAIN, _FEES_TAIL + P_POL1, P_POL2, P_START, P_INFO, P_BILL, P_SIGN]
 
