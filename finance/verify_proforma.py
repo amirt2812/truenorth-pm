@@ -26,7 +26,19 @@ TIERS = dict(monthly=(29, 99, 299), txn=(495, 425, 350), credit=(0, 300, 500),
              crm=(0, 1, 1), tc=(0, 0, 0))
 
 
-def blend(arch, mix):
+INHOUSE_CASH = 65 + 60 + 85          # editing + flyers + sign/lockbox
+BROKER_HOURS, BROKER_RATE = 2.5, 75
+INHOUSE_LOADED = INHOUSE_CASH + BROKER_HOURS * BROKER_RATE
+CAPACITY = 10                        # listings he can personally shoot per month
+
+
+def media_cost(arch, count_time=True):
+    if arch != "D":
+        return MEDIA
+    return INHOUSE_LOADED if count_time else INHOUSE_CASH
+
+
+def blend(arch, mix, monthly_d=99):
     if arch == "B":
         w = mix
         return dict(
@@ -36,13 +48,16 @@ def blend(arch, mix):
             crm=sum(a * b for a, b in zip(TIERS["crm"], w)),
             tc=sum(a * b for a, b in zip(TIERS["tc"], w)),
         )
+    if arch == "D":
+        return dict(monthly=monthly_d, txn=399, credit=10**6, crm=1, tc=0)  # brokerage funds media
     return dict(monthly=20, txn=399, credit=750 if arch == "A" else 0, crm=1, tc=0)
 
 
-def run(arch, name, mom_override=60, recruit_share=0.70, mentor_pct=0.20,
+def run(arch, name, count_time=True, monthly_d=99, mom_override=60, recruit_share=0.70, mentor_pct=0.20,
         mentee_txns=3, mentor_share=0.50, commission=7750):
     s = SCEN[name]
-    b = blend(arch, s["mix"])
+    b = blend(arch, s["mix"], monthly_d)
+    MC = media_cost(arch, count_time)
     agents, cum, months = s["start"], 0.0, []
     for m in range(1, 25):
         bop = agents
@@ -51,15 +66,17 @@ def run(arch, name, mom_override=60, recruit_share=0.70, mentor_pct=0.20,
         txns = agents * s["tpm"]
         listings = txns * s["listing"]
         media_units = listings * s["attach"]
-        rev = agents * b["monthly"] + txns * b["txn"] + media_units * max(0, MEDIA - b["credit"])
+        rev = agents * b["monthly"] + txns * b["txn"] + media_units * max(0, MC - b["credit"])
         mentor = new * mentor_share * mentee_txns * commission * mentor_pct  # paid by the mentee
         mom = txns * recruit_share * mom_override  # the only piece the brokerage funds
-        cost = (media_units * MEDIA + txns * (TXN_BASE + b["tc"] * TC_COST)
+        in_house_units = min(media_units, CAPACITY) if arch == "D" else media_units
+        overflow = max(0.0, media_units - CAPACITY) if arch == "D" else 0.0
+        cost = (in_house_units * MC + overflow * MEDIA + txns * (TXN_BASE + b["tc"] * TC_COST)
                 + agents * (SEAT_BASE + b["crm"] * CRM_SEAT) + FIXED + mom)
         cum += rev - cost
         months.append(dict(m=m, agents=agents, txns=txns, rev=rev, cost=cost, ebitda=rev - cost, cum=cum, mom=mom, mentor=mentor))
     buyer = b["txn"] - TXN_BASE - b["tc"] * TC_COST
-    listing = buyer - MEDIA + max(0, MEDIA - b["credit"])
+    listing = buyer - MC + max(0, MC - b["credit"])
     blended = buyer * (1 - s["listing"]) + listing * s["listing"]
     per_agent = b["monthly"] - (SEAT_BASE + b["crm"] * CRM_SEAT) + s["tpm"] * blended
     mom_y1 = sum(x["mom"] for x in months[:12])
@@ -76,7 +93,8 @@ for scen in SCEN:
     print(hdr)
     for arch, label in (("A", "A. Flat $399 + $20, media incl."),
                         ("B", "B. Tiered"),
-                        ("C", "C. Flat $399 + $20, media billed")):
+                        ("C", "C. Flat $399 + $20, media billed"),
+                        ("D", "D. $399 + $99, you shoot it")):
         x = run(arch, scen)
         be = x["be"] if isinstance(x["be"], str) else f"{x['be']:.1f}"
         print(f"{label:<34}{x['buyer']:>9,.0f}{x['listing']:>10,.0f}{x['blended']:>10,.0f}"
@@ -84,14 +102,50 @@ for scen in SCEN:
     print()
 
 m = run("B", "Modest")
-print(f"Modest / Tiered: agents at month 24 = {m['agents24']:.1f}, "
-      f"blended monthly fee ${m['b']['monthly']:.2f}, blended transaction fee ${m['b']['txn']:.2f}")
+print("\nArchitecture D — what the monthly fee has to be (Modest drivers)")
+print(f"{'monthly fee':>12}{'/agent/mo':>12}{'BE agents':>12}{'yr2 EBITDA':>13}{'24mo cum':>12}")
+for fee in (29, 49, 69, 99, 129):
+    x = run("D", "Modest", monthly_d=fee)
+    be = x["be"] if isinstance(x["be"], str) else f"{x['be']:.1f}"
+    print(f"{fee:>12,.0f}{x['per_agent']:>12,.0f}{be:>12}{x['y2']:>13,.0f}{x['cum']:>12,.0f}")
+
+print("\nArchitecture D at $99 — does counting your time change the answer?")
+for ct, lab in ((True, "time counted at $75/hr"), (False, "time treated as free")):
+    x = run("D", "Modest", count_time=ct)
+    be = x["be"] if isinstance(x["be"], str) else f"{x['be']:.1f}"
+    print(f"  {lab:<26} listing contribution ${x['listing']:,.0f}   BE {be} agents   yr2 ${x['y2']:,.0f}")
+
+sm = SCEN["Modest"]
+print("\nYour shooting load at the modest case")
+for month in (6, 12, 18, 24):
+    ag = SCEN['Modest']['start']
+    for m in range(1, month + 1):
+        ag = max(0.0, ag + (sm['add1'] if m <= 12 else sm['add2']) - ag * sm['attr'] / 12)
+    listings = ag * sm['tpm'] * sm['listing'] * sm['attach']
+    print(f"  month {month:>2}: {ag:>4.1f} agents -> {listings:>4.1f} listings/month -> "
+          f"{listings*BROKER_HOURS:>5.1f} hours of your time")
+
+tiered = run("B", "Modest")
+print(f"\nModest / Tiered: agents at month 24 = {tiered['agents24']:.1f}, "
+      f"blended monthly fee ${tiered['b']['monthly']:.2f}, blended transaction fee ${tiered['b']['txn']:.2f}")
 s = SCEN["Modest"]
 doors24 = s["doors"] + s["doors_add"] * 24
 pm_arr = doors24 * s["fee"] * 12
 print(f"PM at month 24: {doors24:.0f} doors, ${pm_arr:,.0f} annual recurring, "
       f"value at 1.8x = ${pm_arr*1.8:,.0f}")
-print(f"Brokerage value at 2.5x year-2 EBITDA = ${max(0, m['y2'])*2.5:,.0f}")
+print(f"Brokerage value at 2.5x year-2 EBITDA = ${max(0, tiered['y2'])*2.5:,.0f}")
+
+print("\nD at $99 plus a per-listing media fee charged to the agent (Modest)")
+print(f"{'media fee':>11}{'listing contrib':>17}{'/agent/mo':>12}{'BE agents':>12}{'yr2 EBITDA':>13}")
+for fee in (0, 99, 149, 199):
+    x = run("D", "Modest", monthly_d=99)
+    sm2 = SCEN["Modest"]
+    listing = x["listing"] + fee
+    blended = x["buyer"] * (1 - sm2["listing"]) + listing * sm2["listing"]
+    per = 99 - (SEAT_BASE + CRM_SEAT) + sm2["tpm"] * blended
+    be = (FIXED + sum(z["mom"] for z in x["months"][:12]) / 12) / per if per > 0 else None
+    yr2 = x["y2"] + fee * sum(z["txns"] * sm2["listing"] * sm2["attach"] for z in x["months"][12:])
+    print(f"{fee:>11,.0f}{listing:>17,.0f}{per:>12,.0f}{(f'{be:.1f}' if be else 'never'):>12}{yr2:>13,.0f}")
 
 print("\nPer-tier economics (Modest drivers: 0.5 txn/agent/mo, 45% listing side)")
 sm = SCEN["Modest"]

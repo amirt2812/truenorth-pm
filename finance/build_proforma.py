@@ -199,7 +199,7 @@ ws = sheet("Tiers", [34, 16, 16, 16, 44])
 title(ws, "Fee architecture", "Switch architectures in B3. The tier table below drives the Tiered case.")
 put(ws, 3, 1, "Selected architecture", F_B)
 put(ws, 3, 2, "B. Tiered", F_IN, fill=FILL_YELLOW, align="center")
-dv2 = DataValidation(type="list", formula1='"A. Flat (current),B. Tiered,C. Flat media excluded"', allow_blank=False)
+dv2 = DataValidation(type="list", formula1='"A. Flat (current),B. Tiered,C. Flat media excluded,D. In-house media"', allow_blank=False)
 ws.add_data_validation(dv2)
 dv2.add(ws["B3"])
 
@@ -232,19 +232,23 @@ put(ws, r, 1, "Media credit per listing — A", F_N); put(ws, r, 2, 750, F_IN, U
 put(ws, r, 5, "Architecture A includes the full package, so the brokerage funds all of it.", F_NOTE); fa_media = r; r += 1
 put(ws, r, 1, "Media credit per listing — C", F_N); put(ws, r, 2, 0, F_IN, USD)
 put(ws, r, 5, "Architecture C bills media to the agent at cost. Same $399, no hole.", F_NOTE); fc_media = r; r += 1
+put(ws, r, 1, "Monthly fee — D (in-house media)", F_N); put(ws, r, 2, 99, F_IN, USD)
+put(ws, r, 5, "The per-seat tech stack costs about $83 a month. A $20 fee cannot cover it; this one can.", F_NOTE); fd_month = r; r += 1
+put(ws, r, 1, "Transaction fee — D", F_N); put(ws, r, 2, 399, F_IN, USD)
+put(ws, r, 5, "Your number, kept.", F_NOTE); fd_txn = r; r += 1
 
 r += 1
 r = section(ws, r, "Blended economics at the selected architecture and scenario")
 blend_first = r
 put(ws, r, 1, "Blended monthly fee per agent", F_N)
 put(ws, r, 2, (f'=IF($B$3="B. Tiered",B{tfirst}*{SC["Tier mix — Solo"]}+C{tfirst}*{SC["Tier mix — Pro"]}'
-               f'+D{tfirst}*{SC["Tier mix — Premier"]},B{fa_month})'), F_B, USD2); r += 1
+               f'+D{tfirst}*{SC["Tier mix — Premier"]},IF($B$3="D. In-house media",B{fd_month},B{fa_month}))'), F_B, USD2); r += 1
 put(ws, r, 1, "Blended transaction fee", F_N)
 put(ws, r, 2, (f'=IF($B$3="B. Tiered",B{tfirst+1}*{SC["Tier mix — Solo"]}+C{tfirst+1}*{SC["Tier mix — Pro"]}'
-               f'+D{tfirst+1}*{SC["Tier mix — Premier"]},B{fa_txn})'), F_B, USD2); r += 1
+               f'+D{tfirst+1}*{SC["Tier mix — Premier"]},IF($B$3="D. In-house media",B{fd_txn},B{fa_txn}))'), F_B, USD2); r += 1
 put(ws, r, 1, "Blended media credit per listing", F_N)
 put(ws, r, 2, (f'=IF($B$3="B. Tiered",B{tfirst+2}*{SC["Tier mix — Solo"]}+C{tfirst+2}*{SC["Tier mix — Pro"]}'
-               f'+D{tfirst+2}*{SC["Tier mix — Premier"]},IF($B$3="A. Flat (current)",B{fa_media},B{fc_media}))'), F_B, USD2); r += 1
+               f'+D{tfirst+2}*{SC["Tier mix — Premier"]},IF(OR($B$3="A. Flat (current)",$B$3="D. In-house media"),B{fa_media},B{fc_media}))'), F_B, USD2); r += 1
 put(ws, r, 1, "Share of agents with CRM seat included", F_N)
 put(ws, r, 2, (f'=IF($B$3="B. Tiered",C{tfirst+3}*{SC["Tier mix — Pro"]}+D{tfirst+3}*{SC["Tier mix — Premier"]},1)'), F_B, PCT); r += 1
 put(ws, r, 1, "Share of transactions with TC included", F_N)
@@ -272,6 +276,42 @@ for name, amt, note in media:
 put(ws, r, 1, "Total media package per listing", F_B)
 put(ws, r, 2, f"=SUM(B{media_first}:B{r-1})", F_B, USD)
 put(ws, r, 3, "This is the number that breaks a $399 flat fee.", F_NOTE)
+OUTSOURCED = f"Costs!$B${r}"
+r += 2
+
+r = section(ws, r, "In-house media — you shoot it yourself")
+inhouse_first = r
+inhouse = [
+    ("Editing, per listing", 65, "Your quoted editor rate for photos and video."),
+    ("Printed flyers and brochures", 60, "Still a print cost whoever shoots it."),
+    ("Yard sign and lockbox, amortized", 85, "Unchanged — you are not shooting these."),
+    ("Your hours per listing", 2.5, "Drive, shoot interior and exterior, fly the drone, upload, review the edit."),
+    ("Value of your hour", 75, "What an hour of your time is worth doing the next best thing: recruiting an agent or signing a door."),
+]
+for name, amt, note in inhouse:
+    put(ws, r, 1, name, F_N)
+    put(ws, r, 2, amt, F_IN, NUM if name == "Your hours per listing" else USD)
+    put(ws, r, 3, note, F_NOTE); r += 1
+put(ws, r, 1, "In-house media, cash cost per listing", F_B)
+put(ws, r, 2, f"=SUM(B{inhouse_first}:B{inhouse_first+2})", F_B, USD)
+put(ws, r, 3, "What actually leaves the bank account.", F_NOTE)
+INHOUSE_CASH = f"Costs!$B${r}"; r += 1
+put(ws, r, 1, "In-house media, loaded cost per listing", F_B)
+put(ws, r, 2, f"=B{r-1}+B{inhouse_first+3}*B{inhouse_first+4}", F_B, USD)
+put(ws, r, 3, "Cash plus your time. This is the honest number to price against.", F_NOTE)
+INHOUSE_LOADED = f"Costs!$B${r}"; r += 1
+put(ws, r, 1, "Listings you can personally shoot per month", F_N)
+put(ws, r, 2, 10, F_IN, NUM)
+put(ws, r, 3, "Above this, you outsource the overflow at the full package price — or stop taking listings.", F_NOTE)
+CAPACITY = f"Costs!$B${r}"; r += 1
+put(ws, r, 1, "Count your time as a cost?", F_N)
+put(ws, r, 2, 1, F_IN, INT)
+put(ws, r, 3, "1 = yes (recommended). 0 = treat your labor as free and see the flattering version.", F_NOTE)
+COUNT_TIME = f"Costs!$B${r}"; r += 1
+put(ws, r, 1, "Active media cost per listing", F_B)
+put(ws, r, 2, (f'=IF(Tiers!$B$3="D. In-house media",IF({COUNT_TIME}=1,{INHOUSE_LOADED},{INHOUSE_CASH}),{OUTSOURCED})'),
+    F_B, USD)
+put(ws, r, 3, "What the P&L and unit economics use.", F_NOTE)
 MEDIA_COST = f"Costs!$B${r}"
 r += 2
 
@@ -377,7 +417,11 @@ r_rev = row("Total revenue", lambda m, L: f"=SUM({L}{r_rev_month}:{L}{r_rev_medi
 
 r += 1
 r = section(ws, r, "Cost of service")
-r_c_media = row("Media package cost", lambda m, L: f"={L}{r_media_units}*{MEDIA_COST}")
+r_overflow = row("Listings above your shooting capacity", lambda m, L: (
+    f'=IF(Tiers!$B$3="D. In-house media",MAX(0,{L}{r_media_units}-{CAPACITY}),0)'), fmt=NUM)
+r_c_media = row("Media cost", lambda m, L: (
+    f"=MIN({L}{r_media_units},IF(Tiers!$B$3=\"D. In-house media\",{CAPACITY},{L}{r_media_units}))*{MEDIA_COST}"
+    f"+{L}{r_overflow}*{OUTSOURCED}"))
 r_c_txn = row("Per-transaction cost", lambda m, L: (
     f"={L}{r_txn}*({TXN_BASE}+{BLEND['tc_share']}*{TC_COST})"))
 r_c_seat = row("Per-agent cost", lambda m, L: (
