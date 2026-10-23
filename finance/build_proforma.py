@@ -198,7 +198,7 @@ put(ws, r, 5, f"=SUM(E{first+8}:E{first+10})", F_B, PCT)
 ws = sheet("Tiers", [34, 16, 16, 16, 44])
 title(ws, "Fee architecture", "Switch architectures in B3. The tier table below drives the Tiered case.")
 put(ws, 3, 1, "Selected architecture", F_B)
-put(ws, 3, 2, "B. Tiered", F_IN, fill=FILL_YELLOW, align="center")
+put(ws, 3, 2, "D. In-house media", F_IN, fill=FILL_YELLOW, align="center")
 dv2 = DataValidation(type="list", formula1='"A. Flat (current),B. Tiered,C. Flat media excluded,D. In-house media"', allow_blank=False)
 ws.add_data_validation(dv2)
 dv2.add(ws["B3"])
@@ -232,8 +232,8 @@ put(ws, r, 1, "Media credit per listing — A", F_N); put(ws, r, 2, 750, F_IN, U
 put(ws, r, 5, "Architecture A includes the full package, so the brokerage funds all of it.", F_NOTE); fa_media = r; r += 1
 put(ws, r, 1, "Media credit per listing — C", F_N); put(ws, r, 2, 0, F_IN, USD)
 put(ws, r, 5, "Architecture C bills media to the agent at cost. Same $399, no hole.", F_NOTE); fc_media = r; r += 1
-put(ws, r, 1, "Monthly fee — D (in-house media)", F_N); put(ws, r, 2, 99, F_IN, USD)
-put(ws, r, 5, "The per-seat tech stack costs about $83 a month. A $20 fee cannot cover it; this one can.", F_NOTE); fd_month = r; r += 1
+put(ws, r, 1, "Monthly fee — D (in-house media)", F_N); put(ws, r, 2, 29, F_IN, USD)
+put(ws, r, 5, "Chosen structure. Works because the lean stack costs $8 per agent, not $83.", F_NOTE); fd_month = r; r += 1
 put(ws, r, 1, "Transaction fee — D", F_N); put(ws, r, 2, 399, F_IN, USD)
 put(ws, r, 5, "Your number, kept.", F_NOTE); fd_txn = r; r += 1
 
