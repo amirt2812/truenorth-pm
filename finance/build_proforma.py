@@ -334,16 +334,16 @@ r += 2
 r = section(ws, r, "Fixed monthly — the brokerage exists whether or not anyone closes")
 fixed_first = r
 fixed = [
-    ("Brokerage E&O policy", 150, "Firm policy. Agents carry their own on top."),
-    ("General liability", 45, ""),
-    ("Broker association and MLS dues", 85, "Your own dues, annualized to a month."),
-    ("Website, hosting, domain, email", 35, ""),
+    ("Brokerage E&O policy", 80, "Your quoted premium."),
+    ("General liability", 0, "Declined. E&O does not cover bodily injury at an open house — revisit before you host one."),
+    ("Broker association and MLS dues", 0, "Prepaid through 2027. The true annual cost is roughly $85/month; it returns in 2028."),
+    ("Website, hosting, domain, email", 0, "Vercel free tier and an Outlook account already paid for the year."),
     ("Transaction management platform", 0, "Form Simplicity Professional is free with Florida Realtors membership and does transaction management. Upgrade only when volume demands it."),
     ("E-signature — broker seat only", 45, "DocuSign Business Pro, the one seat you need for the agent-packet PowerForm. Agents e-sign through Form Simplicity Ultimate, about $72-84/yr, which they buy."),
-    ("Accounting and bookkeeping", 250, "Trust accounting is not a DIY job once agents are closing."),
-    ("Legal and compliance retainer", 125, "Annual attorney review amortized."),
+    ("Accounting and bookkeeping", 0, "You are doing the books. Escrow still needs a signed monthly reconciliation under Rule 61J2-14.012 — see the Read Me."),
+    ("Legal and compliance retainer", 0, "No retainer. Budget a one-time $800-1,500 for attorney review of the ICA and packet instead."),
     ("Phone system and call routing", 0, "Agents use their own mobile. A brokerage phone system is overhead that buys you nothing."),
-    ("Banking, escrow account fees, software", 40, ""),
+    ("Banking, escrow account fees, software", 25, "Often $0 with the right business account. Zero it once you confirm."),
     ("Marketing and recruiting spend", 200, "Cards, cap hats, event table fees, boosted posts."),
 ]
 for name, amt, note in fixed:
@@ -357,7 +357,7 @@ r = section(ws, r, "Per agent, per month")
 agent_first = r
 per_agent = [
     ("CRM seat, if the brokerage provides one", 0, "Lean stack: agents bring their own CRM or go without. Set to 65 if you decide to provide one."),
-    ("Email alias, storage, admin", 8, "Google Workspace per seat. The only unavoidable per-agent cost."),
+    ("Email alias, storage, admin", 0, "Microsoft 365 aliases forwarding to the agent's own inbox cost nothing. A real mailbox per agent is about $6."),
 ]
 for name, amt, note in per_agent:
     put(ws, r, 1, name, F_N); put(ws, r, 2, amt, F_IN, USD); put(ws, r, 3, note, F_NOTE); r += 1
